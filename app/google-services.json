@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "900524525064",
+    "project_id": "bookworm-burrow",
+    "storage_bucket": "bookworm-burrow.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900524525064:android:bf87a14850be67dfb273bd",
+        "android_client_info": {
+          "package_name": "edu.utsa.cs3773.bookworkburrow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc4r3tL49669kglhD0s3GhuUNvQ7_fidU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
