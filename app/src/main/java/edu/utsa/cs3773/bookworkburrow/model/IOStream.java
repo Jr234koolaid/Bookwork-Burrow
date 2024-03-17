@@ -1,12 +1,11 @@
-// app\main\java\..\model\IOStream.java
-
 package edu.utsa.cs3773.bookworkburrow.model;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public interface IOStream {
+public interface IOStream<T> {
 
-    public void readFrom(String _path) throws FileNotFoundException;
+    T read() throws IOException;
 
-    public void writeTo(String _path) throws FileNotFoundException;
-}
+    void write(T _type) throws IOException;
+
+} // interface IOStream

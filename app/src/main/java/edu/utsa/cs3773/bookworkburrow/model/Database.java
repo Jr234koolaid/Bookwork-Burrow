@@ -1,18 +1,27 @@
-// app\src\main\java\..\model\Database
-
 package edu.utsa.cs3773.bookworkburrow.model;
 
-public class Database
-{
-    private static Database m_database;
+public class Database {
 
-    public static Database GetDatabase()
-    {
-        if (m_database == null)
-        {
-            m_database = new Database();
+    private static Database Instance;
 
-        } return m_database;
+    public static Database getInstance() {
+
+        if (Instance == null) {
+            Instance = new Database();
+
+        } return Instance;
+    }
+
+    private Database() {
+
+    }
+
+    public boolean add(String _username, String _password) {
+        return false;
+    }
+
+    public boolean authenticate(String _username, String _password) {
+        return false;
     }
 
 } // class Database
