@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         Intent intent = this.getIntent();
 
         String UID = intent.getStringExtra(INTENT_ACCOUNT_UID);
@@ -42,6 +43,21 @@ public class MainActivity extends AppCompatActivity {
         //String password = "password123";
         //Account account = createUser(email,password, this);
         //Log.d("Account UID", account.getUID());
+=======
+        String email = "user3@example.com";
+        String password = "password123";
+        createUser("email@example.com", "password123", this)
+                .thenAccept(account -> {
+                    // Handle success
+                    Log.d(TAG, "Account created with UID: " + account.getUid());
+                })
+                .exceptionally(throwable -> {
+                    // Handle failure
+                    Log.e(TAG, "Failed to create account", throwable);
+                    return null;
+                });
+//        Log.d("Account UID", account.getUid());
+>>>>>>> a9575fd (completeableFuture)
     }
 
 } // class MainActivity

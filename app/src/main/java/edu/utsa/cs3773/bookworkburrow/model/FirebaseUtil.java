@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.utsa.cs3773.bookworkburrow.model.Account;
@@ -24,27 +25,36 @@ public class FirebaseUtil {
      * @param password
      * @param context
      */
-    public static Account createUser(String email, String password, AppCompatActivity context){
-        AtomicReference<String> uid = new AtomicReference<>("");
+    public static CompletableFuture<Account> createUser(String email, String password, AppCompatActivity context){
+        CompletableFuture<Account> completableFuture = new CompletableFuture<>();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(context, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success
                         FirebaseUser user = mAuth.getCurrentUser();
-                        //create account with id
-                        assert user != null;
-                        uid.set(user.getUid());
-                        Log.d(TAG, "createUserWithEmail:success");
-                        Log.d("User ID", user.getUid());
+                        // Ensure the user is not null
+                        if (user != null) {
+                            // Create account with UID
+                            String uid = user.getUid();
+                            Log.d(TAG, "createUserWithEmail:success");
+                            Log.d("User ID", uid);
+                            // Successfully created the account, complete the future with the result
+                            completableFuture.complete(new Account(uid));
+                        } else {
+                            // User is null, complete exceptionally
+                            completableFuture.completeExceptionally(new Exception("FirebaseUser is null"));
+                        }
                     } else {
-                        // If sign in fails display a message
+                        // If sign in fails, display a message and complete exceptionally
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(context, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
+                        completableFuture.completeExceptionally(task.getException());
                     }
                 });
-        return new Account(uid.toString());
+        return completableFuture;
     }
 
     /**
