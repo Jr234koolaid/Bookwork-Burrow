@@ -37,8 +37,17 @@ public class MainActivity extends AppCompatActivity
 
         String email = "user3@example.com";
         String password = "password123";
-        Account account = createUser(email,password, this);
-        Log.d("Account UID", account.getUid());
+        createUser("email@example.com", "password123", this)
+                .thenAccept(account -> {
+                    // Handle success
+                    Log.d(TAG, "Account created with UID: " + account.getUid());
+                })
+                .exceptionally(throwable -> {
+                    // Handle failure
+                    Log.e(TAG, "Failed to create account", throwable);
+                    return null;
+                });
+//        Log.d("Account UID", account.getUid());
     }
 
 
