@@ -10,6 +10,7 @@ import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
 
+<<<<<<< HEAD
 // TODO (Juan): Should be renamed to HomeActivity
 public class MainActivity extends AppCompatActivity {
 
@@ -45,19 +46,39 @@ public class MainActivity extends AppCompatActivity {
         //Log.d("Account UID", account.getUID());
 =======
         String email = "user3@example.com";
+=======
+public class MainActivity extends AppCompatActivity
+{
+    Account account;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        
+        //handle getting input for email and password from view
+        String email = "user5@example.com";
+>>>>>>> ce63826 (updated firebase utils)
         String password = "password123";
-        createUser("email@example.com", "password123", this)
+        createUser(email, password, this)
                 .thenAccept(account -> {
                     // Handle success
-                    Log.d(TAG, "Account created with UID: " + account.getUid());
+                    this.account = account;
+                    Log.d(TAG, "Account created with UID: " + this.account.getUid());
+                    //put all other activity code in this
                 })
                 .exceptionally(throwable -> {
                     // Handle failure
                     Log.e(TAG, "Failed to create account", throwable);
                     return null;
                 });
+<<<<<<< HEAD
 //        Log.d("Account UID", account.getUid());
 >>>>>>> a9575fd (completeableFuture)
+=======
+>>>>>>> ce63826 (updated firebase utils)
     }
 
 } // class MainActivity
