@@ -35,6 +35,12 @@ public class ForgotPasswordController implements View.OnClickListener {
 
             String email = emailEditText.getText().toString();
 
+            if (email.isEmpty()) {
+
+                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             // TODO (Juan): Validate
             if (true) {
 

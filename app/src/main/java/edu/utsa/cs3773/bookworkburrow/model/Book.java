@@ -1,4 +1,4 @@
-package edu.utsa.cs3773.bookworkburrow.view.model;
+package edu.utsa.cs3773.bookworkburrow.model;
 
 public class Book {
     private String title;

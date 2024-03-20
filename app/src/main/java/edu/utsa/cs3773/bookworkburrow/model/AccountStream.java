@@ -1,39 +1,50 @@
 package edu.utsa.cs3773.bookworkburrow.model;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import edu.utsa.cs3773.bookworkburrow.view.model.Account;
+public class AccountStream {
 
-public class AccountStream implements IOStream<Account> {
+    private final File m_file;
 
-    private File m_file;
+    public AccountStream(File _root, String _usernameHash) throws IOException {
 
-    public AccountStream(File _root, String _username) throws IOException {
+        Path accountPath = Files.createDirectories(Paths.get(_root.getPath(), "account"));
+        Path path = Paths.get(accountPath.toString(), (_usernameHash + ".bwa"));
 
-        m_file = new File(_root.toString() + "/account/" + _username.hashCode());
+        m_file = new File(path.toString());
         m_file.createNewFile();
     }
 
-    @Override
     public Account read() throws IOException {
 
-        Scanner scanner = new Scanner(m_file);
+        try (DataInputStream inputStream = new DataInputStream(new FileInputStream(m_file))) {
 
-        scanner.close();
+            String username = inputStream.readUTF();
+            String password = inputStream.readUTF();
+            String name = inputStream.readUTF();
 
-        Account account = new Account("Something", "Something", "Something");
+            Account account = new Account(username, password, name);
 
-        return account;
+            return account;
+        }
     }
 
-    @Override
     public void write(Account _account) throws IOException {
 
-        Scanner scanner = new Scanner(m_file);
+        try (DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(m_file))) {
 
-        scanner.close();
+            outputStream.writeUTF(_account.getUsername());
+            outputStream.writeUTF(_account.getPassword());
+            outputStream.writeUTF(_account.getName());
+        }
     }
 
 } // class AccountStream

@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.Database;
+import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 
 public class SignupController implements View.OnClickListener{
 
@@ -31,11 +31,22 @@ public class SignupController implements View.OnClickListener{
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            // TODO: (Juan): Add account to database
-            if (Database.getInstance().add("Nothing", "Nothing")) {
-                // TODO (Juan): Intent stuff here
-            } else {
-                Toast.makeText(m_activity, "Email or username are already in use", Toast.LENGTH_LONG).show();
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+
+                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            try {
+
+                if (AccountDatabase.getInstance().add(m_activity.getDataDir(), email, username, password)) {
+                    // TODO (Juan): Intent stuff here
+                } else {
+                    Toast.makeText(m_activity, "Email or username are already in use", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (Exception e) {
+                Toast.makeText(m_activity, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
             }
         }
     }

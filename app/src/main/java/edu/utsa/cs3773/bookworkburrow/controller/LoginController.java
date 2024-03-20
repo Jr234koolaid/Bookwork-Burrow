@@ -10,7 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.Database;
+import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
@@ -39,31 +39,39 @@ public class LoginController implements View.OnClickListener {
         int viewID = _view.getId();
         if (viewID == R.id.login_button_login) {
 
-            EditText usernameEditText = m_activity.findViewById(R.id.login_edit_username);
+            EditText emailEditText = m_activity.findViewById(R.id.login_edit_email);
             EditText passwordEditText = m_activity.findViewById(R.id.login_edit_password);
 
-            String username = usernameEditText.getText().toString();
+            String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if (Database.getInstance().authenticate(username, password)) {
-                // TODO (Juan): Intent stuff here
-            } else {
-                Toast.makeText(m_activity, "Invalid username or password", Toast.LENGTH_LONG).show();
+            if (email.isEmpty() || password.isEmpty()) {
+
+                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            try {
+
+                if (AccountDatabase.getInstance().authenticate(m_activity.getDataDir(), email, password)) {
+                    // TODO (Juan): Intent stuff here
+
+                    // TODO (Juan): Remove
+                    Toast.makeText(m_activity, "Authenticated", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(m_activity, "Invalid username or password", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (Exception e) {
+                Toast.makeText(m_activity, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
             }
 
         } else if (viewID == R.id.login_button_forgot_password) {
-
-            // TODO (Juan): Intent stuff here
-            Intent intent = new Intent(m_activity, ForgotPasswordActivity.class);
-
-            m_forgotPasswordLauncher.launch(intent);
+            m_forgotPasswordLauncher.launch(new Intent(m_activity, ForgotPasswordActivity.class));
 
         } else if (viewID == R.id.login_button_signup) {
-
-            // TODO (Juan): Intent stuff here
-            Intent intent = new Intent(m_activity, SignupActivity.class);
-
-            m_signupLauncher.launch(intent);
+            m_signupLauncher.launch(new Intent(m_activity, SignupActivity.class));
         }
     }
 

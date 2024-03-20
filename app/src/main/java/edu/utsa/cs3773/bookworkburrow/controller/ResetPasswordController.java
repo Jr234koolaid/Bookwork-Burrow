@@ -28,9 +28,18 @@ public class ResetPasswordController implements View.OnClickListener {
             String newPassword = newPasswordEditText.getText().toString();
             String confirmPassword = confirmPasswordEditText.getText().toString();
 
+            if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+
+                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             if (confirmPassword.equals(newPassword)) {
 
+                // TODO (Juan): Have to get information from intent
                 // TODO (Juan): Enter new password to database
+
+                Toast.makeText(m_activity, "Password has been successfully reset", Toast.LENGTH_LONG).show();
 
                 m_activity.finish();
 

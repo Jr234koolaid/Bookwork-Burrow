@@ -28,30 +28,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_image_header" />
 
-    <!-- Username input -->
+    <!-- Email input -->
 
     <TextView
-        android:id="@+id/login_text_username"
+        android:id="@+id/login_text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Username:"
+        android:text="Email:"
         app:layout_constraintStart_toEndOf="@id/login_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_text_header"
         app:layout_constraintHorizontal_bias="0" />
 
     <EditText
-        android:id="@+id/login_edit_username"
+        android:id="@+id/login_edit_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
-        android:hint="Enter Username"
+        android:inputType="textEmailAddress"
+        android:hint="Enter Email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_text_username" />
+        app:layout_constraintTop_toBottomOf="@id/login_text_email" />
 
     <!-- Password input -->
 
@@ -63,7 +63,7 @@
         android:text="Password:"
         app:layout_constraintStart_toEndOf="@id/login_barrier"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_edit_username"
+        app:layout_constraintTop_toBottomOf="@id/login_edit_email"
         app:layout_constraintHorizontal_bias="0" />
 
     <EditText
@@ -129,6 +129,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="left"
-        app:constraint_referenced_ids="login_edit_username,login_edit_password" />
+        app:constraint_referenced_ids="login_edit_email,login_edit_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

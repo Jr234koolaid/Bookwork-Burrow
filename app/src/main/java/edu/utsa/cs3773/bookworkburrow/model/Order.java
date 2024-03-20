@@ -1,8 +1,7 @@
-package edu.utsa.cs3773.bookworkburrow.view.model;
+package edu.utsa.cs3773.bookworkburrow.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class Order {
