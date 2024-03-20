@@ -58,7 +58,7 @@ public class FirebaseUtil {
     }
 
     /**
-     * Deletes the account given the account object
+     * Deletes the account in Firestore given the account object
      * @param account
      */
     public static void deleteUser(Account account){
@@ -69,6 +69,10 @@ public class FirebaseUtil {
                 .addOnFailureListener(e -> Log.w(TAG, "Error deleting document", e));
     }
 
+    /**
+     * Updates firestore document of user given account
+     * @param account
+     */
     public static void updateUser(Account account){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(account.getUid())
@@ -77,7 +81,7 @@ public class FirebaseUtil {
                 .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
     }
 
-    public static void readUser(){
+    public static void readUsers(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .whereLessThan("born", 1900)

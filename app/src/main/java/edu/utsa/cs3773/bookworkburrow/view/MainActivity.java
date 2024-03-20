@@ -25,29 +25,30 @@ import edu.utsa.cs3773.bookworkburrow.view.model.Account;
 
 public class MainActivity extends AppCompatActivity
 {
+    Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-//        mAuth = FirebaseAuth.getInstance();
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String email = "user3@example.com";
+        
+        //handle getting input for email and password from view
+        String email = "user5@example.com";
         String password = "password123";
-        createUser("email@example.com", "password123", this)
+        createUser(email, password, this)
                 .thenAccept(account -> {
                     // Handle success
-                    Log.d(TAG, "Account created with UID: " + account.getUid());
+                    this.account = account;
+                    Log.d(TAG, "Account created with UID: " + this.account.getUid());
+                    //put all other activity code in this
                 })
                 .exceptionally(throwable -> {
                     // Handle failure
                     Log.e(TAG, "Failed to create account", throwable);
                     return null;
                 });
-//        Log.d("Account UID", account.getUid());
     }
 
 
