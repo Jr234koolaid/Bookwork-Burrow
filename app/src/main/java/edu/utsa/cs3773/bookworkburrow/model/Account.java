@@ -1,25 +1,50 @@
 package edu.utsa.cs3773.bookworkburrow.model;
 
 public class Account {
-    String uid;
-    String name;
-    enum Status {Teacher, Student, Other};
+
+    private final String m_UID;
+
+    private String  m_email;
+    private String  m_firstName;
+    private String  m_lastName;
+
+    enum Status { Teacher, Student, Other };
     //ArrayList<Book> booksOwned;
     //ArrayList<Book> favorites;
     //ArrayList<Order> orderHistory;
     //ArrayList<Review> reviewsMade;
     int readingGoal;
 
-    public Account(String uid){
-        this.uid = uid;
+    public Account(String _UID) {
+        m_UID = _UID;
     }
 
-    public String getName() {
-        return name;
+    public String getUID() {
+        return m_UID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getEmail() {
+        return m_email;
+    }
+
+    public String getFirstName() {
+        return m_firstName;
+    }
+
+    public String getLastName() {
+        return m_lastName;
+    }
+
+    public void setEmail(String _email) {
+        m_email = _email;
+    }
+
+    public void setFirstName(String _firstName) {
+        m_firstName = _firstName;
+    }
+
+    public void setLastName(String _lastName) {
+        m_lastName = _lastName;
     }
 
     public int getReadingGoal() {
@@ -29,13 +54,4 @@ public class Account {
     public void setReadingGoal(int readingGoal) {
         this.readingGoal = readingGoal;
     }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
 }

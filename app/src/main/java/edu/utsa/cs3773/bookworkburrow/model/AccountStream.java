@@ -14,12 +14,12 @@ public class AccountStream {
 
     private final File m_file;
 
-    public AccountStream(File _root, String _usernameHash) throws IOException {
+    public AccountStream(File _root, String _name) throws IOException {
 
-        Path accountPath = Files.createDirectories(Paths.get(_root.getPath(), "account"));
-        Path path = Paths.get(accountPath.toString(), (_usernameHash + ".bwa"));
+        Path accountDirectory = Files.createDirectories(Paths.get(_root.getPath(), "account"));
+        Path accountPath = Paths.get(accountDirectory.toString(), (_name + ".bwa"));
 
-        m_file = new File(path.toString());
+        m_file = new File(accountPath.toString());
         m_file.createNewFile();
     }
 
@@ -27,11 +27,17 @@ public class AccountStream {
 
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(m_file))) {
 
-            String username = inputStream.readUTF();
-            String password = inputStream.readUTF();
-            String name = inputStream.readUTF();
+            if (inputStream.available() <= 0) return null;
 
-            Account account = new Account(username, password, name);
+            String UID = inputStream.readUTF();
+            String email = inputStream.readUTF();
+            String firstName = inputStream.readUTF();
+            String lastName = inputStream.readUTF();
+
+            Account account = new Account(UID);
+            account.setEmail(email);
+            account.setFirstName(firstName);
+            account.setLastName(lastName);
 
             return account;
         }
@@ -41,9 +47,10 @@ public class AccountStream {
 
         try (DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(m_file))) {
 
-            outputStream.writeUTF(_account.getUsername());
-            outputStream.writeUTF(_account.getPassword());
-            outputStream.writeUTF(_account.getName());
+            outputStream.writeUTF(_account.getUID());
+            outputStream.writeUTF(_account.getEmail());
+            outputStream.writeUTF(_account.getFirstName());
+            outputStream.writeUTF(_account.getLastName());
         }
     }
 

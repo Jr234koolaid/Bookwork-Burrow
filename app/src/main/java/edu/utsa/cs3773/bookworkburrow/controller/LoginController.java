@@ -9,20 +9,29 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
+import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
 public class LoginController implements View.OnClickListener {
 
     private final AppCompatActivity                 m_activity;
+    private final ActivityResultLauncher<Intent>    m_homeLauncher;
     private final ActivityResultLauncher<Intent>    m_forgotPasswordLauncher;
     private final ActivityResultLauncher<Intent>    m_signupLauncher;
 
     public LoginController(AppCompatActivity _activity) {
 
         m_activity = _activity;
+        m_homeLauncher = m_activity.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {}
+        );
         m_forgotPasswordLauncher = m_activity.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {}
@@ -53,15 +62,19 @@ public class LoginController implements View.OnClickListener {
 
             try {
 
-                if (AccountDatabase.getInstance().authenticate(m_activity.getDataDir(), email, password)) {
+                String UID = AccountDatabase.getInstance().authenticate(email, password);
+                if (UID != null) {
                     // TODO (Juan): Intent stuff here
+                    Intent intent = new Intent(m_activity, MainActivity.class);
 
-                    // TODO (Juan): Remove
-                    Toast.makeText(m_activity, "Authenticated", Toast.LENGTH_LONG).show();
+                    m_homeLauncher.launch(intent);
 
                 } else {
-                    Toast.makeText(m_activity, "Invalid username or password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(m_activity, "Account information is invalid", Toast.LENGTH_LONG).show();
                 }
+
+            } catch (FirebaseAuthInvalidCredentialsException | FirebaseAuthInvalidUserException e) {
+                Toast.makeText(m_activity, "Invalid username or password", Toast.LENGTH_LONG).show();
 
             } catch (Exception e) {
                 Toast.makeText(m_activity, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
