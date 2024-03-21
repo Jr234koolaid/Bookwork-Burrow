@@ -9,10 +9,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BookworkBurrow"
-        tools:targetApi="31">
+        android:theme="@style/Theme.BookworkBurrow">
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.CartActivity"
@@ -24,7 +32,7 @@
             android:name=".view.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
