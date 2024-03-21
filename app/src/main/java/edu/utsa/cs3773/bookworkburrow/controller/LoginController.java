@@ -64,8 +64,9 @@ public class LoginController implements View.OnClickListener {
 
                 String UID = AccountDatabase.getInstance().authenticate(email, password);
                 if (UID != null) {
-                    // TODO (Juan): Intent stuff here
+
                     Intent intent = new Intent(m_activity, MainActivity.class);
+                    intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
 
                     m_homeLauncher.launch(intent);
 

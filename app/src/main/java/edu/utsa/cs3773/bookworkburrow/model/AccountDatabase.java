@@ -11,9 +11,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.File;
-import java.io.IOException;
-
 public class AccountDatabase {
 
     private static AccountDatabase Instance;
@@ -28,41 +25,37 @@ public class AccountDatabase {
 
     private AccountDatabase() { }
 
-    public String add(String _email, String _password, String _firstName, String _lastName, File _dataDirectory) throws FirebaseAuthWeakPasswordException,
-                                                                                                                        FirebaseAuthInvalidCredentialsException,
-                                                                                                                        FirebaseAuthUserCollisionException,
-                                                                                                                        IOException {
+    public String add(String _email, String _password) throws FirebaseAuthWeakPasswordException,
+                                                              FirebaseAuthInvalidCredentialsException,
+                                                              FirebaseAuthUserCollisionException {
 
-        // (Juan) Get user from firebase
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
         Task<AuthResult> createUserTask = fAuth.createUserWithEmailAndPassword(_email, _password);
         if (!createUserTask.isSuccessful()) return null;
 
         FirebaseUser fUser = fAuth.getCurrentUser();
-        if (fUser == null) return null;
+        return (fUser == null) ? null : fUser.getUid();
+    }
 
-        String UID = fUser.getUid();
-        String emailHash = String.valueOf(_email.hashCode());
+    public void remove(String _email, AppCompatActivity _activity) {
+    }
 
-        try {
+    public String authenticate(String _email, String _password) throws FirebaseAuthInvalidUserException,
+                                                                       FirebaseAuthInvalidCredentialsException {
 
-            // Writes the account to a file
-            Account account = new Account(UID);
-            account.setEmail(_email);
-            account.setFirstName(_firstName);
-            account.setLastName(_lastName);
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
-            AccountStream accountStream = new AccountStream(_dataDirectory, emailHash);
-            accountStream.write(account);
+        Task<AuthResult> signInTask = fAuth.signInWithEmailAndPassword(_email, _password);
+        if (!signInTask.isSuccessful()) return null;
 
-            return UID;
+        FirebaseUser fUser = fAuth.getCurrentUser();
+        return (fUser == null) ? null : fUser.getUid();
+    }
 
-        } catch (IOException e) {
-            throw new IOException(e);
-        }
+} // class AccountDatabase
 
-        // (Juan) This writes the account to a local database file
+// (Juan) This writes the account to a local database file
 //        Path accountsPath = Paths.get(_dataDirectory.getPath(), "accounts.bwd");
 //
 //        File fDatabase = new File(accountsPath.toString());
@@ -96,25 +89,8 @@ public class AccountDatabase {
 //
 //            return UID;
 //        }
-    }
 
-    public void remove(String _email, AppCompatActivity _activity) {
-
-
-    }
-
-    public String authenticate(String _email, String _password) throws  FirebaseAuthInvalidUserException,
-                                                                        FirebaseAuthInvalidCredentialsException {
-
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-
-        Task<AuthResult> signInTask = fAuth.signInWithEmailAndPassword(_email, _password);
-        if (!signInTask.isSuccessful()) return null;
-
-        FirebaseUser fUser = fAuth.getCurrentUser();
-        return (fUser == null) ? null : fUser.getUid();
-
-        // (Juan) This stuff could be removed when we switch to an actual database
+// (Juan) This stuff could be removed when we switch to an actual database
 //        Path accountsPath = Paths.get(_dataDirectory.getPath(), "accounts.bwd");
 //
 //        File fDatabase = new File(accountsPath.toString());
@@ -137,6 +113,3 @@ public class AccountDatabase {
 //
 //            } return false;
 //        }
-    }
-
-} // class AccountDatabase

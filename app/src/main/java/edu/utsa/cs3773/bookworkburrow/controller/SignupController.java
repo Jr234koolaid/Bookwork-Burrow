@@ -14,7 +14,9 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
+import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 
 public class SignupController implements View.OnClickListener {
@@ -55,10 +57,19 @@ public class SignupController implements View.OnClickListener {
 
             try {
 
-                String UID = AccountDatabase.getInstance().add(email, password, firstName, lastName, m_activity.getDataDir());
+                String UID = AccountDatabase.getInstance().add(email, password);
                 if (UID != null) {
-                    // TODO (Juan): Intent stuff here
+
+                    Account account = new Account(UID);
+                    account.setEmail(email);
+                    account.setFirstName(firstName);
+                    account.setLastName(lastName);
+
+                    AccountStream stream = new AccountStream(account, m_activity);
+                    stream.write();
+
                     Intent intent = new Intent(m_activity, MainActivity.class);
+                    intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
 
                     m_homeLauncher.launch(intent);
 

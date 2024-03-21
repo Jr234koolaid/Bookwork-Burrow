@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.LoginController;
-import edu.utsa.cs3773.bookworkburrow.controller.SignupController;
 
 public class LoginActivity extends AppCompatActivity {
 
