@@ -3,20 +3,19 @@ package edu.utsa.cs3773.bookworkburrow.controller;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import java.io.IOException;
 
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
+import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
+import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 
 public class SignupController implements View.OnClickListener {
@@ -37,57 +36,43 @@ public class SignupController implements View.OnClickListener {
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.signup_button_signup) {
+        if (viewID == R.id.signup_button_create_account) {
 
             EditText emailEditText = m_activity.findViewById(R.id.signup_edit_email);
             EditText firstnameEditText = m_activity.findViewById(R.id.signup_edit_firstname);
             EditText lastnameEditText = m_activity.findViewById(R.id.signup_edit_lastname);
             EditText passwordEditText = m_activity.findViewById(R.id.signup_edit_password);
 
-            String email = emailEditText.getText().toString();
-            String firstName = firstnameEditText.getText().toString();
-            String lastName = lastnameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
-
-            if (email.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
-
-                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
-                return;
-            }
-
             try {
 
-                String UID = AccountDatabase.getInstance().add(email, password);
-                if (UID != null) {
+                String email = InputChecker.checkEmail(emailEditText);
+                String firstName = InputChecker.checkName(firstnameEditText);
+                String lastName = InputChecker.checkName(lastnameEditText);
+                String password = InputChecker.checkPassword(passwordEditText);
 
-                    Account account = new Account(UID);
-                    account.setEmail(email);
-                    account.setFirstName(firstName);
-                    account.setLastName(lastName);
+                AccountDatabase accountDatabase = AccountDatabase.getInstance();
+                accountDatabase.setContext(m_activity);
 
-                    AccountStream stream = new AccountStream(account, m_activity);
-                    stream.write();
+                String UID = accountDatabase.addAccount(email, password);
 
-                    Intent intent = new Intent(m_activity, MainActivity.class);
-                    intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
+                Account account = new Account(UID);
+                account.setEmail(email);
+                account.setFirstName(firstName);
+                account.setLastName(lastName);
 
-                    m_homeLauncher.launch(intent);
+                AccountStream stream = new AccountStream(account, m_activity);
+                stream.write();
 
-                } else {
-                    Toast.makeText(m_activity, "Account information is invalid", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(m_activity, MainActivity.class);
+                intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
 
-            } catch (FirebaseAuthWeakPasswordException e) {
-                Toast.makeText(m_activity, e.getReason(), Toast.LENGTH_LONG).show();
+                m_homeLauncher.launch(intent);
 
-            } catch (FirebaseAuthInvalidCredentialsException e) {
-                Toast.makeText(m_activity, "Email is not suitable", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
 
-            } catch (FirebaseAuthUserCollisionException e) {
-                Toast.makeText(m_activity, "Email already in use", Toast.LENGTH_LONG).show();
-
-            } catch (Exception e) {
-                Toast.makeText(m_activity, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
+                ErrorDialog errorDialog = ErrorDialog.getInstance();
+                errorDialog.setContext(m_activity);
+                errorDialog.display(e.getMessage());
             }
         }
     }

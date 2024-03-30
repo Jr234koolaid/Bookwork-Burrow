@@ -1,12 +1,19 @@
 package edu.utsa.cs3773.bookworkburrow.controller;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
+import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
+import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
+import edu.utsa.cs3773.bookworkburrow.view.ResetPasswordActivity;
 
 public class ResetPasswordController implements View.OnClickListener {
 
@@ -25,26 +32,31 @@ public class ResetPasswordController implements View.OnClickListener {
             EditText newPasswordEditText = m_activity.findViewById(R.id.password_reset_edit_new_password);
             EditText confirmPasswordEditText = m_activity.findViewById(R.id.password_reset_edit_confirm_password);
 
-            String newPassword = newPasswordEditText.getText().toString();
-            String confirmPassword = confirmPasswordEditText.getText().toString();
+            try {
 
-            if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                String newPassword = InputChecker.checkPassword(newPasswordEditText);
+                String confirmPassword = InputChecker.checkPassword(confirmPasswordEditText);
 
-                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
-                return;
-            }
+                if (!newPassword.equals(confirmPassword)) throw new IOException("Passwords do not match");
 
-            if (confirmPassword.equals(newPassword)) {
+                Intent intent = m_activity.getIntent();
 
-                // TODO (Juan): Have to get information from intent
-                // TODO (Juan): Enter new password to database
+                String email = intent.getStringExtra(ResetPasswordActivity.INTENT_EMAIL);
+                if (email == null) throw new IOException();
+
+                AccountDatabase accountDatabase = AccountDatabase.getInstance();
+                accountDatabase.setContext(m_activity);
+                accountDatabase.updateAccount(email, newPassword);
 
                 Toast.makeText(m_activity, "Password has been successfully reset", Toast.LENGTH_LONG).show();
 
                 m_activity.finish();
 
-            } else {
-                Toast.makeText(m_activity, "Passwords do not match", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+
+                ErrorDialog errorDialog = ErrorDialog.getInstance();
+                errorDialog.setContext(m_activity);
+                errorDialog.display(e.getMessage());
             }
         }
     }

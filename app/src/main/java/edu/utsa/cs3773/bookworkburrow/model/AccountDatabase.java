@@ -2,14 +2,15 @@ package edu.utsa.cs3773.bookworkburrow.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 
 public class AccountDatabase {
 
@@ -23,93 +24,176 @@ public class AccountDatabase {
         } return Instance;
     }
 
-    private AccountDatabase() { }
+    private String m_root;
 
-    public String add(String _email, String _password) throws FirebaseAuthWeakPasswordException,
-                                                              FirebaseAuthInvalidCredentialsException,
-                                                              FirebaseAuthUserCollisionException {
-
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-
-        Task<AuthResult> createUserTask = fAuth.createUserWithEmailAndPassword(_email, _password);
-        if (!createUserTask.isSuccessful()) return null;
-
-        FirebaseUser fUser = fAuth.getCurrentUser();
-        return (fUser == null) ? null : fUser.getUid();
+    private AccountDatabase() {
     }
 
-    public void remove(String _email, AppCompatActivity _activity) {
+    public void setContext(AppCompatActivity _context) {
+        m_root = _context.getDataDir().toPath().toString();
     }
 
-    public String authenticate(String _email, String _password) throws FirebaseAuthInvalidUserException,
-                                                                       FirebaseAuthInvalidCredentialsException {
+    public String addAccount(String _email, String _password) throws IOException {
 
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        if (m_root == null) throw new IOException();
 
-        Task<AuthResult> signInTask = fAuth.signInWithEmailAndPassword(_email, _password);
-        if (!signInTask.isSuccessful()) return null;
+        // (Juan) This writes the account to a local database file
+        int emailHash = _email.hashCode();
+        int passwordHash = _password.hashCode();
 
-        FirebaseUser fUser = fAuth.getCurrentUser();
-        return (fUser == null) ? null : fUser.getUid();
+        Path accountsPath = Paths.get(m_root, "accounts.bwd");
+
+        File fDatabase = new File(accountsPath.toString());
+        fDatabase.createNewFile();
+
+        try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
+
+            while (inputStream.available() > 0) {
+
+                String email = inputStream.readUTF();
+                String token = inputStream.readUTF();
+                //String check = inputStream.readUTF();
+
+                if (emailHash == Integer.parseInt(email)) throw new IOException("Email already in use");
+            }
+
+        } return this.update(fDatabase, emailHash, passwordHash);
+    }
+
+    public void updateAccount(String _email, String _password) throws IOException {
+
+        // (Juan) This reads from the local database file
+        int emailHash = _email.hashCode();
+        int passwordHash = _password.hashCode();
+
+        Path accountsPath = Paths.get(m_root, "accounts.bwd");
+
+        File fDatabase = new File(accountsPath.toString());
+        if (!fDatabase.createNewFile()) {
+
+            try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
+
+                while (inputStream.available() > 0) {
+
+                    String email = inputStream.readUTF();
+                    String token = inputStream.readUTF();
+                    //String check = inputStream.readUTF();
+
+                    if (emailHash == Integer.parseInt(email)) {
+
+                        this.update(fDatabase, emailHash, passwordHash);
+                        return;
+                    }
+                }
+            }
+
+        } throw new IOException("Invalid email");
+    }
+
+    public boolean findAccount(String _email) throws IOException {
+
+        int emailHash = _email.hashCode();
+
+        Path accountsPath = Paths.get(m_root, "accounts.bwd");
+
+        File fDatabase = new File(accountsPath.toString());
+        if (!fDatabase.createNewFile()) {
+
+            try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
+
+                while (inputStream.available() > 0) {
+
+                    String email = inputStream.readUTF();
+                    String token = inputStream.readUTF();
+                    //String check = inputStream.readUTF();
+
+                    if (emailHash == Integer.parseInt(email)) return true;
+                }
+            }
+
+        } return false;
+    }
+
+    public void removeAccount(String _email) throws IOException {
+    }
+
+    public String authenticate(String _email, String _password) throws IOException {
+
+        if (m_root == null) throw new IOException();
+
+        // (Juan) This reads from the local database file
+        int emailHash = _email.hashCode();
+        int passwordHash = _password.hashCode();
+
+        Path accountsPath = Paths.get(m_root, "accounts.bwd");
+
+        File fDatabase = new File(accountsPath.toString());
+        if (!fDatabase.createNewFile()) {
+
+            try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
+
+                while (inputStream.available() > 0) {
+
+                    // TODO (Juan): REMOVE
+                    String week = LocalDate.now().getDayOfWeek().toString();
+
+                    String email = inputStream.readUTF();
+                    String token = inputStream.readUTF();
+                    //String check = inputStream.readUTF();
+
+                    if (emailHash == Integer.parseInt(email)) {
+
+                        long rightValue = calculateRightHalf(emailHash);
+                        long leftValue = calculateLeftHalf(passwordHash);
+
+                        if ((rightValue + leftValue) == Long.parseLong(token)) return email;
+                        break;
+                    }
+                }
+            }
+
+        } throw new IOException("Invalid email or password");
+    }
+
+    private long calculateRightHalf(int _emailHash) {
+        return ((long) (_emailHash | 0xC0000000) << 32);
+    }
+
+    private long calculateLeftHalf(int _passwordHash) {
+        return ((long) _passwordHash ^ (long) (_passwordHash & 0xC0000000));
+    }
+
+    private String update(File _database, int _emailHash, int _passwordHash) throws IOException {
+
+        try (DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(_database))) {
+
+            long rightValue = this.calculateRightHalf(_emailHash);
+            long leftValue = this.calculateLeftHalf(_passwordHash);
+
+            String email = String.valueOf(_emailHash);
+            String token = String.valueOf(rightValue + leftValue);
+
+            outputStream.writeUTF(email);
+            outputStream.writeUTF(token);
+
+            return email;
+        }
     }
 
 } // class AccountDatabase
 
-// (Juan) This writes the account to a local database file
-//        Path accountsPath = Paths.get(_dataDirectory.getPath(), "accounts.bwd");
+//        FirebaseAuth fAuth = FirebaseAuth.getInstance();
 //
-//        File fDatabase = new File(accountsPath.toString());
-//        fDatabase.createNewFile();
+//        Task<AuthResult> createUserTask = fAuth.createUserWithEmailAndPassword(_email, _password);
+//        if (!createUserTask.isSuccessful()) return null;
 //
-//        try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
-//
-//            while (inputStream.available() > 0) {
-//
-//                String email = inputStream.readUTF();
-//                String usernameHash = inputStream.readUTF();
-//
-//                if (_email.equals(email)) return null;
-//            }
-//        }
-//
-//        String usernameHash = String.valueOf(_username.hashCode());
-//
-//        try (DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(fDatabase))) {
-//            outputStream.writeUTF(_email);
-//            outputStream.writeUTF(usernameHash);
-//
-//            // Writes the account to a file
-//            Account account = new Account(UID);
-//            account.setEmail(_email);
-//            account.setUsername(_username);
-//            account.setPassword(_password);
-//
-//            AccountStream accountStream = new AccountStream(_dataDirectory, usernameHash);
-//            accountStream.write(account);
-//
-//            return UID;
-//        }
+//        FirebaseUser fUser = fAuth.getCurrentUser();
+//        return (fUser == null) ? null : fUser.getUid();
 
-// (Juan) This stuff could be removed when we switch to an actual database
-//        Path accountsPath = Paths.get(_dataDirectory.getPath(), "accounts.bwd");
+//        FirebaseAuth fAuth = FirebaseAuth.getInstance();
 //
-//        File fDatabase = new File(accountsPath.toString());
-//        if (fDatabase.createNewFile()) return false;
+//        Task<AuthResult> signInTaskResult = fAuth.signInWithEmailAndPassword(_email, _password);
+//        FirebaseUser fUser = fAuth.getCurrentUser();
+//        if (!signInTaskResult.isSuccessful() || (fUser == null)) throw new IOException("Unable to sign in");
 //
-//        try (DataInputStream inputStream = new DataInputStream(new FileInputStream(fDatabase))) {
-//
-//            while (inputStream.available() > 0) {
-//
-//                String email = inputStream.readUTF();
-//                String usernameHash = inputStream.readUTF();
-//
-//                if (_email.equals(email)) {
-//
-//                    AccountStream accountStream = new AccountStream(_dataDirectory, usernameHash);
-//                    Account account = accountStream.read();
-//
-//                    return _password.equals(account.getPassword());
-//                }
-//
-//            } return false;
-//        }
+//        return fUser.getUid();

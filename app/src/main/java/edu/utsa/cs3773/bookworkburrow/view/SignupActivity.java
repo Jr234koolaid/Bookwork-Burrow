@@ -18,7 +18,7 @@ public class SignupActivity extends AppCompatActivity {
 
         SignupController signupController = new SignupController(this);
 
-        Button signupButton = findViewById(R.id.signup_button_signup);
+        Button signupButton = findViewById(R.id.signup_button_create_account);
         signupButton.setOnClickListener(signupController);
     }
 

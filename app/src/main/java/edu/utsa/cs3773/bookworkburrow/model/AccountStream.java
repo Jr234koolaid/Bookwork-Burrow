@@ -19,10 +19,8 @@ public class AccountStream {
 
     public AccountStream(Account _account, AppCompatActivity _context) throws IOException {
 
-        String UIDHash = String.valueOf(_account.getUID().hashCode());
-
         Path accountDirectory = Files.createDirectories(Paths.get(_context.getDataDir().getPath(), "account"));
-        Path accountPath = Paths.get(accountDirectory.toString(), (UIDHash + ".bwa"));
+        Path accountPath = Paths.get(accountDirectory.toString(), (_account.getUID() + ".bwa"));
 
         File accountFile = new File(accountPath.toString());
         accountFile.createNewFile();
@@ -35,14 +33,9 @@ public class AccountStream {
 
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(m_file))) {
 
-            if (inputStream.available() <= 0) return;
-
-            String UID = inputStream.readUTF();
             String email = inputStream.readUTF();
             String firstName = inputStream.readUTF();
             String lastName = inputStream.readUTF();
-
-            if (!m_account.getUID().equals(UID)) return;
 
             m_account.setEmail(email);
             m_account.setFirstName(firstName);
@@ -54,7 +47,6 @@ public class AccountStream {
 
         try (DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(m_file))) {
 
-            outputStream.writeUTF(m_account.getUID());
             outputStream.writeUTF(m_account.getEmail());
             outputStream.writeUTF(m_account.getFirstName());
             outputStream.writeUTF(m_account.getLastName());
