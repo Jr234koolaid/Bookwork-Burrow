@@ -3,13 +3,17 @@ package edu.utsa.cs3773.bookworkburrow.controller;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
+import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
+import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
 import edu.utsa.cs3773.bookworkburrow.view.ResetPasswordActivity;
 
 public class ForgotPasswordController implements View.OnClickListener {
@@ -33,24 +37,29 @@ public class ForgotPasswordController implements View.OnClickListener {
 
             EditText emailEditText = m_activity.findViewById(R.id.forgot_password_edit_email);
 
-            String email = emailEditText.getText().toString();
+            try {
 
-            if (email.isEmpty()) {
+                String email = InputChecker.checkEmail(emailEditText);
 
-                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
-                return;
-            }
+                AccountDatabase accountDatabase = AccountDatabase.getInstance();
+                accountDatabase.setContext(m_activity);
 
-            // TODO (Juan): Validate
-            if (true) {
+                if (accountDatabase.findAccount(email)) {
 
-                // TODO (Juan): Intent stuff here
-                Intent intent = new Intent(m_activity, ResetPasswordActivity.class);
+                    Intent intent = new Intent(m_activity, ResetPasswordActivity.class);
+                    intent.putExtra(ResetPasswordActivity.INTENT_EMAIL, email);
 
-                m_resetPasswordLauncher.launch(intent);
+                    m_resetPasswordLauncher.launch(intent);
 
-            } else  {
-                Toast.makeText(m_activity, "Invalid email", Toast.LENGTH_LONG).show();
+                } else {
+                    throw new IOException("Invalid email");
+                }
+
+            } catch (IOException e) {
+
+                ErrorDialog errorDialog = ErrorDialog.getInstance();
+                errorDialog.setContext(m_activity);
+                errorDialog.display(e.getMessage());
             }
         }
     }

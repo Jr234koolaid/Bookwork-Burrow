@@ -3,17 +3,17 @@ package edu.utsa.cs3773.bookworkburrow.controller;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import java.io.IOException;
 
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
+import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
+import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
@@ -51,34 +51,26 @@ public class LoginController implements View.OnClickListener {
             EditText emailEditText = m_activity.findViewById(R.id.login_edit_email);
             EditText passwordEditText = m_activity.findViewById(R.id.login_edit_password);
 
-            String email = emailEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
-
-            if (email.isEmpty() || password.isEmpty()) {
-
-                Toast.makeText(m_activity, "One or more fields are empty", Toast.LENGTH_LONG).show();
-                return;
-            }
-
             try {
 
-                String UID = AccountDatabase.getInstance().authenticate(email, password);
-                if (UID != null) {
+                String email = InputChecker.checkEmail(emailEditText);
+                String password = InputChecker.checkPassword(passwordEditText);
 
-                    Intent intent = new Intent(m_activity, MainActivity.class);
-                    intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
+                AccountDatabase accountDatabase = AccountDatabase.getInstance();
+                accountDatabase.setContext(m_activity);
 
-                    m_homeLauncher.launch(intent);
+                String UID = accountDatabase.authenticate(email, password);
 
-                } else {
-                    Toast.makeText(m_activity, "Account information is invalid", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(m_activity, MainActivity.class);
+                intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
 
-            } catch (FirebaseAuthInvalidCredentialsException | FirebaseAuthInvalidUserException e) {
-                Toast.makeText(m_activity, "Invalid username or password", Toast.LENGTH_LONG).show();
+                m_homeLauncher.launch(intent);
 
-            } catch (Exception e) {
-                Toast.makeText(m_activity, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+
+                ErrorDialog errorDialog = ErrorDialog.getInstance();
+                errorDialog.setContext(m_activity);
+                errorDialog.display(e.getMessage());
             }
 
         } else if (viewID == R.id.login_button_forgot_password) {
