@@ -14,7 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import edu.utsa.cs3773.bookworkburrow.view.model.Account;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
 
 public class FirebaseUtil {
 
@@ -53,7 +53,7 @@ public class FirebaseUtil {
      */
     public static void deleteUser(Account account){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(account.getUid()) // Use the actual document ID
+        db.collection("users").document(account.getUID()) // Use the actual document ID
                 .delete()
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully deleted!"))
                 .addOnFailureListener(e -> Log.w(TAG, "Error deleting document", e));
@@ -61,7 +61,7 @@ public class FirebaseUtil {
 
     public static void updateUser(Account account){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(account.getUid())
+        db.collection("users").document(account.getUID())
                 .update("last", "Lovelace-Byron")
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
                 .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
