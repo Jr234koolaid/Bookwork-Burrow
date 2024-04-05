@@ -15,7 +15,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
+import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 
 public class SignupController implements View.OnClickListener {
@@ -45,10 +45,10 @@ public class SignupController implements View.OnClickListener {
 
             try {
 
-                String email = InputChecker.checkEmail(emailEditText);
-                String firstName = InputChecker.checkName(firstnameEditText);
-                String lastName = InputChecker.checkName(lastnameEditText);
-                String password = InputChecker.checkPassword(passwordEditText);
+                String email = Input.checkEmail(emailEditText);
+                String firstName = Input.checkName(firstnameEditText);
+                String lastName = Input.checkName(lastnameEditText);
+                String password = Input.checkPassword(passwordEditText);
 
                 AccountDatabase accountDatabase = AccountDatabase.getInstance();
                 accountDatabase.setContext(m_activity);

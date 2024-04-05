@@ -13,9 +13,10 @@ import java.io.IOException;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
+import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
+import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
 public class LoginController implements View.OnClickListener {
 
@@ -52,8 +53,8 @@ public class LoginController implements View.OnClickListener {
 
             try {
 
-                String email = InputChecker.checkEmail(emailEditText);
-                String password = InputChecker.checkPassword(passwordEditText);
+                String email = Input.checkEmail(emailEditText);
+                String password = Input.checkPassword(passwordEditText);
 
                 AccountDatabase accountDatabase = AccountDatabase.getInstance();
                 accountDatabase.setContext(m_activity);

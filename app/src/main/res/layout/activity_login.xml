@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/login_worm" />
+        app:srcCompat="@drawable/bookworm_logo" />
 
     <TextView style="@style/login_header_text"
         android:id="@+id/login_text_header"
