@@ -25,31 +25,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         LoginController loginController = new LoginController(this);
 
-        // Initialize views
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
         signupButton = findViewById(R.id.signup_button);
-
-        // Set up the button click listener
         loginButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
-            // Use the loginController to perform the login
             loginController.logIn(email, password).thenAccept(account -> {
-                        // Handle success
                         Toast.makeText(this, "Signed into account with UID: " + account.getUID(), Toast.LENGTH_LONG).show();
-                        //put all other activity code in this
                     })
                     .exceptionally(throwable -> {
-                        // Handle failure
                         Log.e(TAG, "Failed to sign into account", throwable);
                         return null;
                     });;
         });
         signupButton.setOnClickListener(view -> {
-            // Navigate to the SignUpActivity
-            Intent signUpIntent = new Intent(LoginActivity.this, SignupActivity.class);
+            Intent signUpIntent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(signUpIntent);
             finish();
         });
