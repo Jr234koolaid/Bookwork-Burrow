@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginActivity">
+    android:background="@drawable/background">
 
     <ImageView
         android:id="@+id/logo"
@@ -11,17 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp"
-        android:src="@drawable/bookworm_logo"/> <!-- Replace with your logo drawable -->
+        android:src="@drawable/bookworm_logo"/>
 
     <TextView
-        style="@style/login_header_text"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Bookworm Burrow"
+        android:text="Sign Up"
+        android:textSize="24sp"
         android:textStyle="bold"/>
 
     <EditText
@@ -29,13 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/title"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="12dp"
-        android:background="@drawable/edittext_background"
-        android:inputType="text"/>
+        android:background="@drawable/edittext_background"/>
 
     <EditText
         android:id="@+id/password"
@@ -46,33 +45,43 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@drawable/edittext_background"
-        android:inputType="textPassword"/>
+        android:background="@drawable/edittext_background"/>
 
-    <Button
-        android:id="@+id/login_button"
+    <EditText
+        android:id="@+id/confirm_password"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/password"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Login"
-        android:background="@drawable/button_background"
-        android:textColor="#FFFFFF"/>
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:background="@drawable/edittext_background"/>
 
     <Button
         android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/login_button"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/confirm_password"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="Sign Up"
         android:background="@drawable/button_background"
         android:textColor="#FFFFFF"/>
 
+    <TextView
+        android:id="@+id/already_have_account_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Already have an account? Log in"
+        android:textSize="16sp"/>
 
 </RelativeLayout>
