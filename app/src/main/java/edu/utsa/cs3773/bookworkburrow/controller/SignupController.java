@@ -11,32 +11,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
+import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
 import edu.utsa.cs3773.bookworkburrow.model.Input;
-import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
-import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
-public class LoginController implements View.OnClickListener {
+public class SignupController implements View.OnClickListener {
 
     private final AppCompatActivity                 m_activity;
     private final ActivityResultLauncher<Intent>    m_homeLauncher;
-    private final ActivityResultLauncher<Intent>    m_forgotPasswordLauncher;
-    private final ActivityResultLauncher<Intent>    m_signupLauncher;
 
-    public LoginController(AppCompatActivity _activity) {
+    public SignupController(AppCompatActivity _activity) {
 
         m_activity = _activity;
         m_homeLauncher = m_activity.registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {}
-        );
-        m_forgotPasswordLauncher = m_activity.registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {}
-        );
-        m_signupLauncher = m_activity.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {}
         );
@@ -46,20 +36,32 @@ public class LoginController implements View.OnClickListener {
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.login_button_login) {
+        if (viewID == R.id.signup_button_create_account) {
 
-            EditText emailEditText = m_activity.findViewById(R.id.login_edit_email);
-            EditText passwordEditText = m_activity.findViewById(R.id.login_edit_password);
+            EditText emailEditText = m_activity.findViewById(R.id.signup_edit_email);
+            EditText firstnameEditText = m_activity.findViewById(R.id.signup_edit_firstname);
+            EditText lastnameEditText = m_activity.findViewById(R.id.signup_edit_lastname);
+            EditText passwordEditText = m_activity.findViewById(R.id.signup_edit_password);
 
             try {
 
                 String email = Input.checkEmail(emailEditText);
+                String firstName = Input.checkName(firstnameEditText);
+                String lastName = Input.checkName(lastnameEditText);
                 String password = Input.checkPassword(passwordEditText);
 
                 AccountDatabase accountDatabase = AccountDatabase.getInstance();
                 accountDatabase.setContext(m_activity);
 
-                String UID = accountDatabase.authenticate(email, password);
+                String UID = accountDatabase.addAccount(email, password);
+
+                Account account = new Account(UID);
+                account.setEmail(email);
+                account.setFirstName(firstName);
+                account.setLastName(lastName);
+
+                AccountStream stream = new AccountStream(account, m_activity);
+                stream.write();
 
                 Intent intent = new Intent(m_activity, MainActivity.class);
                 intent.putExtra(MainActivity.INTENT_ACCOUNT_UID, UID);
@@ -72,13 +74,7 @@ public class LoginController implements View.OnClickListener {
                 errorDialog.setContext(m_activity);
                 errorDialog.display(e.getMessage());
             }
-
-        } else if (viewID == R.id.login_button_forgot_password) {
-            m_forgotPasswordLauncher.launch(new Intent(m_activity, ForgotPasswordActivity.class));
-
-        } else if (viewID == R.id.login_button_signup) {
-            m_signupLauncher.launch(new Intent(m_activity, SignupActivity.class));
         }
     }
 
-} // class LoginController
+} // class SignupController
