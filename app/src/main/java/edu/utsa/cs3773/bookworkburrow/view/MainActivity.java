@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        //sign in
+        FirebaseUser user = auth.getCurrentUser();
+
         //handle getting input for email and password from view
         String email = "user5@example.com";
         String password = "password123";
@@ -42,14 +45,19 @@ public class MainActivity extends AppCompatActivity
                     // Handle success
                     this.account = account;
                     Log.d(TAG, "Account created with UID: " + this.account.getUid());
+
+
                     //put all other activity code in this
                 })
                 .exceptionally(throwable -> {
                     // Handle failure
                     Log.e(TAG, "Failed to create account", throwable);
+                    //ui stuff to let the user know create user failed
                     return null;
                 });
     }
+
+
 
 
 
