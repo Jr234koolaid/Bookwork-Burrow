@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "An unexpected error has occurred", Toast.LENGTH_LONG).show();
         }
 
+//        if(FirebaseUtil.isLoggedIn()){
+//            Toast.makeText(this, "Already Logged in!", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Intent nextActivityIntent = new Intent(this, LoginActivity.class);
+//            startActivity(nextActivityIntent);
+//            finish();
+//        }
+
 //        mAuth = FirebaseAuth.getInstance();
 
         //String email = "user3@example.com";
