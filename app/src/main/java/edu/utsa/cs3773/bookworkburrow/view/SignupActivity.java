@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
