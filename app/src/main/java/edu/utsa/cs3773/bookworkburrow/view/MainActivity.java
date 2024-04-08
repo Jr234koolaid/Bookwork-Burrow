@@ -1,27 +1,21 @@
-// app\java\view\MainActivity.java
-
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import static android.content.ContentValues.TAG;
+import static edu.utsa.cs3773.bookworkburrow.FirebaseUtil.createUser;
 
-import static edu.utsa.cs3773.bookworkburrow.model.FirebaseUtil.createUser;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.concurrent.Executor;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.view.model.Account;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
+import edu.utsa.cs3773.bookworkburrow.controller.RouteController;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -32,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         //sign in
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity
                 .thenAccept(account -> {
                     // Handle success
                     this.account = account;
-                    Log.d(TAG, "Account created with UID: " + this.account.getUid());
+                    Log.d(TAG, "Account created with UID: " + this.account.getUID());
 
 
                     //put all other activity code in this
@@ -55,14 +50,19 @@ public class MainActivity extends AppCompatActivity
                     //ui stuff to let the user know create user failed
                     return null;
                 });
+
+        RouteController rc = new RouteController();
+        if(rc.isLoggedIn()){
+            Toast.makeText(this, "Already Logged in!", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent nextActivityIntent = new Intent(this, LoginActivity.class);
+            startActivity(nextActivityIntent);
+            finish();
+        }
     }
 
 
 
+}
 
-
-
-
-
-
-} // class MainActivity
+ // class MainActivity
