@@ -4,9 +4,9 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
-public class InputChecker {
+public class Input {
 
-    private InputChecker() {
+    private Input() {
     }
 
     public static String checkEmail(EditText _emailText) throws IOException {
