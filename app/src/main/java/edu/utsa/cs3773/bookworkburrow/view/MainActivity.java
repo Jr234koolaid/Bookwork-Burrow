@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+      
         Intent intent = this.getIntent();
 
         String UID = intent.getStringExtra(INTENT_ACCOUNT_UID);
