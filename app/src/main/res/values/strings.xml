@@ -26,4 +26,10 @@
     <!-- Home strings -->
     <string name="home_button_update_goal"><u>Update Reading Goal</u></string>
 
+    <string name="home_text_header_welcome_placeholder">Welcome, User</string>
+    <string name="home_text_progress_count_placeholder">21</string>
+    <string name="home_text_progress_goal_placeholder">/30 books</string>
+    <string name="home_text_continue">Continue Reading:</string>
+    <string name="home_text_favorites">Your Favorites:</string>
+
 </resources>

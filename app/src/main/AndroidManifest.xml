@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.NavigationalActivity"
             android:exported="false" />
         <activity
             android:name=".view.ResetPasswordActivity"
@@ -33,6 +33,10 @@
             android:exported="false" />
         <activity
             android:name=".view.LoginActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

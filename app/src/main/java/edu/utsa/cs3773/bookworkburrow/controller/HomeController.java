@@ -3,14 +3,13 @@ package edu.utsa.cs3773.bookworkburrow.controller;
 import android.view.View;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.view.HomeActivity;
+import edu.utsa.cs3773.bookworkburrow.view.NavigationalActivity;
 
 public class HomeController implements View.OnClickListener {
 
-    private final HomeActivity m_activity;
+    private final NavigationalActivity m_activity;
 
-    public HomeController(HomeActivity _activity) {
-
+    public HomeController(NavigationalActivity _activity) {
         m_activity = _activity;
     }
 
@@ -30,24 +29,8 @@ public class HomeController implements View.OnClickListener {
         else if (viewID == R.id.home_button_continue_book) {
 
             // TODO: Continue book
-        }
-        else if (viewID == R.id.home_button_home) {
-            m_activity.showHome(this);
 
-        }
-        else if (viewID == R.id.home_button_search) {
-            m_activity.showSearch(this);
-
-        }
-        else if (viewID == R.id.home_button_cart) {
-            m_activity.showCart(this);
-
-        }
-        else if (viewID == R.id.home_button_bookshelf) {
-            m_activity.showBookshelf(this);
-
-        }
-        else if (viewTag.equals("Book")) {
+        } else if (viewTag.equals("Book")) {
 
             // TODO: GO to book
         }
