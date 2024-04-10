@@ -18,4 +18,4 @@ public class LoginController
     public CompletableFuture<Account> logIn(String email, String password){
         return loginWithUsernamePassword(email, password, context);
     }
-} // public class LoginController
+}

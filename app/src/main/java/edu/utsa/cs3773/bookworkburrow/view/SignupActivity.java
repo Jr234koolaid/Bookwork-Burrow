@@ -1,3 +1,4 @@
+
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.content.Intent;
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
@@ -22,7 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_signup);
 
         // Initialize views
         emailEditText = findViewById(R.id.email);
@@ -39,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
+        //TODO: add more validation
         // Basic validation
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();

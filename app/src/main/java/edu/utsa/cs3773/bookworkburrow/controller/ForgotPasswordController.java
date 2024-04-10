@@ -13,7 +13,7 @@ import java.io.IOException;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
+import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.ResetPasswordActivity;
 
 public class ForgotPasswordController implements View.OnClickListener {
@@ -39,7 +39,7 @@ public class ForgotPasswordController implements View.OnClickListener {
 
             try {
 
-                String email = InputChecker.checkEmail(emailEditText);
+                String email = Input.checkEmail(emailEditText);
 
                 AccountDatabase accountDatabase = AccountDatabase.getInstance();
                 accountDatabase.setContext(m_activity);

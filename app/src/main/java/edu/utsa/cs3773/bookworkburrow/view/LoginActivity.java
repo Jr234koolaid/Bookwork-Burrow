@@ -34,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString().trim();
             loginController.logIn(email, password).thenAccept(account -> {
                         Toast.makeText(this, "Signed into account with UID: " + account.getUID(), Toast.LENGTH_LONG).show();
+                        Intent mainIntent = new Intent(this, MainActivity.class);
+                        startActivity(mainIntent);
+                        finish();
                     })
                     .exceptionally(throwable -> {
                         Log.e(TAG, "Failed to sign into account", throwable);
@@ -41,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     });;
         });
         signupButton.setOnClickListener(view -> {
-            Intent signUpIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+            Intent signUpIntent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivity(signUpIntent);
             finish();
         });

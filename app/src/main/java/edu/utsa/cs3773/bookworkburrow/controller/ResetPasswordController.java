@@ -12,7 +12,7 @@ import java.io.IOException;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.InputChecker;
+import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.ResetPasswordActivity;
 
 public class ResetPasswordController implements View.OnClickListener {
@@ -34,8 +34,8 @@ public class ResetPasswordController implements View.OnClickListener {
 
             try {
 
-                String newPassword = InputChecker.checkPassword(newPasswordEditText);
-                String confirmPassword = InputChecker.checkPassword(confirmPasswordEditText);
+                String newPassword = Input.checkPassword(newPasswordEditText);
+                String confirmPassword = Input.checkPassword(confirmPasswordEditText);
 
                 if (!newPassword.equals(confirmPassword)) throw new IOException("Passwords do not match");
 
