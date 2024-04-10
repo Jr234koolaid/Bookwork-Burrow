@@ -3,6 +3,11 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -18,8 +23,16 @@ public class BookActivity extends AppCompatActivity
         setContentView(R.layout.activity_book);
 
         // expecting book object sent through extras
+        // alternatively, could find book object in database through title and author
         Bundle extras = getIntent().getExtras();
         // TODO: readingBook = extras.getParcelable(readingBook,Book);
+
+        textTest();
+    }
+
+    public void textTest(){
+        TextView textContainer = findViewById(R.id.bookTextContainer);
+        textContainer.setText("This is a test. ");
     }
 
 } // class BookActivity
