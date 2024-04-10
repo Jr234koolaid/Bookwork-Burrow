@@ -18,16 +18,58 @@
 
     <!--Add each item dynamically in this view-->
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="330dp"
         android:layout_height="386dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp">
+        android:layout_gravity="center">
+
         <LinearLayout
             android:id="@+id/booksAddedContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="130dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:background="@color/gray" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/text_book_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/commissioner_medium"
+                    android:textColor="@color/black"
+                    android:text="Book Title"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/text_book_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Author of Book"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/text_book_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$20.99"
+                    android:textSize="18sp"
+                    android:textColor="@color/pink"
+                    android:layout_marginTop="8dp"/>
+                
+                <Button
+                    android:id="@+id/button_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"/>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -43,7 +85,7 @@
 
     <Button
         android:id="@+id/checkout_button"
-        android:layout_width="345dp"
+        android:layout_width="352dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/pink"
@@ -58,11 +100,10 @@
     <!--Nav Bar: Change respective icon to active depending on view-->
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_width="300dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:background="?android:attr/listDivider" />
     <LinearLayout
         android:layout_width="match_parent"

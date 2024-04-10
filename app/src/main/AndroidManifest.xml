@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
+            android:name=".view.ConfirmPurchaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ResetPasswordActivity"
             android:exported="false" />
         <activity
@@ -23,6 +26,7 @@
             android:name=".view.MainActivity"
             android:exported="false" />
         <activity android:name=".view.SignUpActivity">
+
             <!-- Any specific intent filters or configurations for SignUpActivity -->
         </activity>
         <activity

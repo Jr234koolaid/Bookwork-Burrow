@@ -30,6 +30,14 @@ public class FirebaseUtil {
         return user != null;
     }
 
+    public static Account getCurrUser(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            return new Account(user.getUid());
+        }
+        else return new Account("user not found");
+    }
+
     /**
      * Attempts to log in a user with the provided username and password.
      * @param email The user's email.
