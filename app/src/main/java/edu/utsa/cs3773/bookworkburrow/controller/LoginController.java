@@ -8,18 +8,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
-import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.HomeActivity;
-import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
 import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
 public class LoginController implements View.OnClickListener {
@@ -57,6 +53,9 @@ public class LoginController implements View.OnClickListener {
 
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+
+            System.out.println(email);
+            System.out.println(password);
 
             CompletableFuture<Account> futureAccount = FirebaseUtil.loginWithUsernamePassword(email, password, m_activity);
             futureAccount.thenAccept(account -> {

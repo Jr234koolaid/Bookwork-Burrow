@@ -8,44 +8,206 @@
 
     <!-- Header -->
 
-    <!-- Need commissioner font -->
     <TextView
         android:id="@+id/home_text_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:layout_marginStart="45dp"
-        android:text="Welcome, "
-        android:textSize="28sp"
+        android:layout_marginStart="30dp"
+        android:text="Welcome, User"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Reading progress -->
+
     <ProgressBar
-        android:id="@+id/home_progress_bar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/home_bar_progress"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="40dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/home_progress_bar"
+        android:progress="25"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_text_welcome"
         app:layout_constraintHorizontal_bias="0" />
 
     <TextView
-        android:id="@+id/home_text_progress_number"
+        android:id="@+id/home_text_progress_count"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
         android:text="21"
-        app:layout_constraintStart_toEndOf="@id/home_progress_bar" />
+        android:textSize="42sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_welcome" />
 
-    <!-- Divider -->
+    <TextView
+        android:id="@+id/home_text_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:text="/30 books"
+        android:textSize="28sp"
+        android:fontFamily="@font/commissioner_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_progress_count" />
+
+    <Button
+        android:id="@+id/home_button_update_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:text="@string/home_button_update_goal"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_goal" />
+
+    <!-- Scrollable items -->
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_scroll_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/home_divider"
+        app:layout_constraintStart_toStartOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_bar_progress">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_scroll_constrained_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Continue reading -->
+
+            <TextView
+                android:id="@+id/home_text_continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/commissioner_medium"
+                android:text="Continue Reading:"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Placeholder -->
+            <ImageView
+                android:id="@+id/home_image_continue"
+                android:layout_width="140dp"
+                android:layout_height="195dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_text_continue" />
+
+            <!-- Favorites -->
+
+            <TextView
+                android:id="@+id/home_text_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/commissioner_medium"
+                android:text="Your Favorites:"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_image_continue" />
+
+            <HorizontalScrollView
+                android:id="@+id/home_scroll_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
+
+                <!-- Placeholder -->
+                <ImageView
+                    android:id="@+id/home_image_favorite"
+                    android:layout_width="140dp"
+                    android:layout_height="195dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Navigation bar -->
 
     <View
         android:id="@+id/home_divider"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="1dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="10dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/home_image_button_home" />
+
+    <ImageButton
+        android:id="@+id/home_image_button_home"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:src="@drawable/home"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/home_image_button_search"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:src="@drawable/search"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@id/home_image_button_home"
+        app:layout_constraintEnd_toStartOf="@id/home_image_button_cart"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/home_image_button_cart"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:src="@drawable/shopping_cart"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@id/home_image_button_search"
+        app:layout_constraintEnd_toStartOf="@id/home_image_button_bookshelf"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/home_image_button_bookshelf"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:src="@drawable/book"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
