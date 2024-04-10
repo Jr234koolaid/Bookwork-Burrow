@@ -125,4 +125,20 @@ public class Order {
      * @param s, the new current date object (Double)
      */
     public void setDate(Calendar s){ date = s; }
+
+    /**
+     * Adds a book to the order
+     * @param book to add
+     */
+    public void addBook(Book book){
+        cartList.add(book);
+    }
+
+    /**
+     * Removes a book from the order
+     * @param book to remove
+     */
+    public void removeBook(Book book){
+        cartList.remove(book);
+    }
 }
