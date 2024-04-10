@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -20,6 +24,7 @@ public class CartActivity extends AppCompatActivity
 {
     Account account;
     LinearLayout bookContainer;
+    Book[] books;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -29,14 +34,47 @@ public class CartActivity extends AppCompatActivity
         bookContainer = findViewById(R.id.booksAddedContainer);
 
         //dummy data for account
-        account.getCart().addBook(new Book());
+        Book book0 = new Book();
+        book0.setTitle("Percy Jackson and the Lightning Thief");
+        book0.setAuthor("Rick Riordan");
+        book0.setPrice(15.99);
+
+        Book book1 = new Book();
+        book1.setTitle("Percy Jackson and the Titan's Curse");
+        book1.setAuthor("Rick Riordan");
+        book1.setPrice(15.99);
+
+        Book book2 = new Book();
+        book2.setTitle("Percy Jackson and the Sea of Monsters");
+        book2.setAuthor("Rick Riordan");
+        book2.setPrice(15.99);
+
+        books = new Book[]{book0, book1, book2};
+
+        account.getCart().addBook(book0);
+        account.getCart().addBook(book1);
+        account.getCart().addBook(book2);
+        Log.d("Account info", account.toString());
+        loadBookViews();
 
 
     }
 
-    //TODO: dynamically load in books in cart
     public void loadBookViews(){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        for(Book book : account.getCart().getCartList()){
+            LayoutInflater inflater = LayoutInflater.from(this);
+            // Inflate the individual book layout
+            LinearLayout bookCartLayout = (LinearLayout) inflater.inflate(R.layout.book_cart_layout, null, false);
+
+            TextView bookTitle = bookCartLayout.findViewById(R.id.cart_book_title);
+            TextView bookAuthor = bookCartLayout.findViewById(R.id.cart_book_author);
+            TextView bookPrice = bookCartLayout.findViewById(R.id.cart_book_price);
+            bookTitle.setText(book.getTitle());
+            bookAuthor.setText(book.getAuthor());
+            bookPrice.setText(""+book.getPrice());
+            bookContainer.addView(bookCartLayout);
+        }
+
 
     }
 
@@ -56,7 +94,7 @@ public class CartActivity extends AppCompatActivity
                 Log.d("Nav bar clicked", "Transactions");
                 break;
             case R.id.nav_cart:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
                 Log.d("Nav bar clicked", "Budget");
                 break;
@@ -67,4 +105,4 @@ public class CartActivity extends AppCompatActivity
                 break;
         }
     }
-} // class CartActivity
+}

@@ -141,4 +141,10 @@ public class Order {
     public void removeBook(Book book){
         cartList.remove(book);
     }
+
+    public String toString(){
+        String s = "Order:";
+        for(Book book : cartList) s += book.getTitle() + " | ";
+        return s;
+    }
 }
