@@ -93,7 +93,7 @@
             <!-- Continue reading -->
 
             <TextView
-                android:id="@+id/home_text_continue"
+                android:id="@+id/home_text_continue_book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/commissioner_medium"
@@ -104,14 +104,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Placeholder -->
-            <ImageView
-                android:id="@+id/home_image_continue"
+            <ImageButton
+                android:id="@+id/home_button_continue_book"
                 android:layout_width="140dp"
                 android:layout_height="195dp"
                 android:layout_marginTop="18dp"
                 android:background="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_text_continue" />
+                app:layout_constraintTop_toBottomOf="@id/home_text_continue_book" />
 
             <!-- Favorites -->
 
@@ -125,10 +125,10 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_image_continue" />
+                app:layout_constraintTop_toBottomOf="@id/home_button_continue_book" />
 
             <HorizontalScrollView
-                android:id="@+id/home_scroll_favorites"
+                android:id="@+id/home_scroll_favorites_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="18dp"
@@ -136,8 +136,8 @@
                 app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
 
                 <!-- Placeholder -->
-                <ImageView
-                    android:id="@+id/home_image_favorite"
+                <ImageButton
+                    android:tag="Book"
                     android:layout_width="140dp"
                     android:layout_height="195dp"
                     android:layout_marginTop="18dp"
@@ -161,46 +161,46 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/home_image_button_home" />
+        app:layout_constraintBottom_toTopOf="@id/home_button_home" />
 
     <ImageButton
-        android:id="@+id/home_image_button_home"
+        android:id="@+id/home_button_home"
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
-        android:src="@drawable/home"
+        android:src="@drawable/home_selected"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageButton
-        android:id="@+id/home_image_button_search"
+        android:id="@+id/home_button_search"
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
         android:src="@drawable/search"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toEndOf="@id/home_image_button_home"
-        app:layout_constraintEnd_toStartOf="@id/home_image_button_cart"
+        app:layout_constraintStart_toEndOf="@id/home_button_home"
+        app:layout_constraintEnd_toStartOf="@id/home_button_cart"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageButton
-        android:id="@+id/home_image_button_cart"
+        android:id="@+id/home_button_cart"
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
         android:src="@drawable/shopping_cart"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toEndOf="@id/home_image_button_search"
-        app:layout_constraintEnd_toStartOf="@id/home_image_button_bookshelf"
+        app:layout_constraintStart_toEndOf="@id/home_button_search"
+        app:layout_constraintEnd_toStartOf="@id/home_button_bookshelf"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageButton
-        android:id="@+id/home_image_button_bookshelf"
+        android:id="@+id/home_button_bookshelf"
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginEnd="30dp"
