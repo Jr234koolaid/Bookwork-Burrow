@@ -13,6 +13,12 @@ public class BookshelfActivity extends AppCompatActivity{
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookshelf);
+
+        // set a controller
+
+        // set a button for all of the books loaded dynamically
+        // set a listener for all of those buttons (books)
+
     }
 
 }
