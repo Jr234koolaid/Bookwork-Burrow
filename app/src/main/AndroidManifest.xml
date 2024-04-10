@@ -22,6 +22,9 @@
         <activity
             android:name=".view.MainActivity"
             android:exported="false" />
+        <activity android:name=".view.SignUpActivity">
+            <!-- Any specific intent filters or configurations for SignUpActivity -->
+        </activity>
         <activity
             android:name=".view.CartActivity"
             android:exported="false" />
@@ -40,6 +43,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
