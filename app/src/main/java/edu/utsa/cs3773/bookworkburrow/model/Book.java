@@ -4,13 +4,13 @@ public class Book {
     private String title;
     private String genre;
     private String author;
-    private Double price;
+    private double price;
     private String description;
     // TODO: private ??? cover;
     private String text;
 
     // TODO: setter and getter functions
-    public Double getPrice(){
+    public double getPrice(){
         return price;
     }
 }

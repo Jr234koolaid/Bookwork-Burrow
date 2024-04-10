@@ -5,17 +5,18 @@ import static android.content.ContentValues.TAG;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 
 import edu.utsa.cs3773.bookworkburrow.model.Account;
+import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class FirebaseUtil {
 
@@ -116,22 +117,9 @@ public class FirebaseUtil {
                 .addOnFailureListener(e -> Log.w(TAG, "Error deleting document", e));
     }
 
-    /**
-     * Updates firestore document of user given account
-     * @param account
-     */
-    public static void updateUser(Account account){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(account.getUID())
-                .update("last", "Lovelace-Byron")
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
-                .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
-    }
-
     public static void readUsers(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
-                .whereLessThan("born", 1900)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
