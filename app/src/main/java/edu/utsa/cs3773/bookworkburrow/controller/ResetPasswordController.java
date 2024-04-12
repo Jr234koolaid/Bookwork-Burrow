@@ -1,64 +1,75 @@
 package edu.utsa.cs3773.bookworkburrow.controller;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
+import com.google.firebase.auth.FirebaseAuth;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
 import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.Input;
 import edu.utsa.cs3773.bookworkburrow.view.ResetPasswordActivity;
 
 public class ResetPasswordController implements View.OnClickListener {
 
-    private final AppCompatActivity m_activity;
+    private final ResetPasswordActivity mContext;
 
-    public ResetPasswordController(AppCompatActivity _activity) {
-        m_activity = _activity;
+    public ResetPasswordController(ResetPasswordActivity _context) {
+        mContext = _context;
     }
 
     @Override
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.password_reset_button_reset) {
+        if (viewID == R.id.reset_password_button_reset) {
 
-            EditText newPasswordEditText = m_activity.findViewById(R.id.password_reset_edit_new_password);
-            EditText confirmPasswordEditText = m_activity.findViewById(R.id.password_reset_edit_confirm_password);
+            EditText newPasswordEditText = mContext.findViewById(R.id.reset_password_edit_new_password);
+            EditText confirmPasswordEditText = mContext.findViewById(R.id.reset_password_edit_confirm_password);
 
-            try {
+            String newPassword = newPasswordEditText.getText().toString();
+            String confirmPassword = confirmPasswordEditText.getText().toString();
 
-                String newPassword = Input.checkPassword(newPasswordEditText);
-                String confirmPassword = Input.checkPassword(confirmPasswordEditText);
-
-                if (!newPassword.equals(confirmPassword)) throw new IOException("Passwords do not match");
-
-                Intent intent = m_activity.getIntent();
-
-                String email = intent.getStringExtra(ResetPasswordActivity.INTENT_EMAIL);
-                if (email == null) throw new IOException();
-
-                AccountDatabase accountDatabase = AccountDatabase.getInstance();
-                accountDatabase.setContext(m_activity);
-                accountDatabase.updateAccount(email, newPassword);
-
-                Toast.makeText(m_activity, "Password has been successfully reset", Toast.LENGTH_LONG).show();
-
-                m_activity.finish();
-
-            } catch (IOException e) {
+            if (!newPassword.equals(confirmPassword)) {
 
                 ErrorDialog errorDialog = ErrorDialog.getInstance();
-                errorDialog.setContext(m_activity);
-                errorDialog.display(e.getMessage());
+                errorDialog.setContext(mContext);
+                errorDialog.display("Passwords do not match");
+
+                return;
             }
+
+            // TODO: Check firebase stuff here
+            // TODO: Put into firebase utils
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+
         }
     }
 
 } // class ResetPasswordController
+
+//try {
+//
+//        String newPassword = Input.checkPassword(newPasswordEditText);
+//        String confirmPassword = Input.checkPassword(confirmPasswordEditText);
+//
+//        if (!newPassword.equals(confirmPassword)) throw new IOException("Passwords do not match");
+//
+//            Intent intent = m_activity.getIntent();
+//
+//            String email = intent.getStringExtra(ResetPasswordActivity.INTENT_EMAIL);
+//            if (email == null) throw new IOException();
+//
+//            AccountDatabase accountDatabase = AccountDatabase.getInstance();
+//            accountDatabase.setContext(m_activity);
+//            accountDatabase.updateAccount(email, newPassword);
+//
+//            Toast.makeText(m_activity, "Password has been successfully reset", Toast.LENGTH_LONG).show();
+//
+//            m_activity.finish();
+//
+//} catch (IOException e) {
+//
+//        ErrorDialog errorDialog = ErrorDialog.getInstance();
+//        errorDialog.setContext(m_activity);
+//        errorDialog.display(e.getMessage());
+//}
