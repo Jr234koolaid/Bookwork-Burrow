@@ -54,7 +54,7 @@
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/searchBarPicture"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -66,10 +66,11 @@
                     android:layout_width="320dp"
                     android:layout_height="match_parent"
                     android:background="#E6EDEF"
+                    android:editable="true"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:gravity="center|left"
                     android:hint="Search for a book title"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -83,7 +84,7 @@
                 android:orientation="horizontal">
 
                 <Space
-                    android:layout_width="45dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0" />
 
@@ -95,8 +96,8 @@
                 </ScrollView>
 
                 <Space
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="53dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="0" />
             </LinearLayout>
 
@@ -126,12 +127,14 @@
                     android:gravity="center"
                     android:onClick="onNavItemClicked"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    tools:ignore="SpeakableTextPresentCheck">
 
                     <ImageView
+                        android:id="@+id/imageView"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/book" />
+                        app:srcCompat="@drawable/book_selected" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -163,10 +166,10 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/imageView2"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/shopping_cart_selected" />
-
+                        app:srcCompat="@drawable/shopping_cart" />
                 </LinearLayout>
 
                 <LinearLayout
