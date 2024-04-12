@@ -71,4 +71,6 @@ public class FirebaseBookUtils {
                 });
         return completableFuture;
     }
+
+    //TODO: get all books stored in database
 }

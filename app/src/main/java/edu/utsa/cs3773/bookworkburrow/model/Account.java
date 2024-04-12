@@ -15,6 +15,9 @@ public class Account {
     int readingGoal;
 
     public Account(String _UID) {
+        booksOwned = new ArrayList<>();
+        orderHistory = new ArrayList<>();
+        cart = new Order();
         m_UID = _UID;
     }
 
@@ -95,5 +98,12 @@ public class Account {
         orderHistory.add(cart);
         booksOwned.addAll(cart.getCartList());
         cart = new Order();
+        //TODO: update firebase
+    }
+
+    public String toString(){
+        String s = "UID: " + m_UID + "\n";
+        s += cart.toString();
+        return s;
     }
 }
