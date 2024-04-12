@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/confirm_root"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.ConfirmPurchaseActivity">
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="25dp"
+        android:src="@drawable/arrow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/commissioner_medium"
+        android:layout_marginStart="30dp"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:text="Confirm Purchase" />
+
+    <!--Add each item dynamically in this view-->
+    <ScrollView
+        android:layout_width="330dp"
+        android:layout_height="455dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/booksAddedContainer"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/commissioner"
+        android:text="Subtotal $"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/commissioner"
+        android:text="Tax $"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/commissioner"
+        android:textStyle="bold"
+        android:text="Total $"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/checkout_button"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/pink"
+        android:fontFamily="@font/commissioner_medium"
+        android:paddingStart="90dp"
+        android:paddingEnd="90dp"
+        android:text="Checkout"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="352dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/gray"
+        android:fontFamily="@font/commissioner_medium"
+        android:paddingStart="90dp"
+        android:paddingEnd="90dp"
+        android:text="Cancel"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+</LinearLayout>
