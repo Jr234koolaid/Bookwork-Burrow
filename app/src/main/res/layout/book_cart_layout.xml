@@ -50,7 +50,7 @@
                 android:layout_marginTop="8dp"/>
 
             <Button
-                android:id="@+id/button_remove"
+                android:id="@+id/book_cart_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Remove"/>

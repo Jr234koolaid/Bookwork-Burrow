@@ -98,6 +98,7 @@ public class Account {
         orderHistory.add(cart);
         booksOwned.addAll(cart.getCartList());
         cart = new Order();
+        //TODO: update firebase
     }
 
     public String toString(){
