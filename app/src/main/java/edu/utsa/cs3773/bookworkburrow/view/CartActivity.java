@@ -43,6 +43,8 @@ public class CartActivity extends AppCompatActivity
             finish();
         });
 
+        //TODO: get books from account
+
         //dummy data for account
         Book book0 = new Book();
         book0.setTitle("Percy Jackson and the Lightning Thief");
