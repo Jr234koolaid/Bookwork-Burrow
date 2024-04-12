@@ -10,8 +10,6 @@ import edu.utsa.cs3773.bookworkburrow.controller.ResetPasswordController;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    public static final String INTENT_EMAIL = "INTENT_EMAIL";
-
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
 

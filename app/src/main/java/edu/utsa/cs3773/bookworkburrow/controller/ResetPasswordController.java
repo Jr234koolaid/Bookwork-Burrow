@@ -34,6 +34,7 @@ public class ResetPasswordController implements View.OnClickListener {
                 ErrorDialog errorDialog = ErrorDialog.getInstance();
                 errorDialog.setContext(mContext);
                 errorDialog.display("Passwords do not match");
+
                 return;
             }
 

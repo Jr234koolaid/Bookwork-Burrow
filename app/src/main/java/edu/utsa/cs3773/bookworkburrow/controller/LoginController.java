@@ -1,6 +1,8 @@
 package edu.utsa.cs3773.bookworkburrow.controller;
 
-import static edu.utsa.cs3773.bookworkburrow.FirebaseUtil.loginWithUsernamePassword;
+import android.content.Intent;
+import android.view.View;
+import android.widget.EditText;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -42,4 +44,5 @@ public class LoginController implements View.OnClickListener {
             mContext.startActivity(new Intent(mContext, SignupActivity.class));
         }
     }
-}
+
+} // class LoginController
