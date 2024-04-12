@@ -15,26 +15,30 @@ public class ErrorDialog {
         } return Instance;
     }
 
-    private final String        m_message;
-    private AlertDialog.Builder m_alertDialogBuilder;
+    private final String        mMessage;
+
+    private AlertDialog.Builder mAlertDialogBuilder;
 
     private ErrorDialog() {
-        m_message = "Please make sure your information is correct and try again!";
+
+        mMessage = "Please make sure your information is correct and try again!";
+
+        mAlertDialogBuilder = null;
     }
 
     public void setContext(AppCompatActivity _context) {
-        m_alertDialogBuilder = new AlertDialog.Builder(_context).setPositiveButton("OK", null);
+        mAlertDialogBuilder = new AlertDialog.Builder(_context).setPositiveButton("OK", null);
     }
 
-    public void display(String _message) {
+    public void display(String _title) {
 
-        if (m_alertDialogBuilder == null) return;
+        if (mAlertDialogBuilder == null) return;
 
-        if (_message == null) {
-            m_alertDialogBuilder.setTitle("Unexpected Error...").setMessage(m_message).show();
+        if (_title == null) {
+            mAlertDialogBuilder.setTitle("Unexpected Error...").setMessage(mMessage).show();
 
         } else {
-            m_alertDialogBuilder.setTitle(_message).setMessage(m_message).show();
+            mAlertDialogBuilder.setTitle(_title).setMessage(mMessage).show();
         }
     }
 

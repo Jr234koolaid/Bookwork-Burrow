@@ -7,32 +7,34 @@ import edu.utsa.cs3773.bookworkburrow.view.NavigationalActivity;
 
 public class HomeController implements View.OnClickListener {
 
-    private final NavigationalActivity m_activity;
+    private final NavigationalActivity mContext;
 
-    public HomeController(NavigationalActivity _activity) {
-        m_activity = _activity;
+    public HomeController(NavigationalActivity _context) {
+        mContext = _context;
     }
 
     @Override
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-
-        Object tag = _view.getTag();
-        String viewTag = (tag == null) ? "" : tag.toString();
+        Object viewTag = _view.getTag();
 
         if (viewID == R.id.home_button_update_goal) {
 
             // TODO: Update
+
         }
-        // TODO: Remove, set tag
-        else if (viewID == R.id.home_button_continue_book) {
+        else if (viewTag != null) {
 
-            // TODO: Continue book
+            String tag = viewTag.toString();
+            if (tag.equals("Continue")) {
 
-        } else if (viewTag.equals("Book")) {
+                // TODO: Continue book
 
-            // TODO: GO to book
+            } else if (tag.equals("Favorites")) {
+
+                // TODO: GO to book page
+            }
         }
     }
 

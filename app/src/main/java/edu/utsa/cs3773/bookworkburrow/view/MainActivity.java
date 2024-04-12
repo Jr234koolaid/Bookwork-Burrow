@@ -11,23 +11,21 @@ import edu.utsa.cs3773.bookworkburrow.R;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle _savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(_savedInstanceState);
+        this.setContentView(R.layout.activity_main);
 
         if (FirebaseUtil.isLoggedIn()) {
 
-            Intent navigationalIntent = new Intent(this, NavigationalActivity.class);
-            this.startActivity(navigationalIntent);
+            this.startActivity(new Intent(this, NavigationalActivity.class));
+            this.finish();
 
         } else {
 
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            this.startActivity(loginIntent);
+            this.startActivity(new Intent(this, LoginActivity.class));
+            this.finish();
         }
-
-        this.finish();
     }
 
 } // class MainActivity

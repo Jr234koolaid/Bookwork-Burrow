@@ -7,10 +7,10 @@ import edu.utsa.cs3773.bookworkburrow.view.NavigationalActivity;
 
 public class NavigationalController implements View.OnClickListener {
 
-    private final NavigationalActivity m_activity;
+    private final NavigationalActivity mContext;
 
-    public NavigationalController(NavigationalActivity _activity) {
-        m_activity = _activity;
+    public NavigationalController(NavigationalActivity _context) {
+        mContext = _context;
     }
 
     @Override
@@ -22,16 +22,16 @@ public class NavigationalController implements View.OnClickListener {
             // TODO: INTENT
 
         } else if (viewID == R.id.navigational_button_home) {
-            m_activity.showHomeLayout();
+            mContext.selectHomeLayout();
 
         } else if (viewID == R.id.navigational_button_search) {
-            m_activity.showSearchLayout();
+            mContext.selectSearchLayout();
 
         } else if (viewID == R.id.navigational_button_cart) {
-            m_activity.showCartLayout();
+            mContext.selectCartLayout();
 
         } else if (viewID == R.id.navigational_button_bookshelf) {
-            m_activity.showBookshelfLayout();
+            mContext.selectBookshelfLayout();
         }
     }
 

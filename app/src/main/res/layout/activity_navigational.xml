@@ -7,12 +7,13 @@
     tools:context=".view.NavigationalActivity">
 
     <!-- Header -->
+
     <TextView
         android:id="@+id/navigational_text_header"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/app_name"
         android:textColor="@color/very_dark_blue"
         android:textSize="32sp"
@@ -20,27 +21,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Scrollable items -->
-
     <ImageButton
         android:id="@+id/navigational_button_settings"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Scrollable items -->
+
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/navigational_scroll_layouts"
+        android:id="@+id/navigational_scroll"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/navigational_text_header"
         app:layout_constraintBottom_toTopOf="@id/navigational_divider" >
 
-        <!-- Navigational views will be programmatically added here -->
+        <!-- Navigational layouts will be programmatically added here -->
 
     </androidx.core.widget.NestedScrollView>
 
@@ -48,7 +48,7 @@
 
     <View
         android:id="@+id/navigational_divider"
-        android:layout_width="200dp"
+        android:layout_width="350dp"
         android:layout_height="1dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/darker_gray"

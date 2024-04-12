@@ -14,7 +14,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle _savedInstanceState) {
 
         super.onCreate(_savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        this.setContentView(R.layout.activity_signup);
 
         SignupController signupController = new SignupController(this);
 

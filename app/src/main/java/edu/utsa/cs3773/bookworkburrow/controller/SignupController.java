@@ -4,35 +4,17 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
-
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.Account;
-import edu.utsa.cs3773.bookworkburrow.model.AccountDatabase;
-import edu.utsa.cs3773.bookworkburrow.model.AccountStream;
-import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
-import edu.utsa.cs3773.bookworkburrow.model.Input;
-import edu.utsa.cs3773.bookworkburrow.view.HomeActivity;
-import edu.utsa.cs3773.bookworkburrow.view.MainActivity;
+import edu.utsa.cs3773.bookworkburrow.view.NavigationalActivity;
+import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
 
 public class SignupController implements View.OnClickListener {
 
-    private final AppCompatActivity                 m_activity;
-    private final ActivityResultLauncher<Intent>    m_homeLauncher;
+    private final SignupActivity mContext;
 
-    public SignupController(AppCompatActivity _activity) {
-
-        m_activity = _activity;
-        m_homeLauncher = m_activity.registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {}
-        );
+    public SignupController(SignupActivity _context) {
+        mContext = _context;
     }
 
     @Override
@@ -41,25 +23,22 @@ public class SignupController implements View.OnClickListener {
         int viewID = _view.getId();
         if (viewID == R.id.signup_button_create_account) {
 
-            EditText emailEditText = m_activity.findViewById(R.id.signup_edit_email);
-            EditText firstnameEditText = m_activity.findViewById(R.id.signup_edit_firstname);
-            EditText lastnameEditText = m_activity.findViewById(R.id.signup_edit_lastname);
-            EditText passwordEditText = m_activity.findViewById(R.id.signup_edit_password);
+            EditText emailEditText = mContext.findViewById(R.id.signup_edit_email);
+            EditText firstnameEditText = mContext.findViewById(R.id.signup_edit_firstname);
+            EditText lastnameEditText = mContext.findViewById(R.id.signup_edit_lastname);
+            EditText passwordEditText = mContext.findViewById(R.id.signup_edit_password);
 
             String email = emailEditText.getText().toString();
             String firstName = firstnameEditText.getText().toString();
             String lastName = lastnameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            CompletableFuture<Account> futureAccount = FirebaseUtil.createUser(email, password, m_activity);
-            futureAccount.thenAccept(account -> {
-                m_homeLauncher.launch(new Intent(m_activity, HomeActivity.class));
+            FirebaseUtil.createUser(email, password, mContext).thenAccept(account -> {
 
-            }).exceptionally(throwable -> {
-                ErrorDialog errorDialog = ErrorDialog.getInstance();
-                errorDialog.display("Could not sign up");
+                // TODO: Set user info here
 
-                return null;
+                mContext.startActivity(new Intent(mContext, NavigationalActivity.class));
+                mContext.finish();
             });
         }
     }
