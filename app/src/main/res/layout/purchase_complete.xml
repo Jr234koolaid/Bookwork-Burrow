@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/nerko_one"
+        android:text="Purchase Complete!"
+        android:textColor="@color/very_dark_blue"
+        android:textAlignment="center"
+        android:textSize="70sp" />
+
+    <ImageView
+        android:layout_width="199dp"
+        android:layout_height="233dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/bookworm_logo" />
+
+    <Button
+        android:id="@+id/purchase_return_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/very_dark_blue"
+        android:textSize="20sp"
+        android:text="Return Home"/>
+
+
+</LinearLayout>
