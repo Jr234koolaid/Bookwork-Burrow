@@ -31,8 +31,11 @@ public class BookActivity extends AppCompatActivity
     }
 
     public void textTest(){
+        readingBook = new Book();
         TextView textContainer = findViewById(R.id.bookTextContainer);
-        textContainer.setText("This is a test. ");
+        TextView titleContainer = findViewById(R.id.titleContainer);
+        titleContainer.setText(readingBook.getTitle());
+        textContainer.setText("This is a test");
     }
 
 } // class BookActivity

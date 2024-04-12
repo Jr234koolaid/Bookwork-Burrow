@@ -8,8 +8,8 @@ public class Book {
     private String author;
     private Double price;
     private String description;
-    private URL textUrl;
-    private URL coverUrl;
+    private String id;
+
 
     public Book(){
         title = "No Title";
@@ -17,18 +17,17 @@ public class Book {
         author = "Unknown Author";
         price = 0.0;
         description = "No description";
-        textUrl = null;
-        coverUrl = null;
+        id = null;
+
     }
 
-    public Book(String t){
+    public Book(String t, String a){
         title = t;
         genre = "No Genre";
-        author = "Unknown Author";
+        author = a;
         price = 0.0;
         description = "No description";
-        textUrl = null;
-        coverUrl = null;
+        id = null;
     }
 
     public String getTitle(){ return title; }
@@ -38,14 +37,12 @@ public class Book {
         return price;
     }
     public String getDescription(){ return description; }
-    public URL getTextUrl(){ return textUrl; }
-    public URL getCoverUrl(){ return coverUrl; }
+    public String getId(){ return id; }
 
     public void setTitle(String s){ title = s; }
     public void setGenre(String s){ genre = s; }
     public void setAuthor(String s){ author = s; }
     public void setPrice(Double s){ price = s; }
     public void setDescription(String s){ description = s; }
-    public void setTextUrl(URL s){ textUrl = s; }
-    public void setCoverUrl(URL s){ coverUrl = s; }
+    public void setId(String s){ id = s; }
 }
