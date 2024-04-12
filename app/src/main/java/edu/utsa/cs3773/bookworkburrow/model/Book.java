@@ -16,26 +16,19 @@ public class Book {
         genre = "No Genre";
         author = "Unknown Author";
         price = 0.0;
-        description = "No description";
+        description = "No Description";
         id = null;
-
     }
 
-    public Book(String t, String a){
-        title = t;
-        genre = "No Genre";
-        author = a;
-        price = 0.0;
-        description = "No description";
-        id = null;
+    public Book(String enterId){
+        id = enterId;
+        // TODO: retrieve book information from database via id
     }
 
     public String getTitle(){ return title; }
     public String getGenre(){ return genre; }
     public String getAuthor(){ return author; }
-    public Double getPrice(){
-        return price;
-    }
+    public Double getPrice(){ return price; }
     public String getDescription(){ return description; }
     public String getId(){ return id; }
 
