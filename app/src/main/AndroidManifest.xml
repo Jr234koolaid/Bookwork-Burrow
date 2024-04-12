@@ -13,6 +13,9 @@
         <activity
             android:name=".view.ConfirmPurchaseActivity"
             android:exported="false" />
+       	<activity
+            android:name=".view.NavigationalActivity"
+            android:exported="false" />
         <activity
             android:name=".view.ResetPasswordActivity"
             android:exported="false" />
@@ -22,13 +25,6 @@
         <activity
             android:name=".view.SignupActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
-        <activity android:name=".view.SignUpActivity">
-
-            <!-- Any specific intent filters or configurations for SignUpActivity -->
-        </activity>
         <activity
             android:name=".view.CartActivity"
             android:exported="false" />
@@ -40,6 +36,10 @@
             android:exported="false" />
         <activity
             android:name=".view.LoginActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header -->
+
+    <TextView
+        android:id="@+id/home_text_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/home_text_header_welcome_placeholder"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Reading progress -->
+
+    <ProgressBar
+        android:id="@+id/home_bar_progress"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="40dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/home_progress_bar"
+        android:progress="25"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_text_welcome"
+        app:layout_constraintHorizontal_bias="0" />
+
+    <TextView
+        android:id="@+id/home_text_progress_count"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="@string/home_text_progress_count_placeholder"
+        android:textSize="42sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_welcome" />
+
+    <TextView
+        android:id="@+id/home_text_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/home_text_progress_goal_placeholder"
+        android:textSize="28sp"
+        android:fontFamily="@font/commissioner_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_progress_count" />
+
+    <Button
+        android:id="@+id/home_button_update_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:text="@string/home_button_update_goal"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintStart_toEndOf="@id/home_bar_progress"
+        app:layout_constraintTop_toBottomOf="@id/home_text_goal" />
+
+    <!-- Continue reading -->
+
+    <TextView
+        android:id="@+id/home_text_continue_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/home_text_continue"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
+
+    <!-- Placeholder -->
+    <ImageButton
+        android:id="@+id/home_button_continue_book"
+        android:layout_width="140dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/gray"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_text_continue_book" />
+
+    <!-- Favorites -->
+
+    <TextView
+        android:id="@+id/home_text_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/home_text_favorites"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_button_continue_book" />
+
+    <HorizontalScrollView
+        android:id="@+id/home_scroll_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_constraint_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- TODO: REMOVE --><!-- Placeholder-->
+            <ImageButton
+                android:tag="Book"
+                android:layout_width="140dp"
+                android:layout_height="195dp"
+                android:background="@color/gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Barriers -->
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/home_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="home_text_welcome" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

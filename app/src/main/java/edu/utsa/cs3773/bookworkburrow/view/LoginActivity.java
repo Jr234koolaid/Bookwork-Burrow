@@ -22,32 +22,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle _savedInstanceState) {
 
         super.onCreate(_savedInstanceState);
-        setContentView(R.layout.activity_login);
+        this.setContentView(R.layout.activity_login);
+
         LoginController loginController = new LoginController(this);
 
-        emailEditText = findViewById(R.id.email);
-        passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login_button);
-        signupButton = findViewById(R.id.signup_button);
-        loginButton.setOnClickListener(view -> {
-            String email = emailEditText.getText().toString().trim();
-            String password = passwordEditText.getText().toString().trim();
-            loginController.logIn(email, password).thenAccept(account -> {
-                        Toast.makeText(this, "Signed into account with UID: " + account.getUID(), Toast.LENGTH_LONG).show();
-                        Intent mainIntent = new Intent(this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    })
-                    .exceptionally(throwable -> {
-                        Log.e(TAG, "Failed to sign into account", throwable);
-                        return null;
-                    });;
-        });
-        signupButton.setOnClickListener(view -> {
-            Intent signUpIntent = new Intent(LoginActivity.this, SignupActivity.class);
-            startActivity(signUpIntent);
-            finish();
-        });
+        Button loginButton = findViewById(R.id.login_button_login);
+        loginButton.setOnClickListener(loginController);
+
+        Button forgotPasswordButton = findViewById(R.id.login_button_forgot_password);
+        forgotPasswordButton.setOnClickListener(loginController);
+
+        Button signupButton = findViewById(R.id.login_button_signup);
+        signupButton.setOnClickListener(loginController);
     }
 
 } // class LoginActivity
