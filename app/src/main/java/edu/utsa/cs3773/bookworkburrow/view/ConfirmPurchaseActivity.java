@@ -1,6 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.annotation.SuppressLint;
+import android.annotation.Suppres;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +16,9 @@ import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
+
+    private ImageView backButton;
+
     private LinearLayout booksContainer;
     private TextView subtotal;
     private TextView tax;

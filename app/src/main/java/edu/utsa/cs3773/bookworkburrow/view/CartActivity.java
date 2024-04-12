@@ -20,6 +20,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class CartActivity extends AppCompatActivity
 {
+
     Account account;
     LinearLayout bookContainer;
     Button checkout;
