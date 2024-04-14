@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <Space
+                android:id="@+id/random id for push"
                 android:layout_width="match_parent"
                 android:layout_height="34dp" />
 
