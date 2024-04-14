@@ -4,65 +4,106 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+/**
+ * object class representing and order in progress
+ * @author Ryan Johnson
+ */
 public class Order {
     private ArrayList<Book> cartList;
-    private Double bookPrice;
-    private Double totalPrice;
     private Calendar date;
-    //private Date date;
 
+    /**
+     * initializes a new order object
+     */
     public Order(){
         cartList= new ArrayList<Book>();
-        bookPrice = 0.0;
-        totalPrice = 0.0;
         date = Calendar.getInstance(TimeZone.getDefault());
     }
 
-    public void addCart(Book newBook){
+    /**
+     * adds a new book to the cart, accounting for its price
+     * @param newBook, book to be added to cart (Book)
+     */
+    public void addBook(Book newBook){
+        //TODO: update firestore
         cartList.add(newBook);
-        updatePrice();
     }
 
-    public void removeCart(int index){
-        cartList.remove(index);
-        updatePrice();
+    /**
+     * removes a book from the cart, accounting for its price
+     * @param book, book to remove
+     */
+    public void removeBook(Book book){
+        //TODO: update firestore
+        cartList.remove(book);
     }
 
-    public void updatePrice(){
-        Double newPrice = 0.0;
-        for(int i=0;i<cartList.size();i++){
-            newPrice += cartList.get(i).getPrice();
-        }
-        bookPrice = newPrice;
+    /**
+     * returns the current price of all books in cart
+     * @return Double, sum of the price of all books in cart
+     */
+    public double getSubtotal() {
+        double price = 0;
+        for(Book book : cartList) price += book.getPrice();
+        return price;
     }
 
+    /**
+     * returns the current price of the total price after tax
+     * @return Double, current price of the total price after tax
+     */
+    public double getTotalWithTax() {
+        return getSubtotal() + getTax();
+    }
+
+    public double getTax(){
+        return getSubtotal() * 0.08;
+    }
+
+
+    /**
+     * updates the stored date of the order to current time
+     */
     public void updateDate(){
         date = Calendar.getInstance(TimeZone.getDefault());
     }
 
-    public Double calculateTotal(){
-        totalPrice = bookPrice + (bookPrice * 0.1);
-        return totalPrice;
-    }
-
+    /**
+     * returns the date as an easily readable string
+     * @return String, the date in "Month, Date, Year" format
+     */
     public String getStringDate(){
         String[] dayPart = date.getTime().toString().split(" ");
         return(dayPart[1]+", "+dayPart[2]+", "+dayPart[5]);
     }
 
-    public ArrayList<Book> getCartList() { return cartList; }
-
-    public Double getBookPrice() { return bookPrice; }
-
-    public Double getTotalPrice() { return totalPrice; }
-
+    /**
+     * returns the current date object
+     * @return Calendar, the current date object
+     */
     public Calendar getDate() { return date; }
 
+    /**
+     * sets the current date object
+     * @param s, the new current date object (Double)
+     */
+    public void setDate(Calendar s){ date = s; }
+
+    /**
+     * returns the cart list
+     * @return ArrayList<Book>, the cart list
+     */
+    public ArrayList<Book> getCartList() { return cartList; }
+
+    /**
+     * sets the cart list
+     * @param s, the new cart list (ArrayList<Book>)
+     */
     public void setCartList(ArrayList<Book> s) { cartList = s; }
 
-    public void setBookPrice(Double s){ bookPrice = s; }
-
-    public void setTotalPrice(Double s){ totalPrice = s; }
-
-    public void setDate(Calendar s){ date = s; }
+    public String toString(){
+        String s = "Order:";
+        for(Book book : cartList) s += book.getTitle() + " | ";
+        return s;
+    }
 }

@@ -1,21 +1,23 @@
 package edu.utsa.cs3773.bookworkburrow.model;
 
+import java.util.ArrayList;
+
 public class Account {
 
     private final String m_UID;
-
     private String  m_email;
     private String  m_firstName;
     private String  m_lastName;
-
-    enum Status { Teacher, Student, Other };
-    //ArrayList<Book> booksOwned;
-    //ArrayList<Book> favorites;
-    //ArrayList<Order> orderHistory;
-    //ArrayList<Review> reviewsMade;
+    ArrayList<Book> booksOwned;
+    ArrayList<Book> favorites;
+    ArrayList<Order> orderHistory;
+    Order cart;
     int readingGoal;
 
     public Account(String _UID) {
+        booksOwned = new ArrayList<>();
+        orderHistory = new ArrayList<>();
+        cart = new Order();
         m_UID = _UID;
     }
 
@@ -53,5 +55,55 @@ public class Account {
 
     public void setReadingGoal(int readingGoal) {
         this.readingGoal = readingGoal;
+    }
+
+    public ArrayList<Book> getBooksOwned() {
+        return booksOwned;
+    }
+
+    public void setBooksOwned(ArrayList<Book> booksOwned) {
+        this.booksOwned = booksOwned;
+    }
+
+    public ArrayList<Book> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(ArrayList<Book> favorites) {
+        this.favorites = favorites;
+    }
+
+    public ArrayList<Order> getOrderHistory() {
+        return orderHistory;
+    }
+
+    public void setOrderHistory(ArrayList<Order> orderHistory) {
+        this.orderHistory = orderHistory;
+    }
+
+    public Order getCart() {
+        return cart;
+    }
+
+    public void setCart(Order cart) {
+        this.cart = cart;
+    }
+
+    /**
+     * Adds the purchased cart items to the booksOwned list
+     * Adds current cart to order history and clears cart
+     * Should be called after purchase is complete
+     */
+    public void completeCheckout(){
+        orderHistory.add(cart);
+        booksOwned.addAll(cart.getCartList());
+        cart = new Order();
+        //TODO: update firebase
+    }
+
+    public String toString(){
+        String s = "UID: " + m_UID + "\n";
+        s += cart.toString();
+        return s;
     }
 }

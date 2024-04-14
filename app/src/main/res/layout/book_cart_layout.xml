@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/book_cart_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/individualBook"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/cart_book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/commissioner_medium"
+                android:textColor="@color/black"
+                android:text="Book Title"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/cart_book_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Author of Book"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/cart_book_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/commissioner_medium"
+                android:textStyle="bold"
+                android:text="$20.99"
+                android:textSize="18sp"
+                android:textColor="@color/pink"
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/book_cart_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

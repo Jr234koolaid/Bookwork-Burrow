@@ -12,71 +12,43 @@
         android:id="@+id/login_image_header"
         android:layout_width="125dp"
         android:layout_height="175dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/book" />
+        app:srcCompat="@drawable/bookworm_logo" />
 
-    <TextView
+    <TextView style="@style/login_header_text"
         android:id="@+id/login_text_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Bookworm Burrow"
+        android:text="@string/app_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_image_header" />
 
     <!-- Email input -->
 
-    <TextView
-        android:id="@+id/login_text_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Email:"
-        app:layout_constraintStart_toEndOf="@id/login_barrier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_text_header"
-        app:layout_constraintHorizontal_bias="0" />
-
-    <EditText
+    <EditText style="@style/login_edit_text"
         android:id="@+id/login_edit_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
+        android:layout_marginTop="48dp"
         android:inputType="textEmailAddress"
-        android:hint="Enter Email"
+        android:hint="@string/login_hint_email"
+        android:autofillHints="emailAddress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_text_email" />
+        app:layout_constraintTop_toBottomOf="@id/login_text_header" />
 
     <!-- Password input -->
 
-    <TextView
-        android:id="@+id/login_text_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Password:"
-        app:layout_constraintStart_toEndOf="@id/login_barrier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_edit_email"
-        app:layout_constraintHorizontal_bias="0" />
-
-    <EditText
+    <EditText style="@style/login_edit_text"
         android:id="@+id/login_edit_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
+        android:layout_marginTop="24dp"
         android:inputType="textPassword"
-        android:hint="Enter Password"
+        android:hint="@string/login_hint_password"
+        android:autofillHints="password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_text_password" />
+        app:layout_constraintTop_toBottomOf="@id/login_edit_email" />
 
     <!-- Login buttons -->
 
@@ -84,8 +56,8 @@
         android:id="@+id/login_button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Login"
+        android:layout_marginTop="40dp"
+        android:text="@string/login_button_login"
         app:layout_constraintStart_toEndOf="@id/login_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_edit_password"
@@ -95,8 +67,8 @@
         android:id="@+id/login_button_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Forgot Password?"
+        android:layout_marginTop="40dp"
+        android:text="@string/login_button_forgot_password"
         app:layout_constraintStart_toEndOf="@id/login_button_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_edit_password" />
@@ -107,8 +79,10 @@
         android:id="@+id/login_text_need_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Need An Account?"
+        android:layout_marginTop="64dp"
+        android:text="@string/login_text_signup"
+        android:textSize="18sp"
+        android:fontFamily="@font/nerko_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_button_login" />
@@ -117,8 +91,10 @@
         android:id="@+id/login_button_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Signup"
+        android:text="@string/login_button_signup"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@color/transparent"
         app:layout_constraintStart_toEndOf="@id/login_text_need_account"
         app:layout_constraintBaseline_toBaselineOf="@id/login_text_need_account" />
 
