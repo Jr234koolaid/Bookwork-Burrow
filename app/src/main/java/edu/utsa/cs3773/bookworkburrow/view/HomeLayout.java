@@ -18,27 +18,25 @@ public class HomeLayout extends NavigationalLayout {
     }
 
     @Override
-    public void onShow() {
-
-        super.onShow();
+    protected void onDisplay() {
 
         // TODO: Update with the user info
         HomeController controller = new HomeController(mContext);
 
-        TextView welcomeText = mLayoutRoot.findViewById(R.id.home_text_welcome);
+        TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
 
-        ProgressBar bookProgress = mLayoutRoot.findViewById(R.id.home_bar_progress);
+        ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
 
-        TextView progressText = mLayoutRoot.findViewById(R.id.home_text_progress_count);
+        TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
 
-        TextView goalText = mLayoutRoot.findViewById(R.id.home_text_goal);
+        TextView goalText = mLayoutView.findViewById(R.id.home_text_goal);
 
-        Button goalUpdateButton = mLayoutRoot.findViewById(R.id.home_button_update_goal);
+        Button goalUpdateButton = mLayoutView.findViewById(R.id.home_button_update_goal);
         goalUpdateButton.setOnClickListener(controller);
 
-        ImageButton bookContinue = mLayoutRoot.findViewById(R.id.home_button_continue_book);
+        ImageButton bookContinue = mLayoutView.findViewById(R.id.home_button_continue_book);
 
-        ConstraintLayout favoritesLayout = mLayoutRoot.findViewById(R.id.home_constraint_favorites);
+        ConstraintLayout favoritesLayout = mLayoutView.findViewById(R.id.home_constraint_favorites);
     }
 
 } // class HomeLayout
