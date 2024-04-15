@@ -1,106 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background">
+    tools:context=".view.SignupActivity">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+    <!-- Header -->
+
+    <TextView style="@style/login_header_text"
+        android:id="@+id/signup_text_header"
+        android:layout_marginTop="112dp"
+        android:text="@string/login_text_header_signup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Email input -->
+
+    <EditText style="@style/login_edit_text"
+        android:id="@+id/signup_edit_email"
         android:layout_marginTop="64dp"
-        android:src="@drawable/bookworm_logo"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/nerko_one"
-        android:text="Sign Up"
-        android:textColor="@color/very_dark_blue"
-        android:textSize="40sp"
-        android:textStyle="bold"/>
-
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_background"
-        android:hint="First Name"
         android:inputType="textEmailAddress"
-        android:padding="12dp" />
-    <EditText
-        android:id="@+id/lastName"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_background"
-        android:hint="Last Name"
-        android:inputType="textEmailAddress"
-        android:padding="12dp" />
+        android:hint="@string/login_hint_email"
+        android:autofillHints="emailAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_text_header" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_background"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="12dp" />
+    <!-- First name input -->
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:hint="Password"
+    <EditText style="@style/login_edit_text"
+        android:id="@+id/signup_edit_firstname"
+        android:layout_marginTop="24dp"
+        android:inputType="textPersonName"
+        android:hint="@string/login_hint_first_name"
+        android:autofillHints="name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_edit_email" />
+
+    <!-- Last name input -->
+
+    <EditText style="@style/login_edit_text"
+        android:id="@+id/signup_edit_lastname"
+        android:layout_marginTop="24dp"
+        android:inputType="textPersonName"
+        android:hint="@string/login_hint_last_name"
+        android:autofillHints="name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_edit_firstname" />
+
+    <!-- Password input -->
+
+    <EditText style="@style/login_edit_text"
+        android:id="@+id/signup_edit_password"
+        android:layout_marginTop="24dp"
         android:inputType="textPassword"
-        android:padding="12dp"
-        android:background="@drawable/edittext_background"/>
+        android:hint="@string/login_hint_password"
+        android:autofillHints="password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_edit_lastname" />
 
-    <EditText
-        android:id="@+id/confirm_password"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:padding="12dp"
-        android:background="@drawable/edittext_background"/>
+    <!-- Signup -->
 
     <Button
-        android:id="@+id/signup_button"
-        android:layout_width="352dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/commissioner_bold"
-        android:text="Sign Up!"
-        android:background="@drawable/button_background"
-        android:textColor="#FFFFFF"/>
-
-    <TextView
-        android:id="@+id/already_have_account_text"
+        android:id="@+id/signup_button_create_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/commissioner_medium"
-        android:text="@string/already_have_an_account_log_in"
-        android:textColor="@color/very_dark_blue"
-        android:textSize="16sp"/>
+        android:layout_marginTop="40dp"
+        android:text="@string/login_button_create_account"
+        app:layout_constraintStart_toEndOf="@id/signup_barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_edit_password"
+        app:layout_constraintHorizontal_bias="0" />
 
-</LinearLayout>
+    <!-- Barriers -->
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/signup_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="signup_edit_email,signup_edit_firstname,signup_edit_lastname,signup_edit_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
