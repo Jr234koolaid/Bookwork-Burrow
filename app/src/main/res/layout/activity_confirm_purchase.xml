@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/discount_code"
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/commissioner_medium"
-            android:hint="Enter discount code"
+            android:hint="@string/enter_discount_code"
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/very_dark_blue"
@@ -71,12 +72,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/commissioner"
         android:text="Subtotal $"
         android:textColor="@color/black"
         android:textSize="15sp" />
-
     <TextView
         android:id="@+id/discount_text_display"
         android:visibility="gone"
@@ -88,7 +87,6 @@
         android:textSize="15sp"
         android:text="Discount $-"
         />
-
     <TextView
         android:id="@+id/tax"
         android:layout_width="wrap_content"
