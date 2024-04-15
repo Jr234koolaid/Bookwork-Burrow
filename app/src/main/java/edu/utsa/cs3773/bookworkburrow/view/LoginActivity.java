@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,8 @@ import edu.utsa.cs3773.bookworkburrow.controller.LoginController;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
-    private Button loginButton, signupButton;
+    private Button loginButton;
+    private TextView signupButton;
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -33,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
             loginController.logIn(email, password).thenAccept(account -> {
-                        Toast.makeText(this, "Signed into account with UID: " + account.getUID(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Signed in!", Toast.LENGTH_LONG).show();
                         Intent mainIntent = new Intent(this, MainActivity.class);
                         startActivity(mainIntent);
                         finish();

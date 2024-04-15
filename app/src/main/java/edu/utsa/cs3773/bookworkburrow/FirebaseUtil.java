@@ -21,6 +21,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class FirebaseUtil {
 
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * Checks if a user is already logged in using Firebase Auth
@@ -82,7 +83,7 @@ public class FirebaseUtil {
      * @param password
      * @param context
      */
-    public static CompletableFuture<Account> createUser(String email, String password, AppCompatActivity context){
+    public static CompletableFuture<Account> createUser(String firstname, String lastname, String email, String password, AppCompatActivity context){
         CompletableFuture<Account> completableFuture = new CompletableFuture<>();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -98,8 +99,11 @@ public class FirebaseUtil {
                             Log.d(TAG, "createUserWithEmail:success");
                             Log.d("User ID", uid);
                             //TODO: add to firestore
-                            HashMap<String, Object> objectMap = new HashMap<>();
-                            objectMap.put("email", user.getEmail());
+                            HashMap<String, Object> userMap = new HashMap<>();
+                            userMap.put("email", user.getEmail());
+                            userMap.put("first-name", firstname);
+                            userMap.put("last-name", lastname);
+                            db.collection("users").document(user.getUid()).set(userMap);
                             completableFuture.complete(new Account(uid));
                         } else {
                             // User is null, complete exceptionally

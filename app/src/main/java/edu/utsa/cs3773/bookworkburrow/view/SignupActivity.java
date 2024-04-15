@@ -17,6 +17,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
+    private EditText firstName;
+    private EditText lastName;
     private Button signUpButton;
     private TextView loginTextView;
 
@@ -31,11 +33,15 @@ public class SignupActivity extends AppCompatActivity {
         confirmPasswordEditText = findViewById(R.id.confirm_password);
         signUpButton = findViewById(R.id.signup_button);
         loginTextView = findViewById(R.id.already_have_account_text);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
         signUpButton.setOnClickListener(view -> attemptSignUp());
         loginTextView.setOnClickListener(view -> navigateToLogin());
     }
 
     private void attemptSignUp() {
+        String firstname = firstName.getText().toString().trim();
+        String lastname = lastName.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
@@ -52,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        FirebaseUtil.createUser(email, password, this)
+        FirebaseUtil.createUser(firstname, lastname, email, password, this)
                 .thenAccept(account -> {
                     // Navigate to the next activity after successful sign-up
                     Intent nextActivityIntent = new Intent(this, MainActivity.class);
@@ -60,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
                     finish();
                 })
                 .exceptionally(exception -> {
-                    Toast.makeText(this, "Sign-up failed: " + exception.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Sign-up failed: Password must be at least 6 characters long" , Toast.LENGTH_LONG).show();
                     return null;
                 });
     }
