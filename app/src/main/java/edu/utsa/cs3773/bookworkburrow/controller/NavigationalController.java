@@ -17,11 +17,7 @@ public class NavigationalController implements View.OnClickListener {
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.navigational_button_settings) {
-
-            // TODO: INTENT
-
-        } else if (viewID == R.id.navigational_button_home) {
+        if (viewID == R.id.navigational_button_home) {
             mContext.selectHomeLayout();
 
         } else if (viewID == R.id.navigational_button_search) {
@@ -30,8 +26,8 @@ public class NavigationalController implements View.OnClickListener {
         } else if (viewID == R.id.navigational_button_cart) {
             mContext.selectCartLayout();
 
-        } else if (viewID == R.id.navigational_button_bookshelf) {
-            mContext.selectBookshelfLayout();
+        } else if (viewID == R.id.navigational_button_settings) {
+            mContext.selectSettingsLayout();
         }
     }
 
