@@ -22,6 +22,7 @@
     <string name="login_text_header_forgot_password">Forgot Password</string>
     <string name="login_text_header_reset_password">Reset Password</string>
     <string name="login_text_header_signup">Signup</string>
+    <string name="enter_discount_code">Enter discount code</string>
 
     <!-- Home strings -->
     <string name="home_button_update_goal"><u>Update Reading Goal</u></string>
