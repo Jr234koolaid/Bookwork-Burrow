@@ -10,17 +10,15 @@ import edu.utsa.cs3773.bookworkburrow.controller.ResetPasswordController;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    public static final String INTENT_EMAIL = "INTENT_EMAIL";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle _savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        super.onCreate(_savedInstanceState);
+        this.setContentView(R.layout.activity_reset_password);
 
         ResetPasswordController resetPasswordController = new ResetPasswordController(this);
 
-        Button resetButton = findViewById(R.id.password_reset_button_reset);
+        Button resetButton = findViewById(R.id.reset_password_button_reset);
         resetButton.setOnClickListener(resetPasswordController);
     }
 

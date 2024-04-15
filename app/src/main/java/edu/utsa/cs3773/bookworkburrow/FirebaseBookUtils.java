@@ -13,7 +13,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
-
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class FirebaseBookUtils {
@@ -53,6 +52,7 @@ public class FirebaseBookUtils {
 
     public static CompletableFuture<ArrayList<String>> getBooksByTitle(String title){
         CompletableFuture<ArrayList<String>>  completableFuture = new CompletableFuture<>();
+
         db.collection("books").whereEqualTo("title", title).get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){

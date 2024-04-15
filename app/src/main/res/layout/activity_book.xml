@@ -8,13 +8,14 @@
     tools:context=".view.CartActivity">
 
     <TextView
+        android:id="@+id/titleContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/commissioner_medium"
         android:layout_margin="30dp"
-        android:textSize="35sp"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="Title"
         android:textColor="@color/black"
-        android:text="Title" />
+        android:textSize="35sp" />
 
     <!--Text from the book goes here-->
     <ScrollView
