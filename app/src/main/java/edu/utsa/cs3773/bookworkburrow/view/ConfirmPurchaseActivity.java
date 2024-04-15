@@ -1,6 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.annotation.Suppres;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +33,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
 
         account = FirebaseUtil.getCurrUser();
 
-        ImageView backButton = findViewById(R.id.back_arrow);
+        backButton = findViewById(R.id.back_arrow);
         booksContainer = findViewById(R.id.booksAddedContainer);
         Button checkout = findViewById(R.id.checkout_button);
         Button cancel = findViewById(R.id.cancel_button);
