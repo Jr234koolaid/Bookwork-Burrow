@@ -17,21 +17,17 @@ public class NavigationalController implements View.OnClickListener {
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.navigational_button_settings) {
-
-            // TODO: INTENT
-
-        } else if (viewID == R.id.navigational_button_home) {
-            mContext.selectHomeLayout();
+        if (viewID == R.id.navigational_button_home) {
+            mContext.show(NavigationalActivity.NavigationState.HOME);
 
         } else if (viewID == R.id.navigational_button_search) {
-            mContext.selectSearchLayout();
+            mContext.show(NavigationalActivity.NavigationState.SEARCH);
 
         } else if (viewID == R.id.navigational_button_cart) {
-            mContext.selectCartLayout();
+            mContext.show(NavigationalActivity.NavigationState.CART);
 
-        } else if (viewID == R.id.navigational_button_bookshelf) {
-            mContext.selectBookshelfLayout();
+        } else if (viewID == R.id.navigational_button_settings) {
+            mContext.show(NavigationalActivity.NavigationState.SETTINGS);
         }
     }
 

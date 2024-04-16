@@ -40,7 +40,7 @@ public class LoginController implements View.OnClickListener {
         } else if (viewID == R.id.login_button_forgot_password) {
             mContext.startActivity(new Intent(mContext, ForgotPasswordActivity.class));
 
-        } else if (viewID == R.id.login_button_signup) {
+        } else if (viewID == R.id.login_button_create_account) {
             mContext.startActivity(new Intent(mContext, SignupActivity.class));
         }
     }

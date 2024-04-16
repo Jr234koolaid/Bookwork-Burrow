@@ -23,7 +23,7 @@ public class ForgotPasswordController implements View.OnClickListener {
     public void onClick(View _view) {
 
         int viewID = _view.getId();
-        if (viewID == R.id.forgot_password_button_continue) {
+        if (viewID == R.id.forgot_password_button_confirm) {
 
             EditText emailEditText = mContext.findViewById(R.id.forgot_password_edit_email);
 
