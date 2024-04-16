@@ -36,27 +36,6 @@ public class CartLayout extends NavigationalLayout {
         AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
         checkoutButton.setOnClickListener(view -> mContext.startActivity(new Intent(mContext, ConfirmPurchaseActivity.class)));
 
-        // Dummy data for account
-        Book book0 = new Book();
-        book0.setTitle("Percy Jackson and the Lightning Thief");
-        book0.setAuthor("Rick Riordan");
-        book0.setPrice(15.99);
-
-        Book book1 = new Book();
-        book1.setTitle("Percy Jackson and the Titan's Curse");
-        book1.setAuthor("Rick Riordan");
-        book1.setPrice(15.99);
-
-        Book book2 = new Book();
-        book2.setTitle("Percy Jackson and the Sea of Monsters");
-        book2.setAuthor("Rick Riordan");
-        book2.setPrice(15.99);
-
-        mCart.addBook(book0);
-        mCart.addBook(book1);
-        mCart.addBook(book2);
-        mCart.addBook(book0);
-
         this.updateCart();
     }
 
