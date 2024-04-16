@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.HomeController;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
@@ -22,7 +22,7 @@ public class HomeLayout extends NavigationalLayout {
     protected void onDisplay() {
 
         // TODO: Update with the user info
-        Account account = FirebaseUtil.getCurrUser();
+        Account account = FirebaseUserUtil.getCurrUser();
 
         HomeController controller = new HomeController(mContext);
 

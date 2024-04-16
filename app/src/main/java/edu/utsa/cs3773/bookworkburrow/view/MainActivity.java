@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(_savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
-        if (FirebaseUtil.isLoggedIn()) {
+        if (FirebaseUserUtil.isLoggedIn()) {
 //            //tests for firebase utils
 //            Account account = FirebaseUtil.getCurrUser();
 //            FirebaseOrderUtil.getOrderHistory(account.getUID()).thenAccept(ArrayList ->{
