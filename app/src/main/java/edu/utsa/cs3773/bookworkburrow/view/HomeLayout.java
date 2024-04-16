@@ -3,13 +3,14 @@ package edu.utsa.cs3773.bookworkburrow.view;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
+import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.HomeController;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
 
 public class HomeLayout extends NavigationalLayout {
 
@@ -18,27 +19,33 @@ public class HomeLayout extends NavigationalLayout {
     }
 
     @Override
-    public void onShow() {
-
-        super.onShow();
+    protected void onDisplay() {
 
         // TODO: Update with the user info
+        Account account = FirebaseUtil.getCurrUser();
+
         HomeController controller = new HomeController(mContext);
 
-        TextView welcomeText = mLayoutRoot.findViewById(R.id.home_text_welcome);
+        TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
+        welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, "User"));
 
-        ProgressBar bookProgress = mLayoutRoot.findViewById(R.id.home_bar_progress);
+        ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
+        bookProgress.setProgress((int)((21.0 / 30.0) * 100.0));
 
-        TextView progressText = mLayoutRoot.findViewById(R.id.home_text_progress_count);
+        TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
+        progressText.setText(mContext.getString(R.string.home_text_progress_count, 21));
 
-        TextView goalText = mLayoutRoot.findViewById(R.id.home_text_goal);
+        TextView goalText = mLayoutView.findViewById(R.id.home_text_goal);
+        goalText.setText(mContext.getString(R.string.home_text_progress_goal, 30));
 
-        Button goalUpdateButton = mLayoutRoot.findViewById(R.id.home_button_update_goal);
+        Button goalUpdateButton = mLayoutView.findViewById(R.id.home_button_update_goal);
         goalUpdateButton.setOnClickListener(controller);
 
-        ImageButton bookContinue = mLayoutRoot.findViewById(R.id.home_button_continue_book);
+        ImageButton bookContinue = mLayoutView.findViewById(R.id.home_button_continue_book);
 
-        ConstraintLayout favoritesLayout = mLayoutRoot.findViewById(R.id.home_constraint_favorites);
+        LinearLayout favoritesLayout = mLayoutView.findViewById(R.id.home_layout_favorites);
+
+        LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
     }
 
 } // class HomeLayout
