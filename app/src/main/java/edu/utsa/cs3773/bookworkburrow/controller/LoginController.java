@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.view.LoginActivity;
@@ -31,7 +31,7 @@ public class LoginController implements View.OnClickListener {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            FirebaseUtil.loginWithUsernamePassword(email, password, mContext).thenAccept(account -> {
+            FirebaseUserUtil.loginWithUsernamePassword(email, password, mContext).thenAccept(account -> {
 
                 mContext.startActivity(new Intent(mContext, NavigationalActivity.class));
                 mContext.finish();
