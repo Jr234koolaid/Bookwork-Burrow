@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -7,10 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.widget.NestedScrollView;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.controller.CartController;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
@@ -32,10 +33,8 @@ public class CartLayout extends NavigationalLayout {
         mCart = account.getCart();
         mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
-        CartController cartController = new CartController(mContext);
-
         AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
-        checkoutButton.setOnClickListener(cartController);
+        checkoutButton.setOnClickListener(view -> mContext.startActivity(new Intent(mContext, ConfirmPurchaseActivity.class)));
 
         // Dummy data for account
         Book book0 = new Book();
@@ -63,7 +62,9 @@ public class CartLayout extends NavigationalLayout {
 
     private void updateCart() {
 
-        LinearLayout bookContainer = mLayoutView.findViewById(R.id.cart_layout_book_container);
+        NestedScrollView bookScroll = mLayoutView.findViewById(R.id.cart_scroll_book_container);
+
+        LinearLayout bookContainer = bookScroll.findViewById(R.id.cart_layout_book_container);
         bookContainer.removeAllViews();
 
         for (Book book : mCart.getCartList()) {
@@ -80,7 +81,7 @@ public class CartLayout extends NavigationalLayout {
             bookPriceText.setText(mContext.getString(R.string.cart_book_text_price, book.getPrice()));
 
             Button removeButton = bookLayout.findViewById(R.id.cart_book_button_remove);
-            removeButton.setOnClickListener((view) -> this.removeBook(book));
+            removeButton.setOnClickListener(view -> this.removeBook(book));
 
             bookContainer.addView(bookLayout);
         }
@@ -90,8 +91,10 @@ public class CartLayout extends NavigationalLayout {
 
     private void removeBook(Book _book) {
 
+        // Remove book from cart
         mCart.removeBook(_book);
 
+        // Update cart
         this.updateCart();
     }
 

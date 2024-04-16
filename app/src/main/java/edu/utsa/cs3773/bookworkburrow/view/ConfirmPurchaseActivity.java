@@ -1,7 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -146,9 +145,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void returnToCart(){
-        Intent cartView = new Intent(this, CartActivity.class);
-        startActivity(cartView);
-
+        this.finish();
     }
 
     public void handleCheckout(){
