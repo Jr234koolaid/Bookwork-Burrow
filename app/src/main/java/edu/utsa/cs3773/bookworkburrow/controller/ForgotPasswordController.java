@@ -1,14 +1,7 @@
 package edu.utsa.cs3773.bookworkburrow.controller;
 
 import android.view.View;
-import android.widget.EditText;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.firebase.auth.FirebaseAuth;
-
-import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.ErrorDialog;
 import edu.utsa.cs3773.bookworkburrow.view.ForgotPasswordActivity;
 
 public class ForgotPasswordController implements View.OnClickListener {
@@ -22,36 +15,6 @@ public class ForgotPasswordController implements View.OnClickListener {
     @Override
     public void onClick(View _view) {
 
-        int viewID = _view.getId();
-        if (viewID == R.id.forgot_password_button_confirm) {
-
-            EditText emailEditText = mContext.findViewById(R.id.forgot_password_edit_email);
-
-            String email = emailEditText.getText().toString();
-
-            // TODO: Check firebase stuff here
-            // TODO: Put into firebase utils
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(mContext, task -> {
-
-                if (task.isSuccessful()) {
-
-                    // TODO: Change?
-                    new AlertDialog.Builder(mContext)
-                            .setPositiveButton("OK", (dialog, i) -> {
-                                mContext.finish();
-                            })
-                            .setTitle("Success!")
-                            .setMessage("A link to reset your password has been set")
-                            .show();
-
-                } else {
-
-                    ErrorDialog errorDialog = ErrorDialog.getInstance();
-                    errorDialog.setContext(mContext);
-                    errorDialog.display("Could not find email");
-                }
-            });
-        }
     }
 
 } // class ForgotPasswordController

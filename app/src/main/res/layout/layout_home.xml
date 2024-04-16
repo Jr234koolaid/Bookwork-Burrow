@@ -71,43 +71,19 @@
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
         app:layout_constraintTop_toBottomOf="@id/home_text_goal" />
 
-    <!-- Continue reading -->
-
-    <TextView
-        android:id="@+id/home_text_continue_book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/commissioner_medium"
-        android:text="@string/home_text_continue"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
-
-    <!-- Placeholder -->
-    <ImageButton
-        android:id="@+id/home_button_continue_book"
-        android:layout_width="140dp"
-        android:layout_height="195dp"
-        android:layout_marginTop="18dp"
-        android:background="@color/gray"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_text_continue_book" />
-
     <!-- Favorites -->
 
     <TextView
         android:id="@+id/home_text_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_favorites"
         android:textColor="@color/black"
         android:textSize="26sp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_button_continue_book" />
+        app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
 
     <HorizontalScrollView
         android:id="@+id/home_scroll_favorites"
@@ -123,12 +99,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- TODO: REMOVE --><!-- Placeholder-->
-            <ImageButton
-                android:tag="Book"
-                android:layout_width="140dp"
-                android:layout_height="195dp"
-                android:background="@color/gray" />
+            <!-- TODO: REMOVE -->
+<!--            <ImageButton-->
+<!--                android:tag="Book"-->
+<!--                android:layout_width="140dp"-->
+<!--                android:layout_height="195dp"-->
+<!--                android:background="@color/gray" />-->
 
         </LinearLayout>
 
@@ -140,7 +116,7 @@
         android:id="@+id/home_text_bookshelf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="56dp"
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_bookshelf"
         android:textColor="@color/black"
@@ -162,12 +138,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- TODO: REMOVE --><!-- Placeholder-->
-            <ImageButton
-                android:tag="Book"
-                android:layout_width="140dp"
-                android:layout_height="195dp"
-                android:background="@color/gray" />
+            <!-- TODO: REMOVE -->
+<!--            <ImageButton-->
+<!--                android:tag="Book"-->
+<!--                android:layout_width="140dp"-->
+<!--                android:layout_height="195dp"-->
+<!--                android:background="@color/gray" />-->
 
         </LinearLayout>
 

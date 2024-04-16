@@ -1,19 +1,16 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.widget.NestedScrollView;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.controller.NavigationalController;
 
 public class NavigationalActivity extends AppCompatActivity {
 
-    public enum NavigationState { NONE, HOME, SEARCH, CART, SETTINGS }
+    private enum NavigationState { NONE, HOME, SEARCH, CART, SETTINGS }
 
     private NavigationState     mNavigationState;
 
@@ -23,9 +20,6 @@ public class NavigationalActivity extends AppCompatActivity {
     private ImageButton         mSearchButton;
     private ImageButton         mCartButton;
     private ImageButton         mSettingsButton;
-
-    private Drawable            mBarBackground;
-    private Drawable            mBarBackgroundSelected;
 
     private HomeLayout          mHomeLayout;
     private CartLayout          mCartLayout;
@@ -40,54 +34,53 @@ public class NavigationalActivity extends AppCompatActivity {
 
         mScrollView = this.findViewById(R.id.navigational_scroll);
 
-        mBarBackground = AppCompatResources.getDrawable(this, R.drawable.background_bar);
-        mBarBackgroundSelected = AppCompatResources.getDrawable(this, R.drawable.background_bar_selected);
-
         mHomeLayout = new HomeLayout(this, mScrollView);
         mCartLayout = new CartLayout(this, mScrollView);
 
-        NavigationalController controller = new NavigationalController(this);
-
         mHomeButton = this.findViewById(R.id.navigational_button_home);
-        mHomeButton.setOnClickListener(controller);
+        mHomeButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.HOME));
 
         mSearchButton = this.findViewById(R.id.navigational_button_search);
-        mSearchButton.setOnClickListener(controller);
+        mSearchButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.SEARCH));
 
         mCartButton = this.findViewById(R.id.navigational_button_cart);
-        mCartButton.setOnClickListener(controller);
+        mCartButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.CART));
 
         mSettingsButton = this.findViewById(R.id.navigational_button_settings);
-        mSettingsButton.setOnClickListener(controller);
+        mSettingsButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.SETTINGS));
 
         // show home as default
         this.show(NavigationState.HOME);
     }
 
-    public void show(NavigationState _state) {
+    private void show(NavigationState _state) {
 
         if (mNavigationState == _state) return;
 
         switch (_state) {
 
             case HOME:
-                this.selectLayout(_state, mHomeLayout, mHomeButton);
+                this.selectLayout(mHomeLayout, mHomeButton, R.drawable.home_selected);
                 break;
 
             case SEARCH:
-                this.selectLayout(_state, null, mSearchButton);
+                this.selectLayout(null, mSearchButton, R.drawable.search_selected);
                 break;
 
             case CART:
-                this.selectLayout(_state, mCartLayout, mCartButton);
+                this.selectLayout(mCartLayout, mCartButton, R.drawable.shopping_cart_selected);
                 break;
 
             case SETTINGS:
-                this.selectLayout(_state, null, mSettingsButton);
+                this.selectLayout(null, mSettingsButton, R.drawable.settings_selected);
+                break;
         }
+
+        // Set navigation state
+        mNavigationState = _state;
     }
 
-    private void selectLayout(NavigationState _state, NavigationalLayout _layout, ImageButton _button) {
+    private void selectLayout(NavigationalLayout _layout, ImageButton _button, int _resource) {
 
         // Unselect current layout
         this.unselectLayout();
@@ -95,34 +88,31 @@ public class NavigationalActivity extends AppCompatActivity {
         // Add layout
         _layout.onShow();
 
-        // Set status background
-        _button.setBackground(mBarBackgroundSelected);
-
-        // Set navigation state
-        mNavigationState = _state;
+        // Set image resource
+        _button.setImageResource(_resource);
     }
 
     private void unselectLayout() {
 
         if (mNavigationState == NavigationState.NONE) return;
 
-        // Reset status background
+        // Reset image resource
         switch (mNavigationState) {
 
             case HOME:
-                mHomeButton.setBackground(mBarBackground);
+                mHomeButton.setImageResource(R.drawable.home);
                 break;
 
             case SEARCH:
-                mSearchButton.setBackground(mBarBackground);
+                mSearchButton.setImageResource(R.drawable.search);
                 break;
 
             case CART:
-                mCartButton.setBackground(mBarBackground);
+                mCartButton.setImageResource(R.drawable.shopping_cart);
                 break;
 
             case SETTINGS:
-                mSettingsButton.setBackground(mBarBackground);
+                mSettingsButton.setImageResource(R.drawable.settings);
                 break;
         }
 

@@ -15,8 +15,6 @@ public class CartController implements View.OnClickListener {
     @Override
     public void onClick(View _view) {
 
-        int viewId = _view.getId();
-
     }
 
 } // class CartController
