@@ -191,6 +191,13 @@ public class FirebaseUserUtil {
         return completableFuture;
     }
 
+    /**
+     * Logs out the current user
+     */
+    public static void logOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
 
 
 
