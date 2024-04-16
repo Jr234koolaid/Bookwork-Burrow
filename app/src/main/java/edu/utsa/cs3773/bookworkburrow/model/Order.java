@@ -11,6 +11,7 @@ import java.util.TimeZone;
 public class Order {
     private ArrayList<Book> cartList;
     private Calendar date;
+    double discount;
 
     /**
      * initializes a new order object
@@ -18,6 +19,7 @@ public class Order {
     public Order(){
         cartList= new ArrayList<Book>();
         date = Calendar.getInstance(TimeZone.getDefault());
+        discount = 0;
     }
 
     /**
@@ -53,11 +55,13 @@ public class Order {
      * @return Double, current price of the total price after tax
      */
     public double getTotalWithTax() {
-        return getSubtotal() + getTax();
+        double price = getSubtotal() + getTax();
+        if(discount > 0) price -= price * discount;
+        return price;
     }
 
     public double getTax(){
-        return getSubtotal() * 0.08;
+        return getSubtotal() * 0.0825;
     }
 
 
@@ -105,5 +109,13 @@ public class Order {
         String s = "Order:";
         for(Book book : cartList) s += book.getTitle() + " | ";
         return s;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount / 100;
     }
 }
