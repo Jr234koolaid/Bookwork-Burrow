@@ -33,7 +33,7 @@ public class SignupController implements View.OnClickListener {
             String lastName = lastnameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            FirebaseUtil.createUser(email, password, mContext).thenAccept(account -> {
+            FirebaseUtil.createUser(firstName, lastName, email, password, mContext).thenAccept(account -> {
 
                 // TODO: Set user info here
 
