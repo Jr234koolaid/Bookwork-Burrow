@@ -4,36 +4,43 @@
     <string name="app_name">BookworkBurrow</string>
 
     <!-- Login strings -->
-    <string name="login_hint_email">Enter Email</string>
-    <string name="login_hint_password">Enter Password</string>
-    <string name="login_hint_new_password">Enter New Password</string>
-    <string name="login_hint_confirm_password">Confirm Password</string>
-    <string name="login_hint_first_name">Enter First Name</string>
-    <string name="login_hint_last_name">Enter Last Name</string>
-
+    <string name="login_button_forgot_password"><u>Forgot Password?</u></string>
+    <string name="login_button_create_account"><u>Create an Account</u></string>
     <string name="login_button_login">Login</string>
-    <string name="login_button_forgot_password">Forgot Password?</string>
-    <string name="login_button_signup"><u>Signup</u></string>
-    <string name="login_button_continue">Continue</string>
+    <string name="login_button_confirm">Confirm</string>
     <string name="login_button_reset_password">Reset Password</string>
-    <string name="login_button_create_account">Create Account</string>
 
-    <string name="login_text_signup">Need an account?</string>
+    <string name="login_text_email">Email</string>
+    <string name="login_text_password">Password</string>
+    <string name="login_text_firstname">First Name</string>
+    <string name="login_text_lastname">Last Name</string>
+    <string name="login_text_signup">Signup</string>
     <string name="login_text_header_forgot_password">Forgot Password</string>
     <string name="login_text_header_reset_password">Reset Password</string>
-    <string name="login_text_header_signup">Signup</string>
-    <string name="enter_discount_code">Enter discount code</string>
+    <string name="login_text_header_create_account">Create Account</string>
 
     <!-- Home strings -->
     <string name="home_button_update_goal"><u>Update Reading Goal</u></string>
 
-    <string name="home_text_header_welcome_placeholder">Welcome, User</string>
-    <string name="home_text_progress_count_placeholder">21</string>
-    <string name="home_text_progress_goal_placeholder">/30 books</string>
     <string name="home_text_continue">Continue Reading:</string>
     <string name="home_text_favorites">Your Favorites:</string>
-    <string name="forgot_password"><u>Forgot Password?</u></string>
-    <string name="create_an_account"><u>Create an Account</u></string>
-    <string name="already_have_an_account_log_in">Already have an account? <u>Log in</u></string>
+    <string name="home_text_bookshelf">Your Bookshelf:</string>
+    <string name="home_text_header_welcome">Welcome, %1$s</string>
+    <string name="home_text_progress_count">%1$d</string>
+    <string name="home_text_progress_goal">/%1$d books</string>
+
+    <!-- Cart strings -->
+    <string name="cart_button_checkout">Checkout</string>
+    <string name="cart_book_button_remove">Remove</string>
+
+    <string name="cart_text_subtotal">Subtotal</string>
+    <string name="cart_text_subtotal_cost">$%1$.2f</string>
+    <string name="cart_text_header_cart">Your Cart</string>
+    <string name="cart_book_text_title">%1$s</string>
+    <string name="cart_book_text_author">%1$s</string>
+    <string name="cart_book_text_price">$%1$.2f</string>
+
+    <!-- Confirm purchase strings -->
+    <string name="enter_discount_code">Enter discount code</string>
 
 </resources>
