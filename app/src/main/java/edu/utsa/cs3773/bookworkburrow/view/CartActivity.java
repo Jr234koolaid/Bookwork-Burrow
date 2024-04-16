@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -32,7 +31,7 @@ public class CartActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        account = FirebaseUtil.getCurrUser();
+        account = FirebaseUserUtil.getCurrUser();
         bookContainer = findViewById(R.id.booksAddedContainer);
         subtotal = findViewById(R.id.subtotal);
         checkout = findViewById(R.id.checkout_button);

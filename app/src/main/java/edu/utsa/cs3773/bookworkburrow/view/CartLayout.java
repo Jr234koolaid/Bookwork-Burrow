@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.widget.NestedScrollView;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -28,7 +28,7 @@ public class CartLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        Account account = FirebaseUtil.getCurrUser();
+        Account account = FirebaseUserUtil.getCurrUser();
 
         mCart = account.getCart();
         mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
