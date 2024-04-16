@@ -25,7 +25,6 @@ public class Book {
 
     public Book(String enterId){
         id = enterId;
-        // TODO: retrieve book information from database via id
     }
 
     public String getTitle(){ return title; }

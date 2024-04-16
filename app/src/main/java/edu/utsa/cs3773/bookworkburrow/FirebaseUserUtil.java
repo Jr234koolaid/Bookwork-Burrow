@@ -7,13 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 
-public class FirebaseUtil {
+public class FirebaseUserUtil {
 
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     /**
      * Checks if a user is already logged in using Firebase Auth
@@ -54,9 +57,9 @@ public class FirebaseUtil {
                         // Ensure the user is not null
                         if (user != null) {
                             String uid = user.getUid();
+                            Account account = new Account(uid);
                             // Successfully signed in, complete the future with the result
                             completableFuture.complete(new Account(uid));
-                            //TODO: load all of their info
                         } else {
                             // User is null, complete exceptionally
                             completableFuture.completeExceptionally(new Exception("FirebaseUser is null"));
@@ -98,6 +101,10 @@ public class FirebaseUtil {
                             userMap.put("email", user.getEmail());
                             userMap.put("first-name", firstname);
                             userMap.put("last-name", lastname);
+                            userMap.put("books-owned", new ArrayList<>());
+                            userMap.put("books-favorited", new ArrayList<>());
+                            userMap.put("orders", new ArrayList<>());
+                            userMap.put("reading-goal", 5);
                             db.collection("users").document(user.getUid()).set(userMap);
                             completableFuture.complete(new Account(uid));
                         } else {
@@ -117,21 +124,33 @@ public class FirebaseUtil {
 
     /**
      * Updates a string value on the database for user objects
-     * @param documentID userID
+     * @param userID userID
      * @param field which attribute to change
      * @param value the updated value
      */
-    public static void updateUserStringField(String documentID, String field, double value){
-        db.collection("users").document(documentID).update(field, value);
+    public static CompletableFuture<Boolean> updateUserStringField(String userID, String field, String value){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(userID).update(field, value)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) completableFuture.complete(true);
+                    else completableFuture.completeExceptionally(new Throwable(task.getException()));
+                });
+        return completableFuture;
     }
 
     /**
      * Updates the reading goal on the database for user objects
-     * @param documentID userID
+     * @param userID userID
      * @param value the updated value
      */
-    public static void updateUserReadingGoal(String documentID, int value){
-        db.collection("users").document(documentID).update("reading-goal", value);
+    public static CompletableFuture<Boolean> setUserReadingGoal(String userID, int value){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(userID).update("reading-goal", value)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) completableFuture.complete(true);
+                    else completableFuture.completeExceptionally(new Throwable(task.getException()));
+                });
+        return completableFuture;
     }
 
     /**
@@ -156,8 +175,31 @@ public class FirebaseUtil {
         return completableFuture;
     }
 
+    /**
+     * Resets the user's password with a new string
+     * @param newPassword new password to set
+     * @return boolean whether it was successful or not
+     */
+    public static CompletableFuture<Boolean> resetPassword(String newPassword){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        user.updatePassword(newPassword).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) completableFuture.complete(true);
+            else completableFuture.completeExceptionally(new Throwable(task.getException()));
+        });
+        return completableFuture;
+    }
+
+    /**
+     * Logs out the current user
+     */
+    public static void logOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
 
 
-    //TODO: get all owned books, all favorites, all orders
+
+
 
 }

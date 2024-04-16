@@ -157,6 +157,8 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         // Inflate the individual book layout
         LinearLayout confirmation = (LinearLayout) inflater.inflate(R.layout.purchase_complete, null, false);
+        TextView code = confirmation.findViewById(R.id.confirmation_code);
+        code.setText(confirmationCode);
         Button returnHome = confirmation.findViewById(R.id.purchase_return_home);
         returnHome.setOnClickListener(view ->returnToCart());
         root.addView(confirmation);
