@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
@@ -95,6 +96,8 @@ public class NavigationalActivity extends AppCompatActivity {
 
         if (mNavigationState == NavigationState.CART) return;
 
+        Intent cartActivity = new Intent(this, CartActivity.class);
+        startActivity(cartActivity);
         // Unselect current layout
         this.unselectLayout();
 

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                     .exceptionally(throwable -> {
                         Log.e(TAG, "Failed to sign into account", throwable);
                         return null;
-                    });;
+                    });
         });
         signupButton.setOnClickListener(view -> {
             Intent signUpIntent = new Intent(LoginActivity.this, SignupActivity.class);
@@ -52,4 +52,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-} // class LoginActivity
+}

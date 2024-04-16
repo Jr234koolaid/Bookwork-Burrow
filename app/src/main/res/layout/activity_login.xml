@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="64dp"
-        android:src="@drawable/bookworm_logo"/> <!-- Replace with your logo drawable -->
+        android:src="@drawable/bookworm_logo"/>
 
     <TextView
         style="@style/login_header_text"
