@@ -38,14 +38,14 @@ public class FirebaseDiscountUtils {
     }
 
     public static CompletableFuture<Double> getAmountByCode(String code){
-        CompletableFuture completableFuture = new CompletableFuture<>();
+        CompletableFuture<Double> completableFuture = new CompletableFuture<>();
         DocumentReference doc = db.collection("discount-codes").document(code);
         doc.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    double amount = document.getDouble("percent-off");
+                    double amount = Double.parseDouble(document.get("percent-off").toString());
                     completableFuture.complete(amount);
                 } else {
                     Log.d(TAG, "No such document");

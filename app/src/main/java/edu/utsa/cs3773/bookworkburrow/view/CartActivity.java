@@ -111,15 +111,15 @@ public class CartActivity extends AppCompatActivity
             case R.id.nav_search:
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                Log.d("Nav bar clicked", "Transactions");
+                Log.d("Nav bar clicked", "BookShelf");
                 break;
             case R.id.nav_cart:
                 intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
-                Log.d("Nav bar clicked", "Budget");
+                Log.d("Nav bar clicked", "Cart");
                 break;
             default:
-                Log.d("Nav bar clicked", "Transfer");
+                Log.d("Nav bar clicked", "Search");
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;

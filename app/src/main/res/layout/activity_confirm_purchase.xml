@@ -53,7 +53,6 @@
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/commissioner_medium"
             android:hint="@string/enter_discount_code"
-            android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/very_dark_blue"
             android:textSize="15sp" />
