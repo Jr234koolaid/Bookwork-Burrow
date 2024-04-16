@@ -40,4 +40,7 @@
     <string name="cart_book_text_author">%1$s</string>
     <string name="cart_book_text_price">$%1$.2f</string>
 
+    <!-- Confirm purchase strings -->
+    <string name="enter_discount_code">Enter discount code</string>
+
 </resources>
