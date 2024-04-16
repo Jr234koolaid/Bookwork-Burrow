@@ -1,52 +1,58 @@
 package edu.utsa.cs3773.bookworkburrow.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+
+import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
 
 public class Account {
 
-    private final String m_UID;
-    private String  m_email;
-    private String  m_firstName;
-    private String  m_lastName;
-    ArrayList<Book> booksOwned;
-    ArrayList<Book> favorites;
-    ArrayList<Order> orderHistory;
+    private String UID;
+    private String email;
+    private String firstName;
+    private String lastName;
+    ArrayList<String> booksOwned;
+    ArrayList<String> favorites;
+    ArrayList<String> orderHistory;
     Order cart;
+    String cartID;
     int readingGoal;
 
-    public Account(String _UID) {
+    public Account(String UID) {
         booksOwned = new ArrayList<>();
         orderHistory = new ArrayList<>();
         cart = new Order();
-        m_UID = _UID;
+        this.UID = UID;
     }
 
     public String getUID() {
-        return m_UID;
+        return UID;
     }
 
     public String getEmail() {
-        return m_email;
+        return email;
     }
 
     public String getFirstName() {
-        return m_firstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return m_lastName;
+        return lastName;
     }
 
     public void setEmail(String _email) {
-        m_email = _email;
+        email = _email;
     }
 
     public void setFirstName(String _firstName) {
-        m_firstName = _firstName;
+        firstName = _firstName;
     }
 
     public void setLastName(String _lastName) {
-        m_lastName = _lastName;
+        lastName = _lastName;
     }
 
     public int getReadingGoal() {
@@ -57,27 +63,27 @@ public class Account {
         this.readingGoal = readingGoal;
     }
 
-    public ArrayList<Book> getBooksOwned() {
+    public ArrayList<String> getBooksOwned() {
         return booksOwned;
     }
 
-    public void setBooksOwned(ArrayList<Book> booksOwned) {
+    public void setBooksOwned(ArrayList<String> booksOwned) {
         this.booksOwned = booksOwned;
     }
 
-    public ArrayList<Book> getFavorites() {
+    public ArrayList<String> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(ArrayList<Book> favorites) {
+    public void setFavorites(ArrayList<String> favorites) {
         this.favorites = favorites;
     }
 
-    public ArrayList<Order> getOrderHistory() {
+    public ArrayList<String> getOrderHistory() {
         return orderHistory;
     }
 
-    public void setOrderHistory(ArrayList<Order> orderHistory) {
+    public void setOrderHistory(ArrayList<String> orderHistory) {
         this.orderHistory = orderHistory;
     }
 
@@ -94,16 +100,34 @@ public class Account {
      * Adds current cart to order history and clears cart
      * Should be called after purchase is complete
      */
-    public void completeCheckout(){
-        orderHistory.add(cart);
-        booksOwned.addAll(cart.getCartList());
-        cart = new Order();
-        //TODO: update firebase
+    public String completeCheckout(){
+        FirebaseOrderUtil.addOrder(UID, cart).thenAccept(String ->{
+            if(String.length() > 0){
+                cartID = String;
+                orderHistory.add(cartID);
+                cart = new Order();
+            }
+            else cartID = "Error processing";
+        });
+
+        return cartID;
     }
 
     public String toString(){
-        String s = "UID: " + m_UID + "\n";
+        String s = "UID: " + UID + "\n";
         s += cart.toString();
         return s;
     }
+
+    /**
+     * Adds a book to the user's favorites list
+     * @param bookID ID of book to add
+     */
+    public void addBookToFavorites(String bookID){
+        FirebaseUtil.addToUserList(UID, "books-favorited", bookID)
+                .thenAccept(Boolean ->{
+            if(Boolean) Log.d("Added to favorites", bookID + " added to favorites");
+        });
+    }
+
 }

@@ -1,20 +1,14 @@
 package edu.utsa.cs3773.bookworkburrow;
 
 import static android.content.ContentValues.TAG;
-
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
-
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 
 public class FirebaseUtil {
@@ -33,9 +27,11 @@ public class FirebaseUtil {
     public static Account getCurrUser(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
-            return new Account(user.getUid());
+            String id = user.getUid();
+            Account account = new Account(id);
+            return account;
         }
-        else return new Account("user not found");
+        return new Account("user not found");
     }
 
     /**
@@ -60,6 +56,7 @@ public class FirebaseUtil {
                             String uid = user.getUid();
                             // Successfully signed in, complete the future with the result
                             completableFuture.complete(new Account(uid));
+                            //TODO: load all of their info
                         } else {
                             // User is null, complete exceptionally
                             completableFuture.completeExceptionally(new Exception("FirebaseUser is null"));
@@ -96,7 +93,7 @@ public class FirebaseUtil {
                             String uid = user.getUid();
                             Log.d(TAG, "createUserWithEmail:success");
                             Log.d("User ID", uid);
-                            //TODO: add to firestore
+                            //add to firestore
                             HashMap<String, Object> userMap = new HashMap<>();
                             userMap.put("email", user.getEmail());
                             userMap.put("first-name", firstname);
@@ -119,30 +116,48 @@ public class FirebaseUtil {
     }
 
     /**
-     * Deletes the account in Firestore given the account object
-     * @param account
+     * Updates a string value on the database for user objects
+     * @param documentID userID
+     * @param field which attribute to change
+     * @param value the updated value
      */
-    public static void deleteUser(Account account){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(account.getUID()) // Use the actual document ID
-                .delete()
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully deleted!"))
-                .addOnFailureListener(e -> Log.w(TAG, "Error deleting document", e));
+    public static void updateUserStringField(String documentID, String field, double value){
+        db.collection("users").document(documentID).update(field, value);
     }
 
-    public static void readUsers(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .get()
+    /**
+     * Updates the reading goal on the database for user objects
+     * @param documentID userID
+     * @param value the updated value
+     */
+    public static void updateUserReadingGoal(String documentID, int value){
+        db.collection("users").document(documentID).update("reading-goal", value);
+    }
+
+    /**
+     * Updates a list (books owned, favorites, orders) of user with a new value
+     * @param userID userID of user
+     * @param list list name (books-owned, books-favorited, orders)
+     * @param valueID ID of book or order to add to collected
+     * @return boolean if successfully added
+     */
+    public static CompletableFuture<Boolean> addToUserList(String userID, String list, String valueID){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(userID).update(list, valueID)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData());
-                        }
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
+                    if(task.isSuccessful()){
+                        completableFuture.complete(true);
+                    }
+                    else{
+                        completableFuture.completeExceptionally(new Throwable("Could not retrieve books"));
                     }
                 });
+
+        return completableFuture;
     }
+
+
+
+    //TODO: get all owned books, all favorites, all orders
 
 }
