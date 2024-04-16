@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.OrderHistory"
             android:exported="false"
             android:label="@string/title_activity_order_history"
