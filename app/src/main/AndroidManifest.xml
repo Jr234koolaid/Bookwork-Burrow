@@ -9,11 +9,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
-
+        <activity
+            android:name=".view.OrderHistory"
+            android:exported="false"
+            android:label="@string/title_activity_order_history"
+            android:theme="@style/Theme.BookworkBurrow" />
+        <activity
+            android:name=".view.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.BookworkBurrow" />
         <activity
             android:name=".view.ConfirmPurchaseActivity"
             android:exported="false" />
-       	<activity
+        <activity
             android:name=".view.NavigationalActivity"
             android:exported="false" />
         <activity
@@ -30,20 +39,16 @@
             android:exported="false" />
         <activity
             android:name=".view.LoginActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

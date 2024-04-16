@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.NavigationalActivity">
+
+    <!-- Scrollable items -->
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/navigational_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigational_divider" >
+
+        <!-- Navigational layouts will be programmatically added here -->
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Navigation bar -->
+
+    <View
+        android:id="@+id/navigational_divider"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigational_button_home" />
+
+    <ImageButton
+        android:id="@+id/navigational_button_home"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_bar"
+        android:src="@drawable/navigation_home"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/navigational_button_search"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_bar"
+        android:src="@drawable/navigation_search"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toEndOf="@id/navigational_button_home"
+        app:layout_constraintEnd_toStartOf="@id/navigational_button_cart"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/navigational_button_cart"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_bar"
+        android:src="@drawable/navigation_cart"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toEndOf="@id/navigational_button_search"
+        app:layout_constraintEnd_toStartOf="@id/navigational_button_settings"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/navigational_button_settings"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_bar_selected"
+        android:src="@drawable/navigation_settings"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
