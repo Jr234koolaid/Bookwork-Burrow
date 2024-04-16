@@ -23,6 +23,7 @@ public class NavigationalActivity extends AppCompatActivity {
 
     private HomeLayout          mHomeLayout;
     private CartLayout          mCartLayout;
+    private SettingsLayout      mSettingsLayout;
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -36,6 +37,7 @@ public class NavigationalActivity extends AppCompatActivity {
 
         mHomeLayout = new HomeLayout(this, mScrollView);
         mCartLayout = new CartLayout(this, mScrollView);
+        mSettingsLayout = new SettingsLayout(this, mScrollView);
 
         mHomeButton = this.findViewById(R.id.navigational_button_home);
         mHomeButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.HOME));
@@ -72,7 +74,7 @@ public class NavigationalActivity extends AppCompatActivity {
                 break;
 
             case SETTINGS:
-                this.selectLayout(null, mSettingsButton, R.drawable.settings_selected);
+                this.selectLayout(mSettingsLayout, mSettingsButton, R.drawable.settings_selected);
                 break;
         }
 
