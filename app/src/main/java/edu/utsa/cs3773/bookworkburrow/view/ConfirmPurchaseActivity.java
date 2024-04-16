@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseDiscountUtils;
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -40,8 +40,8 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_purchase);
 
-        account = FirebaseUtil.getCurrUser();
-        boolean loggedIn = FirebaseUtil.isLoggedIn();
+        account = FirebaseUserUtil.getCurrUser();
+        boolean loggedIn = FirebaseUserUtil.isLoggedIn();
         Log.d("account id", account.getUID());
         Log.d("Is logged in?", loggedIn + "!");
         applyDiscount = findViewById(R.id.discount_apply_button);

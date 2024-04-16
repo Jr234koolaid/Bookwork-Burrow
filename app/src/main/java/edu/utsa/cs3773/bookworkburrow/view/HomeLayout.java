@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -32,7 +32,7 @@ public class HomeLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        Account account = FirebaseUtil.getCurrUser();
+        Account account = FirebaseUserUtil.getCurrUser();
 
         TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
         welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
