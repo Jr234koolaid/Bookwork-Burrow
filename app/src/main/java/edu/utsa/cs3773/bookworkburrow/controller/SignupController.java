@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.view.NavigationalActivity;
 import edu.utsa.cs3773.bookworkburrow.view.SignupActivity;
@@ -33,7 +33,7 @@ public class SignupController implements View.OnClickListener {
             String lastName = lastnameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            FirebaseUtil.createUser(firstName, lastName, email, password, mContext).thenAccept(account -> {
+            FirebaseUserUtil.createUser(firstName, lastName, email, password, mContext).thenAccept(account -> {
 
                 // TODO: Set user info here
 
