@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.model.Account;
@@ -96,7 +97,9 @@ public class FirebaseUtil {
                             String uid = user.getUid();
                             Log.d(TAG, "createUserWithEmail:success");
                             Log.d("User ID", uid);
-                            // Successfully created the account, complete the future with the result
+                            //TODO: add to firestore
+                            HashMap<String, Object> objectMap = new HashMap<>();
+                            objectMap.put("email", user.getEmail());
                             completableFuture.complete(new Account(uid));
                         } else {
                             // User is null, complete exceptionally

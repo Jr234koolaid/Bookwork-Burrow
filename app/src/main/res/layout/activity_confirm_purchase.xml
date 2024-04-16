@@ -27,7 +27,7 @@
     <!--Add each item dynamically in this view-->
     <ScrollView
         android:layout_width="330dp"
-        android:layout_height="455dp"
+        android:layout_height="346dp"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -39,23 +39,61 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/discount_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/commissioner_medium"
+            android:hint="@string/enter_discount_code"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/very_dark_blue"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/discount_apply_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Apply"
+            />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/subtotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
-        android:fontFamily="@font/commissioner_medium"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/commissioner_regular"
         android:text="Subtotal $"
         android:textColor="@color/black"
         android:textSize="15sp" />
-
+    <TextView
+        android:id="@+id/discount_text_display"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:textColor="@color/very_dark_blue"
+        android:textSize="15sp"
+        android:text="Discount $-"
+        />
     <TextView
         android:id="@+id/tax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:fontFamily="@font/commissioner_medium"
+        android:fontFamily="@font/commissioner_regular"
         android:text="Tax $"
         android:textColor="@color/black"
         android:textSize="15sp" />
@@ -67,10 +105,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/commissioner_medium"
-        android:textStyle="bold"
         android:text="Total $"
         android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
 
     <Button
         android:id="@+id/checkout_button"

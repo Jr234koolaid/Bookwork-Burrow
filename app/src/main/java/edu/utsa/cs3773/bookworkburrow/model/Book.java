@@ -38,4 +38,10 @@ public class Book {
     public void setPrice(Double s){ price = s; }
     public void setDescription(String s){ description = s; }
     public void setId(String s){ id = s; }
+
+    public void setTextUrl(URL url) {
+    }
+
+    public void setCoverUrl(URL url) {
+    }
 }
