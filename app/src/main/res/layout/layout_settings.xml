@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="12dp">
+
+    <!-- Header -->
+
+    <TextView
+        android:id="@+id/settings_text_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/settings_text_header_settings"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Text size -->
+
+<!--    <TextView style="@style/login_text"-->
+<!--        android:id="@+id/settings_text_text_size"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Text Size"-->
+<!--        app:layout_constraintStart_toEndOf="@id/settings_barrier_start"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/settings_button_change" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/settings_edit_text_size"-->
+<!--        android:layout_width="45dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginTop="6dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        android:text="18"-->
+<!--        app:layout_constraintStart_toEndOf="@id/settings_barrier_start"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/settings_text_text_size" />-->
+
+    <!-- Order history -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settings_button_order_history"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/settings_button_order_history"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toEndOf="@id/settings_barrier"
+        app:layout_constraintTop_toBottomOf="@id/settings_text_header" />
+
+    <!-- Change password -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settings_button_change_password"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/settings_button_change_password"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toEndOf="@id/settings_barrier"
+        app:layout_constraintTop_toBottomOf="@id/settings_button_order_history" />
+
+    <!-- Logout -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settings_button_login"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/settings_button_logout"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toEndOf="@id/settings_barrier"
+        app:layout_constraintTop_toBottomOf="@id/settings_button_change_password" />
+
+    <!-- Barriers -->
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/settings_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="settings_text_header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

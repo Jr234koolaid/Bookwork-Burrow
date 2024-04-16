@@ -43,7 +43,25 @@
 
     <!-- Confirm purchase strings -->
     <string name="enter_discount_code">Enter discount code</string>
+
+    <!-- Settings strings -->
+    <string name="settings_button_order_history">Order History</string>
+    <string name="settings_button_change_password">Change Password</string>
+    <string name="settings_button_logout">Logout</string>
+
+    <string name="settings_text_header_settings">Settings</string>
+
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Change password strings -->
+    <string name="change_password_button_change">Change</string>
+
+    <string name="change_password_check_password">Show Password</string>
+
+    <string name="change_password_text_password">Password</string>
+
+    <string name="change_password_text_header_change_password">Change Password</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
