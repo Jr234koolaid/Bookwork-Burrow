@@ -7,7 +7,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        FirebaseUtil.loginWithUsernamePassword(email, password, this).thenAccept(account -> {
+        FirebaseUserUtil.loginWithUsernamePassword(email, password, this).thenAccept(account -> {
 
             this.startActivity(new Intent(this, NavigationalActivity.class));
             this.finish();

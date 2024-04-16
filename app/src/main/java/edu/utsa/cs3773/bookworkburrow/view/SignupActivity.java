@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 
 public class SignupActivity extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class SignupActivity extends AppCompatActivity {
         String lastName = lastnameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        FirebaseUtil.createUser(firstName, lastName, email, password, this).thenAccept(account -> {
+        FirebaseUserUtil.createUser(firstName, lastName, email, password, this).thenAccept(account -> {
 
             this.startActivity(new Intent(this, NavigationalActivity.class));
             this.finish();
