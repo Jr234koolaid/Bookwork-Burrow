@@ -13,7 +13,7 @@ import edu.utsa.cs3773.bookworkburrow.controller.NavigationalController;
 
 public class NavigationalActivity extends AppCompatActivity {
 
-    private enum NavigationState { NONE, HOME, SEARCH, CART, SETTINGS }
+    public enum NavigationState { NONE, HOME, SEARCH, CART, SETTINGS }
 
     private NavigationState     mNavigationState;
 
@@ -60,76 +60,46 @@ public class NavigationalActivity extends AppCompatActivity {
         mSettingsButton = this.findViewById(R.id.navigational_button_settings);
         mSettingsButton.setOnClickListener(controller);
 
-        // Select home as default
-        this.selectHomeLayout();
+        // show home as default
+        this.show(NavigationState.HOME);
     }
 
-    public void selectHomeLayout() {
+    public void show(NavigationState _state) {
 
-        if (mNavigationState == NavigationState.HOME) return;
+        if (mNavigationState == _state) return;
+
+        switch (_state) {
+
+            case HOME:
+                this.selectLayout(_state, mHomeLayout, mHomeButton);
+                break;
+
+            case SEARCH:
+                this.selectLayout(_state, null, mSearchButton);
+                break;
+
+            case CART:
+                this.selectLayout(_state, mCartLayout, mCartButton);
+                break;
+
+            case SETTINGS:
+                this.selectLayout(_state, null, mSettingsButton);
+        }
+    }
+
+    private void selectLayout(NavigationState _state, NavigationalLayout _layout, ImageButton _button) {
 
         // Unselect current layout
         this.unselectLayout();
 
         // Add layout
-        mHomeLayout.onShow();
+        _layout.onShow();
 
         // Set status background
-        mHomeButton.setBackground(mBarBackgroundSelected);
+        _button.setBackground(mBarBackgroundSelected);
 
         // Set navigation state
-        mNavigationState = NavigationState.HOME;
-    }
-
-    public void selectSearchLayout() {
-
-        if (mNavigationState == NavigationState.SEARCH) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        //mSearchLayout.onShow();
-
-        // Set status background
-        mSearchButton.setBackground(mBarBackgroundSelected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.SEARCH;
-    }
-
-    public void selectCartLayout() {
-
-        if (mNavigationState == NavigationState.CART) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        mCartLayout.onShow();
-
-        // Set status background
-        mCartButton.setBackground(mBarBackgroundSelected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.CART;
-    }
-
-    public void selectSettingsLayout() {
-
-        if (mNavigationState == NavigationState.SETTINGS) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        //mSettingsLayout.onShow();
-
-        // Set status background
-        mSettingsButton.setBackground(mBarBackgroundSelected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.SETTINGS;
+        mNavigationState = _state;
     }
 
     private void unselectLayout() {

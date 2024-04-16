@@ -71,13 +71,13 @@ public class CartLayout extends NavigationalLayout {
             View bookLayout = mInflater.inflate(R.layout.layout_cart_book, bookContainer, false);
 
             TextView bookTitleText = bookLayout.findViewById(R.id.cart_book_text_title);
-            bookTitleText.setText(book.getTitle());
+            bookTitleText.setText(mContext.getString(R.string.cart_book_text_title, book.getTitle()));
 
             TextView bookAuthorText = bookLayout.findViewById(R.id.cart_book_text_author);
-            bookAuthorText.setText(book.getAuthor());
+            bookAuthorText.setText(mContext.getString(R.string.cart_book_text_author, book.getAuthor()));
 
             TextView bookPriceText = bookLayout.findViewById(R.id.cart_book_text_price);
-            bookPriceText.setText("$" + book.getPrice());
+            bookPriceText.setText(mContext.getString(R.string.cart_book_text_price, book.getPrice()));
 
             Button removeButton = bookLayout.findViewById(R.id.cart_book_button_remove);
             removeButton.setOnClickListener((view) -> this.removeBook(book));
@@ -85,7 +85,7 @@ public class CartLayout extends NavigationalLayout {
             bookContainer.addView(bookLayout);
         }
 
-        mSubtotalCostText.setText("$" + mCart.getSubtotal());
+        mSubtotalCostText.setText(mContext.getString(R.string.cart_text_subtotal_cost, mCart.getSubtotal()));
     }
 
     private void removeBook(Book _book) {

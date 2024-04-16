@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="48dp"
-        android:text="@string/home_text_header_welcome_placeholder"
+        android:text="@string/home_text_header_welcome"
         android:textSize="32sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_bold"
@@ -29,7 +29,6 @@
         android:layout_marginTop="40dp"
         android:indeterminateOnly="false"
         android:progressDrawable="@drawable/home_progress_bar"
-        android:progress="25"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_text_welcome"
@@ -42,7 +41,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         android:gravity="center"
-        android:text="@string/home_text_progress_count_placeholder"
+        android:text="@string/home_text_progress_count"
         android:textSize="42sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_medium"
@@ -54,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:text="@string/home_text_progress_goal_placeholder"
+        android:text="@string/home_text_progress_goal"
         android:textSize="28sp"
         android:fontFamily="@font/commissioner_medium"
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
@@ -82,7 +81,7 @@
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_continue"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
 
@@ -106,7 +105,7 @@
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_favorites"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_button_continue_book" />
 
@@ -118,21 +117,59 @@
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/home_constraint_favorites"
+        <LinearLayout
+            android:id="@+id/home_layout_favorites"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <!-- TODO: REMOVE --><!-- Placeholder-->
             <ImageButton
                 android:tag="Book"
                 android:layout_width="140dp"
                 android:layout_height="195dp"
-                android:background="@color/gray"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@color/gray" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Bookshelf -->
+
+    <TextView
+        android:id="@+id/home_text_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/home_text_bookshelf"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_scroll_favorites" />
+
+    <HorizontalScrollView
+        android:id="@+id/home_scroll_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_text_bookshelf">
+
+        <LinearLayout
+            android:id="@+id/home_layout_bookshelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- TODO: REMOVE --><!-- Placeholder-->
+            <ImageButton
+                android:tag="Book"
+                android:layout_width="140dp"
+                android:layout_height="195dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
 
     </HorizontalScrollView>
 

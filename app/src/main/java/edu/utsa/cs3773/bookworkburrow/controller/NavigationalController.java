@@ -18,16 +18,16 @@ public class NavigationalController implements View.OnClickListener {
 
         int viewID = _view.getId();
         if (viewID == R.id.navigational_button_home) {
-            mContext.selectHomeLayout();
+            mContext.show(NavigationalActivity.NavigationState.HOME);
 
         } else if (viewID == R.id.navigational_button_search) {
-            mContext.selectSearchLayout();
+            mContext.show(NavigationalActivity.NavigationState.SEARCH);
 
         } else if (viewID == R.id.navigational_button_cart) {
-            mContext.selectCartLayout();
+            mContext.show(NavigationalActivity.NavigationState.CART);
 
         } else if (viewID == R.id.navigational_button_settings) {
-            mContext.selectSettingsLayout();
+            mContext.show(NavigationalActivity.NavigationState.SETTINGS);
         }
     }
 

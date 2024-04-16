@@ -1,9 +1,9 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.LoginController;
@@ -18,14 +18,14 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginController loginController = new LoginController(this);
 
-        Button loginButton = findViewById(R.id.login_button_login);
+        AppCompatButton loginButton = this.findViewById(R.id.login_button_login);
         loginButton.setOnClickListener(loginController);
 
-        Button forgotPasswordButton = findViewById(R.id.login_button_forgot_password);
+        AppCompatButton forgotPasswordButton = this.findViewById(R.id.login_button_forgot_password);
         forgotPasswordButton.setOnClickListener(loginController);
 
-        Button signupButton = findViewById(R.id.login_button_signup);
-        signupButton.setOnClickListener(loginController);
+        AppCompatButton createAccountButton = this.findViewById(R.id.login_button_create_account);
+        createAccountButton.setOnClickListener(loginController);
     }
 
 } // class LoginActivity
