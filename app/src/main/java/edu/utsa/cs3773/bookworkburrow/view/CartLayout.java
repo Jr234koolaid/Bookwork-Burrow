@@ -12,6 +12,7 @@ import androidx.core.widget.NestedScrollView;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.controller.CartController;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
@@ -29,17 +30,17 @@ public class CartLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
-        AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
-        checkoutButton.setOnClickListener(view -> mContext.startActivity(new Intent(mContext, ConfirmPurchaseActivity.class)));
+        mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
         FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
             account = Account;
-
             mCart = account.getCart();
 
-            //TODO: pull data from cart object
+            CartController cartController = new CartController(mContext);
+
+            AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
+            checkoutButton.setOnClickListener(cartController);
 
             // Dummy data for account
             Book book0 = new Book();
@@ -62,8 +63,9 @@ public class CartLayout extends NavigationalLayout {
             mCart.addBook(book2);
             mCart.addBook(book0);
 
-            updateCart();
+            this.updateCart();
         });
+
 
     }
 

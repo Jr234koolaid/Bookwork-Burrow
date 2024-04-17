@@ -27,7 +27,8 @@ public class Account {
         this.UID = UID;
     }
 
-    public Account(String UID, String firstName, String lastName, String email){
+
+    public Account(String UID, String firstName, String lastName, String email) {
         this.UID = UID;
         this.firstName = firstName;
         this.lastName = lastName;

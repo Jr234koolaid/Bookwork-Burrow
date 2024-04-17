@@ -1,9 +1,9 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,7 +25,6 @@ import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class HomeLayout extends NavigationalLayout {
-
     Account account;
     public HomeLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_home);
@@ -33,12 +32,10 @@ public class HomeLayout extends NavigationalLayout {
 
     @Override
     protected void onDisplay() {
-
         FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
             account = Account;
             TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
             welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
-            Log.d("Account name", account.getFirstName());
 
             int readingGoal = account.getReadingGoal();
 
@@ -142,6 +139,7 @@ public class HomeLayout extends NavigationalLayout {
 
         // TODO: Use intent to go to right book?
         mContext.startActivity(new Intent(mContext, BookActivity.class));
+
     }
 
 } // class HomeLayout

@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
             boolean loggedIn = FirebaseUserUtil.isLoggedIn();
             Log.d("account id", account.getUID());
             Log.d("Is logged in?", loggedIn + "!");
-
+            Log.d("account name", account.getFirstName());
             applyDiscount = findViewById(R.id.discount_apply_button);
             backButton = findViewById(R.id.back_arrow);
             booksContainer = findViewById(R.id.booksAddedContainer);
@@ -62,6 +63,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
             checkout.setOnClickListener(view -> handleCheckout());
             applyDiscount.setOnClickListener(view -> handleDiscount());
 
+
             FirebaseBookUtils.getAllBookIDs().thenAccept(ArrayList ->{
                 for(String bookID: ArrayList){
                     FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
@@ -73,6 +75,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                 }
             });
         });
+
 
     }
 
@@ -147,7 +150,9 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void returnToCart(){
-        this.finish();
+        Intent cartView = new Intent(this, CartActivity.class);
+        startActivity(cartView);
+
     }
 
     public void handleCheckout(){
