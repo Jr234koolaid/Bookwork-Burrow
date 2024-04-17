@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import edu.utsa.cs3773.bookworkburrow.ChangePasswordActivity;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 

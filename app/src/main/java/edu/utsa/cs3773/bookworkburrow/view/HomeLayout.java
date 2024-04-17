@@ -2,8 +2,6 @@ package edu.utsa.cs3773.bookworkburrow.view;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,28 +10,29 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-import java.io.IOException;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+
 import java.util.ArrayList;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class HomeLayout extends NavigationalLayout {
-    Account account;
+
     public HomeLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_home);
     }
 
     @Override
     protected void onDisplay() {
-        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
-            account = Account;
+
+        FirebaseUserUtil.getCurrUser().thenAccept(account ->{
+
             TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
             welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
 
@@ -78,8 +77,6 @@ public class HomeLayout extends NavigationalLayout {
                 }
             }
         });
-
-
     }
 
     private void showBook(LinearLayout _layout, Book _book) {
@@ -97,14 +94,9 @@ public class HomeLayout extends NavigationalLayout {
         imageButton.setLayoutParams(layoutParams);
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
 
-        try {
-
-            Bitmap coverBitmap = BitmapFactory.decodeStream(_book.getCoverURL().openConnection().getInputStream());
-            imageButton.setImageBitmap(coverBitmap);
-
-        } catch (IOException e) {
-            imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray));
-        }
+        Glide.with(mContext)
+                .load(FirebaseStorage.getInstance().getReferenceFromUrl(_book.getCoverURL().toString()))
+                .into(imageButton);
 
         _layout.addView(imageButton);
     }
@@ -139,7 +131,6 @@ public class HomeLayout extends NavigationalLayout {
 
         // TODO: Use intent to go to right book?
         mContext.startActivity(new Intent(mContext, BookActivity.class));
-
     }
 
 } // class HomeLayout
