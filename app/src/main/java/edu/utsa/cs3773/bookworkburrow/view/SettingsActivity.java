@@ -28,29 +28,33 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     TextView password;
     TextView email;
     int textSize;
-    Account account = FirebaseUserUtil.getCurrUser();
+    Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setupImageButton(R.id.navigational_button_home);
-        setupImageButton(R.id.navigational_button_search);
-        setupImageButton(R.id.navigational_button_cart);
-        setUpTextButton(R.id.logout);
 
-        setUpTextButton(R.id.orderHistory);
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            setupImageButton(R.id.navigational_button_home);
+            setupImageButton(R.id.navigational_button_search);
+            setupImageButton(R.id.navigational_button_cart);
+            setUpTextButton(R.id.logout);
 
-        show=(CheckBox)findViewById(R.id.checkBox);
-        show.setOnClickListener(this);
+            setUpTextButton(R.id.orderHistory);
 
-        email = findViewById(R.id.EmailAddress);
-        email.setText(account.getEmail());
+            show=(CheckBox)findViewById(R.id.checkBox);
+            show.setOnClickListener(this);
 
-        password = findViewById(R.id.editPassword);
-        //password.setText(account.getPassword());
+            email = findViewById(R.id.EmailAddress);
+            email.setText(account.getEmail());
 
-        AppCompatButton changeButton = this.findViewById(R.id.changePassword);
-        changeButton.setOnClickListener(this);
+            password = findViewById(R.id.editPassword);
+            //password.setText(account.getPassword());
+
+            AppCompatButton changeButton = this.findViewById(R.id.changePassword);
+            changeButton.setOnClickListener(this);
+        });
+
 
     }
 
