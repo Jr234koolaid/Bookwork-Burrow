@@ -65,7 +65,6 @@ public class CartLayout extends NavigationalLayout {
             updateCart();
         });
 
-
     }
 
     private void updateCart() {
