@@ -32,44 +32,49 @@ public class CartActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        account = FirebaseUserUtil.getCurrUser();
         bookContainer = findViewById(R.id.booksAddedContainer);
         subtotal = findViewById(R.id.subtotal);
         checkout = findViewById(R.id.checkout_button);
 
-        checkout.setOnClickListener((view) ->{
-            Intent intent = new Intent(this, ConfirmPurchaseActivity.class);
-            startActivity(intent);
-            finish();
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            checkout.setOnClickListener((view) ->{
+                Intent intent = new Intent(this, ConfirmPurchaseActivity.class);
+                startActivity(intent);
+                finish();
+            });
+
+            //TODO: get books from account
+
+            //dummy data for account
+            Book book0 = new Book();
+            book0.setTitle("Percy Jackson and the Lightning Thief");
+            book0.setAuthor("Rick Riordan");
+            book0.setPrice(15.99);
+
+            Book book1 = new Book();
+            book1.setTitle("Percy Jackson and the Titan's Curse");
+            book1.setAuthor("Rick Riordan");
+            book1.setPrice(15.99);
+
+            Book book2 = new Book();
+            book2.setTitle("Percy Jackson and the Sea of Monsters");
+            book2.setAuthor("Rick Riordan");
+            book2.setPrice(15.99);
+
+
+            account.getCart().addBook(book0);
+            account.getCart().addBook(book1);
+            account.getCart().addBook(book2);
+            account.getCart().addBook(book0);
+            Log.d("Account info", account.toString());
+
+            loadBookViews();
+            setSubtotal();
         });
 
-        //TODO: get books from account
-
-        //dummy data for account
-        Book book0 = new Book();
-        book0.setTitle("Percy Jackson and the Lightning Thief");
-        book0.setAuthor("Rick Riordan");
-        book0.setPrice(15.99);
-
-        Book book1 = new Book();
-        book1.setTitle("Percy Jackson and the Titan's Curse");
-        book1.setAuthor("Rick Riordan");
-        book1.setPrice(15.99);
-
-        Book book2 = new Book();
-        book2.setTitle("Percy Jackson and the Sea of Monsters");
-        book2.setAuthor("Rick Riordan");
-        book2.setPrice(15.99);
 
 
-        account.getCart().addBook(book0);
-        account.getCart().addBook(book1);
-        account.getCart().addBook(book2);
-        account.getCart().addBook(book0);
-        Log.d("Account info", account.toString());
-
-        loadBookViews();
-        setSubtotal();
 
 
     }
