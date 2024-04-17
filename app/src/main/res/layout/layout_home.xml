@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="12dp">
@@ -13,10 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="48dp"
-        android:fontFamily="@font/commissioner_bold"
         android:text="@string/home_text_header_welcome"
         android:textSize="32sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,10 +42,10 @@
         android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         android:gravity="center"
-        android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_progress_count"
         android:textSize="42sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/commissioner_medium"
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
         app:layout_constraintTop_toBottomOf="@id/home_text_welcome" />
 
@@ -53,9 +54,9 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_progress_goal"
         android:textSize="28sp"
+        android:fontFamily="@font/commissioner_medium"
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
         app:layout_constraintTop_toBottomOf="@id/home_text_progress_count" />
 
@@ -64,10 +65,10 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:background="@color/transparent"
-        android:fontFamily="@font/inter_medium"
         android:text="@string/home_button_update_goal"
         android:textSize="12sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
         app:layout_constraintTop_toBottomOf="@id/home_text_goal" />
 
@@ -85,6 +86,18 @@
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
 
+
+    <ImageView
+        android:id="@+id/home_image_favorites"
+        android:layout_width="43dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/favorite"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_favorites"
+        app:layout_constraintStart_toEndOf="@id/home_text_favorites"
+        app:layout_constraintTop_toTopOf="@id/home_text_favorites"
+        app:layout_constraintVertical_bias="1.0" />
+
     <HorizontalScrollView
         android:id="@+id/home_scroll_favorites"
         android:layout_width="wrap_content"
@@ -99,7 +112,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Books will be programmatically added here -->
+            <!-- TODO: REMOVE -->
+            <!--            <ImageButton-->
+            <!--                android:tag="Book"-->
+            <!--                android:layout_width="140dp"-->
+            <!--                android:layout_height="195dp"-->
+            <!--                android:background="@color/gray" />-->
 
         </LinearLayout>
 
@@ -119,6 +137,17 @@
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_scroll_favorites" />
 
+    <ImageView
+        android:id="@+id/home_image_shelf"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/shelf"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_bookshelf"
+        app:layout_constraintStart_toEndOf="@id/home_text_bookshelf"
+        app:layout_constraintTop_toTopOf="@id/home_text_bookshelf"
+        app:layout_constraintVertical_bias="1.0" />
+
     <HorizontalScrollView
         android:id="@+id/home_scroll_bookshelf"
         android:layout_width="wrap_content"
@@ -133,7 +162,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Books will be programmatically added here -->
+            <!-- TODO: REMOVE -->
+            <!--            <ImageButton-->
+            <!--                android:tag="Book"-->
+            <!--                android:layout_width="140dp"-->
+            <!--                android:layout_height="195dp"-->
+            <!--                android:background="@color/gray" />-->
 
         </LinearLayout>
 
@@ -145,7 +179,7 @@
         android:id="@+id/home_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="start"
+        app:barrierDirection="left"
         app:constraint_referenced_ids="home_text_welcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
