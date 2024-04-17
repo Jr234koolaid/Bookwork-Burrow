@@ -1,19 +1,20 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.widget.NestedScrollView;
 
+import com.bumptech.glide.Glide;
+
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.CartController;
-import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
 
@@ -21,7 +22,6 @@ public class CartLayout extends NavigationalLayout {
 
     private Order       mCart;
     private TextView    mSubtotalCostText;
-    private Account account;
 
     public CartLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_cart);
@@ -30,11 +30,10 @@ public class CartLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-
         mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
-        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
-            account = Account;
+        FirebaseUserUtil.getCurrUser().thenAccept(account ->{
+
             mCart = account.getCart();
 
             CartController cartController = new CartController(mContext);
@@ -42,31 +41,8 @@ public class CartLayout extends NavigationalLayout {
             AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
             checkoutButton.setOnClickListener(cartController);
 
-            // Dummy data for account
-            Book book0 = new Book();
-            book0.setTitle("Percy Jackson and the Lightning Thief");
-            book0.setAuthor("Rick Riordan");
-            book0.setPrice(15.99);
-
-            Book book1 = new Book();
-            book1.setTitle("Percy Jackson and the Titan's Curse");
-            book1.setAuthor("Rick Riordan");
-            book1.setPrice(15.99);
-
-            Book book2 = new Book();
-            book2.setTitle("Percy Jackson and the Sea of Monsters");
-            book2.setAuthor("Rick Riordan");
-            book2.setPrice(15.99);
-
-            mCart.addBook(book0);
-            mCart.addBook(book1);
-            mCart.addBook(book2);
-            mCart.addBook(book0);
-
             this.updateCart();
         });
-
-
     }
 
     private void updateCart() {
@@ -91,6 +67,11 @@ public class CartLayout extends NavigationalLayout {
 
             Button removeButton = bookLayout.findViewById(R.id.cart_book_button_remove);
             removeButton.setOnClickListener(view -> this.removeBook(book));
+
+            ImageView bookImage = bookLayout.findViewById(R.id.cart_book_image);
+            Glide.with(mContext)
+                    .load(book.getCoverURL().toString())
+                    .into(bookImage);
 
             bookContainer.addView(bookLayout);
         }

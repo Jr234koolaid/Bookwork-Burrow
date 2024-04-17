@@ -30,6 +30,11 @@
     <string name="home_text_no_favorites">Your favorites will appear here…</string>
     <string name="home_text_no_books">Your books will appear here…</string>
 
+    <!-- Search strings -->
+    <string name="search_hint_search">Search for a book title</string>
+
+    <string name="search_text_header_search">Search</string>
+
     <!-- Cart strings -->
     <string name="cart_button_checkout">Checkout</string>
     <string name="cart_book_button_remove">Remove</string>
@@ -105,5 +110,10 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_order_history">OrderHistory</string>
+
+    <!-- read strings -->
+    <string name="toggle_theme_description">Toggle theme color</string>
+    <string name="error_loading_book"></string>
+    <string name="book_not_found"></string>
 
 </resources>
