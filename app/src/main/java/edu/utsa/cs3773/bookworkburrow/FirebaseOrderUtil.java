@@ -7,9 +7,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
@@ -19,6 +21,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Order;
 public class FirebaseOrderUtil {
 
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static String userId = FirebaseUserUtil.user.getUid();
 
     /**
      * Adds an order to the database
@@ -110,6 +113,27 @@ public class FirebaseOrderUtil {
                     else completableFuture.completeExceptionally(new Throwable(task.getException()));
                 });
         return completableFuture;
+    }
+
+    /**
+     * Adds a book ID to a user's cart array in Firestore.
+     * @param userId The ID of the user.
+     * @param bookId The book ID to add to the user's cart array.
+     */
+    public static void addBookToCart(String bookId) {
+        db.collection("users").document(userId)
+                .update("cart", FieldValue.arrayUnion(bookId))
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("UpdateSuccess", "Book added to user's cart array");
+                })
+                .addOnFailureListener(e -> {
+                    db.collection("users").document(userId)
+                            .set(Collections.singletonMap("cart", Collections.singletonList(bookId)), SetOptions.merge())
+                            .addOnSuccessListener(aVoid ->
+                                    Log.d("SetSuccess", "Cart field created and book added"))
+                            .addOnFailureListener(eSet ->
+                                    Log.w("SetFailure", "Error creating cart field and adding book", eSet));
+                });
     }
 
 }
