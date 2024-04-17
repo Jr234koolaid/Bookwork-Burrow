@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.storage.FirebaseStorage;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -67,7 +66,7 @@ public class SearchLayout extends NavigationalLayout {
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
 
         Glide.with(mContext)
-                .load(FirebaseStorage.getInstance().getReferenceFromUrl(_book.getCoverURL().toString()))
+                .load(_book.getCoverURL().toString())
                 .into(imageButton);
 
         mBookContainer.addView(imageButton);
