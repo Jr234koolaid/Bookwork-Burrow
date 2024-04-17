@@ -23,11 +23,18 @@
         android:src="@drawable/bookworm_logo" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="108dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:textColor="@color/very_dark_blue"
+        android:text="Confirmation Code:"/>
+    <TextView
         android:id="@+id/confirmation_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:background="@drawable/edittext_background"
         android:backgroundTint="#C3D6E2"
         android:padding="10dp"
@@ -36,16 +43,18 @@
         android:textSize="20sp"
         android:text="Confirmation Code"/>
 
-    <Button
+    <TextView
         android:id="@+id/purchase_return_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:padding="10dp"
+        android:background="@drawable/edittext_background"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/commissioner_medium"
         android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="Read your new books!"/>
 
 

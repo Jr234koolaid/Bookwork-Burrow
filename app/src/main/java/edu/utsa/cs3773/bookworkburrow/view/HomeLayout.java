@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -87,7 +86,7 @@ public class HomeLayout extends NavigationalLayout {
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
 
         Glide.with(mContext)
-                .load(FirebaseStorage.getInstance().getReferenceFromUrl(_book.getCoverURL().toString()))
+                .load(_book.getCoverURL().toString())
                 .into(imageButton);
 
         _layout.addView(imageButton);

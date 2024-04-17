@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class FirebaseUserUtil {
                         DocumentSnapshot doc = task.getResult();
                         Account account = new Account(user.getUid(), doc.getString("first-name"), doc.getString("last-name"), doc.getString("email"));
                         account.setFavorites((ArrayList<String>) doc.get("books-favorited"));
-                        account.setBooksOwned((ArrayList<String>) doc.get("books-owned"));
+//                        account.setBooksOwned((ArrayList<String>) doc.get("books-owned"));
                         account.setOrderHistory((ArrayList<String>) doc.get("orders"));
                         Double goal = doc.getDouble("reading-goal");
                         account.setReadingGoal(goal.intValue());
@@ -174,7 +175,7 @@ public class FirebaseUserUtil {
      */
     public static CompletableFuture<Boolean> addToUserList(String userID, String list, String valueID){
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        db.collection("users").document(userID).update(list, valueID)
+        db.collection("users").document(userID).update(list, FieldValue.arrayUnion(valueID))
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         completableFuture.complete(true);
