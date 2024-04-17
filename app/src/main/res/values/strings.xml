@@ -111,4 +111,9 @@
     </string>
     <string name="title_activity_order_history">OrderHistory</string>
 
+    <!-- read strings -->
+    <string name="toggle_theme_description">Toggle theme color</string>
+    <string name="error_loading_book"></string>
+    <string name="book_not_found"></string>
+
 </resources>

@@ -33,10 +33,10 @@
                     android:id="@+id/ScreenTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/commissioner_black"
+                    android:fontFamily="sans-serif-black"
                     android:text="Your Books"
-                    android:textColor="@color/black"
-                    android:textSize="30sp" />
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <Space
@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:background="#E6EDEF"
                     android:editable="true"
-                    android:fontFamily="@font/commissioner_light"
+                    android:fontFamily="sans-serif-condensed-medium"
                     android:gravity="center|left"
                     android:hint="Search for a book title"
                     android:textSize="18sp" />
@@ -92,6 +92,18 @@
                     android:id="@+id/bookScroll"
                     android:layout_width="308dp"
                     android:layout_height="468dp">
+                    <GridLayout
+                        android:id="@+id/gridLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:layout_gravity="center_horizontal">
+
+
+                    </GridLayout>
+
 
                 </ScrollView>
 
