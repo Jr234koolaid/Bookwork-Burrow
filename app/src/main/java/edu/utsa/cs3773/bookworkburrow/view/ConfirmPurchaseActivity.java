@@ -25,7 +25,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 public class ConfirmPurchaseActivity extends AppCompatActivity {
 
     private ImageView backButton;
-    private Button applyDiscount;
+    private TextView applyDiscount;
     private EditText discountCode;
     private TextView discountDisplay;
     private LinearLayout booksContainer;
@@ -150,25 +150,27 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void returnToCart(){
-        Intent cartView = new Intent(this, CartActivity.class);
+        Intent cartView = new Intent(this, NavigationalActivity.class);
         startActivity(cartView);
 
     }
 
     public void handleCheckout(){
-        String confirmationCode = account.completeCheckout();
-        Log.d("Cart after checkout", account.getCart().toString());
-        LinearLayout root = findViewById(R.id.confirm_root);
-        root.removeAllViews();
+        account.completeCheckout().thenAccept(String ->{
+            Log.d("Cart after checkout", account.getCart().toString());
+            LinearLayout root = findViewById(R.id.confirm_root);
+            root.removeAllViews();
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        // Inflate the individual book layout
-        LinearLayout confirmation = (LinearLayout) inflater.inflate(R.layout.purchase_complete, null, false);
-        TextView code = confirmation.findViewById(R.id.confirmation_code);
-        code.setText(confirmationCode);
-        Button returnHome = confirmation.findViewById(R.id.purchase_return_home);
-        returnHome.setOnClickListener(view ->returnToCart());
-        root.addView(confirmation);
+            LayoutInflater inflater = LayoutInflater.from(this);
+            // Inflate the individual book layout
+            LinearLayout confirmation = (LinearLayout) inflater.inflate(R.layout.purchase_complete, null, false);
+            TextView code = confirmation.findViewById(R.id.confirmation_code);
+            code.setText(String);
+            TextView returnHome = confirmation.findViewById(R.id.purchase_return_home);
+            returnHome.setOnClickListener(view ->returnToCart());
+            root.addView(confirmation);
+        });
+
 
     }
     @SuppressLint("DefaultLocale")

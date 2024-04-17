@@ -3,6 +3,7 @@ package edu.utsa.cs3773.bookworkburrow.model;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
@@ -127,20 +128,22 @@ public class Account {
      * Adds current cart to order history and clears cart
      * Should be called after purchase is complete
      */
-    public String completeCheckout(){
-        for(String bookID : cart.getBookIDs()){
-            this.addBookToOwned(bookID);
+    public CompletableFuture<String> completeCheckout(){
+        CompletableFuture<String> completableFuture = new CompletableFuture<>();
+        for(Book book : cart.getCartList()){
+            this.addBookToOwned(book.getId());
         }
         FirebaseOrderUtil.addOrder(UID, cart).thenAccept(String ->{
             if(String.length() > 0){
                 cartID = String;
                 orderHistory.add(cartID);
                 cart = new Order();
+                completableFuture.complete(String);
             }
-            else cartID = "Error processing";
+            else completableFuture.completeExceptionally(new Throwable(String));
         });
 
-        return cartID;
+        return completableFuture;
     }
 
     public String toString(){
