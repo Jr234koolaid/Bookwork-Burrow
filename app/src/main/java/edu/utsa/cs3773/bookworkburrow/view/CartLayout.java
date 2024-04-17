@@ -12,6 +12,7 @@ import androidx.core.widget.NestedScrollView;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.controller.CartController;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
@@ -20,6 +21,7 @@ public class CartLayout extends NavigationalLayout {
 
     private Order       mCart;
     private TextView    mSubtotalCostText;
+    private Account account;
 
     public CartLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_cart);
@@ -28,15 +30,43 @@ public class CartLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        Account account = FirebaseUserUtil.getCurrUser();
 
-        mCart = account.getCart();
         mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
-        AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
-        checkoutButton.setOnClickListener(view -> mContext.startActivity(new Intent(mContext, ConfirmPurchaseActivity.class)));
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            mCart = account.getCart();
 
-        this.updateCart();
+            CartController cartController = new CartController(mContext);
+
+            AppCompatButton checkoutButton = mLayoutView.findViewById(R.id.cart_button_checkout);
+            checkoutButton.setOnClickListener(cartController);
+
+            // Dummy data for account
+            Book book0 = new Book();
+            book0.setTitle("Percy Jackson and the Lightning Thief");
+            book0.setAuthor("Rick Riordan");
+            book0.setPrice(15.99);
+
+            Book book1 = new Book();
+            book1.setTitle("Percy Jackson and the Titan's Curse");
+            book1.setAuthor("Rick Riordan");
+            book1.setPrice(15.99);
+
+            Book book2 = new Book();
+            book2.setTitle("Percy Jackson and the Sea of Monsters");
+            book2.setAuthor("Rick Riordan");
+            book2.setPrice(15.99);
+
+            mCart.addBook(book0);
+            mCart.addBook(book1);
+            mCart.addBook(book2);
+            mCart.addBook(book0);
+
+            this.updateCart();
+        });
+
+
     }
 
     private void updateCart() {
