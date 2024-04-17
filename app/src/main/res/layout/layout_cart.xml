@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="48dp"
+        android:fontFamily="@font/commissioner_bold"
         android:text="@string/cart_text_header_cart"
         android:textSize="32sp"
         android:textColor="@color/black"
-        android:fontFamily="@font/commissioner_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,10 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
+        android:fontFamily="@font/commissioner_light"
         android:text="@string/cart_text_subtotal"
         android:textSize="28sp"
         android:textColor="@color/black"
-        android:fontFamily="@font/commissioner_light"
         app:layout_constraintStart_toEndOf="@id/cart_barrier"
         app:layout_constraintTop_toBottomOf="@id/cart_scroll_book_container"
         app:layout_constraintHorizontal_bias="0" />
@@ -62,10 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/commissioner_bold"
         android:text="@string/cart_text_subtotal_cost"
         android:textSize="32sp"
         android:textColor="@color/black"
-        android:fontFamily="@font/commissioner_bold"
         app:layout_constraintStart_toEndOf="@id/cart_text_subtotal"
         app:layout_constraintBaseline_toBaselineOf="@+id/cart_text_subtotal" />
 
@@ -77,10 +77,10 @@
         android:layout_height="52dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/background_cart_button"
+        android:fontFamily="@font/commissioner_extra_bold"
         android:text="@string/cart_button_checkout"
         android:textSize="18sp"
         android:textColor="@color/white"
-        android:fontFamily="@font/commissioner_extra_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cart_text_subtotal" />
@@ -91,7 +91,7 @@
         android:id="@+id/cart_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="left"
+        app:barrierDirection="start"
         app:constraint_referenced_ids="cart_text_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

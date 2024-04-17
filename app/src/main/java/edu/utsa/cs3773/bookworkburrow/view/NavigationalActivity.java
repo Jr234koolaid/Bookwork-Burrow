@@ -22,6 +22,7 @@ public class NavigationalActivity extends AppCompatActivity {
     private ImageButton         mSettingsButton;
 
     private HomeLayout          mHomeLayout;
+    private SearchLayout        mSearchLayout;
     private CartLayout          mCartLayout;
     private SettingsLayout      mSettingsLayout;
 
@@ -36,6 +37,7 @@ public class NavigationalActivity extends AppCompatActivity {
         mScrollView = this.findViewById(R.id.navigational_scroll);
 
         mHomeLayout = new HomeLayout(this, mScrollView);
+        mSearchLayout = new SearchLayout(this, mScrollView);
         mCartLayout = new CartLayout(this, mScrollView);
         mSettingsLayout = new SettingsLayout(this, mScrollView);
 
@@ -66,7 +68,7 @@ public class NavigationalActivity extends AppCompatActivity {
                 break;
 
             case SEARCH:
-                this.selectLayout(null, mSearchButton, R.drawable.search_selected);
+                this.selectLayout(mSearchLayout, mSearchButton, R.drawable.search_selected);
                 break;
 
             case CART:
