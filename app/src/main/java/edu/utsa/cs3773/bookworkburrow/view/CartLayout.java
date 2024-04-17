@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.storage.FirebaseStorage;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -71,7 +70,7 @@ public class CartLayout extends NavigationalLayout {
 
             ImageView bookImage = bookLayout.findViewById(R.id.cart_book_image);
             Glide.with(mContext)
-                    .load(FirebaseStorage.getInstance().getReferenceFromUrl(book.getCoverURL().toString()))
+                    .load(book.getCoverURL().toString())
                     .into(bookImage);
 
             bookContainer.addView(bookLayout);
