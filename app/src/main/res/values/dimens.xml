@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="book_image_width">150dp</dimen>
+    <dimen name="book_image_height">225dp</dimen>
+    <dimen name="book_image_size">150dp</dimen>
+</resources>

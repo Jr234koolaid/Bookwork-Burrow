@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="12dp">
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="48dp"
-        android:text="@string/home_text_header_welcome_placeholder"
+        android:text="@string/home_text_header_welcome"
         android:textSize="32sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_bold"
@@ -29,7 +30,6 @@
         android:layout_marginTop="40dp"
         android:indeterminateOnly="false"
         android:progressDrawable="@drawable/home_progress_bar"
-        android:progress="25"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_text_welcome"
@@ -42,7 +42,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         android:gravity="center"
-        android:text="@string/home_text_progress_count_placeholder"
+        android:text="@string/home_text_progress_count"
         android:textSize="42sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_medium"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:text="@string/home_text_progress_goal_placeholder"
+        android:text="@string/home_text_progress_goal"
         android:textSize="28sp"
         android:fontFamily="@font/commissioner_medium"
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
@@ -72,43 +72,31 @@
         app:layout_constraintStart_toEndOf="@id/home_bar_progress"
         app:layout_constraintTop_toBottomOf="@id/home_text_goal" />
 
-    <!-- Continue reading -->
-
-    <TextView
-        android:id="@+id/home_text_continue_book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/commissioner_medium"
-        android:text="@string/home_text_continue"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
-
-    <!-- Placeholder -->
-    <ImageButton
-        android:id="@+id/home_button_continue_book"
-        android:layout_width="140dp"
-        android:layout_height="195dp"
-        android:layout_marginTop="18dp"
-        android:background="@color/gray"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_text_continue_book" />
-
     <!-- Favorites -->
 
     <TextView
         android:id="@+id/home_text_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_favorites"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_button_continue_book" />
+        app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
+
+
+    <ImageView
+        android:id="@+id/home_image_favorites"
+        android:layout_width="43dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/favorite"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_favorites"
+        app:layout_constraintStart_toEndOf="@id/home_text_favorites"
+        app:layout_constraintTop_toTopOf="@id/home_text_favorites"
+        app:layout_constraintVertical_bias="1.0" />
 
     <HorizontalScrollView
         android:id="@+id/home_scroll_favorites"
@@ -118,21 +106,70 @@
         app:layout_constraintStart_toEndOf="@id/home_barrier"
         app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/home_constraint_favorites"
+        <LinearLayout
+            android:id="@+id/home_layout_favorites"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <!-- TODO: REMOVE --><!-- Placeholder-->
-            <ImageButton
-                android:tag="Book"
-                android:layout_width="140dp"
-                android:layout_height="195dp"
-                android:background="@color/gray"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <!-- TODO: REMOVE -->
+            <!--            <ImageButton-->
+            <!--                android:tag="Book"-->
+            <!--                android:layout_width="140dp"-->
+            <!--                android:layout_height="195dp"-->
+            <!--                android:background="@color/gray" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Bookshelf -->
+
+    <TextView
+        android:id="@+id/home_text_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/commissioner_medium"
+        android:text="@string/home_text_bookshelf"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_scroll_favorites" />
+
+    <ImageView
+        android:id="@+id/home_image_shelf"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/shelf"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_bookshelf"
+        app:layout_constraintStart_toEndOf="@id/home_text_bookshelf"
+        app:layout_constraintTop_toTopOf="@id/home_text_bookshelf"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <HorizontalScrollView
+        android:id="@+id/home_scroll_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toBottomOf="@id/home_text_bookshelf">
+
+        <LinearLayout
+            android:id="@+id/home_layout_bookshelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- TODO: REMOVE -->
+            <!--            <ImageButton-->
+            <!--                android:tag="Book"-->
+            <!--                android:layout_width="140dp"-->
+            <!--                android:layout_height="195dp"-->
+            <!--                android:background="@color/gray" />-->
+
+        </LinearLayout>
 
     </HorizontalScrollView>
 

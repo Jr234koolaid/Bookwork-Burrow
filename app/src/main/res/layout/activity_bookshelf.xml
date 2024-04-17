@@ -92,6 +92,18 @@
                     android:id="@+id/bookScroll"
                     android:layout_width="308dp"
                     android:layout_height="468dp">
+                    <GridLayout
+                        android:id="@+id/gridLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:layout_gravity="center_horizontal">
+
+
+                    </GridLayout>
+
 
                 </ScrollView>
 

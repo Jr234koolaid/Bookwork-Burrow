@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="12dp">
+    android:layout_marginBottom="18dp">
 
     <!-- Book cover -->
 
@@ -22,7 +22,7 @@
         android:layout_width="212dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
-        android:text="Book Title"
+        android:text="@string/cart_book_text_title"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_medium"
@@ -33,7 +33,7 @@
         android:id="@+id/cart_book_text_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Author of Book"
+        android:text="@string/cart_book_text_author"
         android:textSize="12sp"
         android:textColor="@color/black"
         android:fontFamily="@font/commissioner_medium"
@@ -44,7 +44,7 @@
         android:id="@+id/cart_book_text_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$20.99"
+        android:text="@string/cart_book_text_price"
         android:textSize="32sp"
         android:textColor="@color/very_dark_blue"
         android:fontFamily="@font/commissioner_bold"
@@ -59,24 +59,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:background="@color/transparent"
-        android:text="Remove"
+        android:text="@string/cart_book_button_remove"
         android:textSize="12sp"
         android:textColor="@android:color/darker_gray"
         android:fontFamily="@font/commissioner_medium"
         app:layout_constraintEnd_toStartOf="@id/cart_book_barrier_end"
-        app:layout_constraintBottom_toTopOf="@id/cart_book_barrier_bottom" />
+        app:layout_constraintBottom_toTopOf="@id/cart_book_divider" />
 
     <!-- Divider -->
 
     <View
         android:id="@+id/cart_book_divider"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cart_book_barrier_end"
-        app:layout_constraintTop_toBottomOf="@id/cart_book_barrier_bottom" />
+        app:layout_constraintTop_toBottomOf="@id/cart_book_image" />
 
     <!-- Barriers -->
 
@@ -93,12 +93,5 @@
         android:layout_height="wrap_content"
         app:barrierDirection="end"
         app:constraint_referenced_ids="cart_book_text_title" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/cart_book_barrier_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="cart_book_image, cart_book_text_price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

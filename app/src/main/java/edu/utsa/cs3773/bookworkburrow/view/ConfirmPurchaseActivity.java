@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseDiscountUtils;
-import edu.utsa.cs3773.bookworkburrow.FirebaseUtil;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -34,53 +35,47 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
 
     Account account;
     private double discountAmount;
-    private boolean discountValid;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_purchase);
 
-        account = FirebaseUtil.getCurrUser();
-        applyDiscount = findViewById(R.id.discount_apply_button);
-        backButton = findViewById(R.id.back_arrow);
-        booksContainer = findViewById(R.id.booksAddedContainer);
-        discountCode = findViewById(R.id.discount_code);
-        discountDisplay = findViewById(R.id.discount_text_display);
-        subtotal = findViewById(R.id.subtotal);
-        tax = findViewById(R.id.tax);
-        total = findViewById(R.id.total);
-        Button checkout = findViewById(R.id.checkout_button);
-        Button cancel = findViewById(R.id.cancel_button);
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            boolean loggedIn = FirebaseUserUtil.isLoggedIn();
+            Log.d("account id", account.getUID());
+            Log.d("Is logged in?", loggedIn + "!");
+            Log.d("account name", account.getFirstName());
+            applyDiscount = findViewById(R.id.discount_apply_button);
+            backButton = findViewById(R.id.back_arrow);
+            booksContainer = findViewById(R.id.booksAddedContainer);
+            discountCode = findViewById(R.id.discount_code);
+            discountDisplay = findViewById(R.id.discount_text_display);
+            subtotal = findViewById(R.id.subtotal);
+            tax = findViewById(R.id.tax);
+            total = findViewById(R.id.total);
+            Button checkout = findViewById(R.id.checkout_button);
+            Button cancel = findViewById(R.id.cancel_button);
 
-        backButton.setOnClickListener(view ->returnToCart());
-        cancel.setOnClickListener(view -> returnToCart());
-        checkout.setOnClickListener(view -> handleCheckout());
-        applyDiscount.setOnClickListener(view -> handleDiscount());
+            backButton.setOnClickListener(view ->returnToCart());
+            cancel.setOnClickListener(view -> returnToCart());
+            checkout.setOnClickListener(view -> handleCheckout());
+            applyDiscount.setOnClickListener(view -> handleDiscount());
 
-        //dummy data for account
-        Book book0 = new Book();
-        book0.setTitle("Percy Jackson and the Lightning Thief");
-        book0.setAuthor("Rick Riordan");
-        book0.setPrice(15.99);
 
-        Book book1 = new Book();
-        book1.setTitle("Percy Jackson and the Titan's Curse");
-        book1.setAuthor("Rick Riordan");
-        book1.setPrice(15.99);
+            FirebaseBookUtils.getAllBookIDs().thenAccept(ArrayList ->{
+                for(String bookID: ArrayList){
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
+                        account.getCart().addBook(Book);
+                        Log.d("Added book", Book.getTitle());
+                        addBookView(Book);
+                        setPrices();
+                    });
+                }
+            });
+        });
 
-        Book book2 = new Book();
-        book2.setTitle("Percy Jackson and the Sea of Monsters");
-        book2.setAuthor("Rick Riordan");
-        book2.setPrice(15.99);
-
-        account.getCart().addBook(book0);
-        account.getCart().addBook(book1);
-        account.getCart().addBook(book2);
-        account.getCart().addBook(book2);
-
-        loadBookViews();
-        setPrices();
 
     }
 
@@ -117,7 +112,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void loadBookViews() {
-        for (Book book : account.getCart().getCartList()) {
+        for(Book book : account.getCart().getCartList()){
             LayoutInflater inflater = LayoutInflater.from(this);
             // Inflate the individual book layout
             LinearLayout bookCartLayout = (LinearLayout) inflater.inflate(R.layout.book_cart_layout, null, false);
@@ -130,9 +125,28 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
             bookAuthor.setText(book.getAuthor());
             bookPrice.setText("$" + book.getPrice());
 
-
             booksContainer.addView(bookCartLayout);
         }
+    }
+
+    public void addBookView(Book book) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        // Inflate the individual book layout
+        LinearLayout bookCartLayout = (LinearLayout) inflater.inflate(R.layout.book_cart_layout, null, false);
+
+        TextView bookTitle = bookCartLayout.findViewById(R.id.cart_book_title);
+        TextView bookAuthor = bookCartLayout.findViewById(R.id.cart_book_author);
+        TextView bookPrice = bookCartLayout.findViewById(R.id.cart_book_price);
+        Button remove = bookCartLayout.findViewById(R.id.book_cart_remove);
+
+        remove.setVisibility(View.GONE);
+        bookTitle.setText(book.getTitle());
+        bookAuthor.setText(book.getAuthor());
+        bookPrice.setText("$" + book.getPrice());
+
+
+        booksContainer.addView(bookCartLayout);
+
     }
 
     public void returnToCart(){
@@ -142,7 +156,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void handleCheckout(){
-        account.completeCheckout();
+        String confirmationCode = account.completeCheckout();
         Log.d("Cart after checkout", account.getCart().toString());
         LinearLayout root = findViewById(R.id.confirm_root);
         root.removeAllViews();
@@ -150,6 +164,8 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         // Inflate the individual book layout
         LinearLayout confirmation = (LinearLayout) inflater.inflate(R.layout.purchase_complete, null, false);
+        TextView code = confirmation.findViewById(R.id.confirmation_code);
+        code.setText(confirmationCode);
         Button returnHome = confirmation.findViewById(R.id.purchase_return_home);
         returnHome.setOnClickListener(view ->returnToCart());
         root.addView(confirmation);
@@ -157,7 +173,6 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
     @SuppressLint("DefaultLocale")
     public void setPrices(){
-
         subtotal.setText(String.format("Subtotal $%.2f", account.getCart().getSubtotal()) );
         tax.setText(String.format("Tax $%.2f", account.getCart().getTax()));
         total.setText(String.format("Total $%.2f", account.getCart().getTotalWithTax()));

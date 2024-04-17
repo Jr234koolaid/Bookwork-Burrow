@@ -22,6 +22,20 @@
         android:layout_marginTop="30dp"
         android:src="@drawable/bookworm_logo" />
 
+    <TextView
+        android:id="@+id/confirmation_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_background"
+        android:backgroundTint="#C3D6E2"
+        android:padding="10dp"
+        android:textColor="@color/very_dark_blue"
+        android:fontFamily="@font/commissioner_bold"
+        android:textSize="20sp"
+        android:text="Confirmation Code"/>
+
     <Button
         android:id="@+id/purchase_return_home"
         android:layout_width="wrap_content"
@@ -29,9 +43,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:padding="10dp"
-        android:backgroundTint="@color/very_dark_blue"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/commissioner_medium"
         android:textSize="20sp"
-        android:text="Return Home"/>
+        android:text="Read your new books!"/>
 
 
 </LinearLayout>

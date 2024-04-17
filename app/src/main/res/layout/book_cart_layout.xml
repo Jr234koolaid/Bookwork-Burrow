@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/cover_img"
             android:layout_width="100dp"
             android:layout_height="140dp"
             android:background="@color/gray" />
@@ -42,7 +43,7 @@
                 android:id="@+id/cart_book_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/commissioner_medium"
+                android:fontFamily="@font/commissioner_bold"
                 android:textStyle="bold"
                 android:text="$20.99"
                 android:textSize="18sp"

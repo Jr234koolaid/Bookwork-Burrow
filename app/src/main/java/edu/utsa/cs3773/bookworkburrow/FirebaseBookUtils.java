@@ -24,8 +24,9 @@ public class FirebaseBookUtils {
                     if(task.isSuccessful()){
                         DocumentSnapshot doc = task.getResult();
                         Book book = new Book();
+                        book.setId(doc.getId());
                         book.setTitle(doc.getString("title"));
-                        book.setTitle(doc.getString("author"));
+                        book.setAuthor(doc.getString("author"));
                         book.setPrice(doc.getDouble("price"));
                         book.setGenre(doc.getString("genre"));
                         book.setDescription(doc.getString("description"));
