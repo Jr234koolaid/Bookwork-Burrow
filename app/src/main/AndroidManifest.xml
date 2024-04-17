@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
+            android:name=".view.BookSummaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.BookshelfActivity"
             android:exported="true" />
         <activity
