@@ -9,7 +9,9 @@ import android.widget.ImageButton;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -63,17 +65,10 @@ public class SearchLayout extends NavigationalLayout {
         imageButton.setTag(_book.getId());
         imageButton.setLayoutParams(layoutParams);
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
-        imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray));
 
-        // TODO: Add back
-//        try {
-//
-//            Bitmap coverBitmap = BitmapFactory.decodeStream(_book.getCoverURL().openConnection().getInputStream());
-//            imageButton.setImageBitmap(coverBitmap);
-//
-//        } catch (IOException e) {
-//            imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray));
-//        }
+        Glide.with(mContext)
+                .load(FirebaseStorage.getInstance().getReferenceFromUrl(_book.getCoverURL().toString()))
+                .into(imageButton);
 
         mBookContainer.addView(imageButton);
 
