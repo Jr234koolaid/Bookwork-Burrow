@@ -2,17 +2,11 @@ package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
-import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.model.Account;
-import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class MainActivity extends AppCompatActivity {
 
