@@ -1,8 +1,14 @@
 package edu.utsa.cs3773.bookworkburrow.model;
 
+import android.util.Log;
+
+import com.google.firebase.Timestamp;
+
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
+
+import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 
 /**
  * object class representing and order in progress
@@ -10,14 +16,18 @@ import java.util.TimeZone;
  */
 public class Order {
     private ArrayList<Book> cartList;
-    private Calendar date;
+    private Timestamp date;
+    double discount;
+    private String orderID;
+    private ArrayList<String> bookIDs;
 
     /**
      * initializes a new order object
      */
     public Order(){
         cartList= new ArrayList<Book>();
-        date = Calendar.getInstance(TimeZone.getDefault());
+        date = new Timestamp(new Date());
+        discount = 0;
     }
 
     /**
@@ -53,41 +63,37 @@ public class Order {
      * @return Double, current price of the total price after tax
      */
     public double getTotalWithTax() {
-        return getSubtotal() + getTax();
+        double price = getSubtotal() + getTax();
+        if(discount > 0) price -= price * discount;
+        return price;
     }
 
     public double getTax(){
-        return getSubtotal() * 0.08;
+        return getSubtotal() * 0.0825;
     }
 
-
-    /**
-     * updates the stored date of the order to current time
-     */
-    public void updateDate(){
-        date = Calendar.getInstance(TimeZone.getDefault());
-    }
 
     /**
      * returns the date as an easily readable string
      * @return String, the date in "Month, Date, Year" format
      */
     public String getStringDate(){
-        String[] dayPart = date.getTime().toString().split(" ");
-        return(dayPart[1]+", "+dayPart[2]+", "+dayPart[5]);
+//        String[] dayPart = date.getTime().toString().split(" ");
+//        return(dayPart[1]+", "+dayPart[2]+", "+dayPart[5]);
+        return date.toString();
     }
 
     /**
      * returns the current date object
-     * @return Calendar, the current date object
+     * @return Timestamp, the current date object
      */
-    public Calendar getDate() { return date; }
+    public Timestamp getDate() { return date; }
 
     /**
      * sets the current date object
      * @param s, the new current date object (Double)
      */
-    public void setDate(Calendar s){ date = s; }
+    public void setDate(Timestamp s){ date = s; }
 
     /**
      * returns the cart list
@@ -105,5 +111,33 @@ public class Order {
         String s = "Order:";
         for(Book book : cartList) s += book.getTitle() + " | ";
         return s;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount / 100;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    public ArrayList<String> getBookIDs() {
+        return bookIDs;
+    }
+
+    public void setBookIDs(ArrayList<String> bookIDs) {
+        this.bookIDs = bookIDs;
+        for(String ID : bookIDs) FirebaseBookUtils.getBookByID(ID).thenAccept(Book ->{
+            cartList.add(Book);
+            Log.d("Order Book", Book.getTitle());
+        });
     }
 }

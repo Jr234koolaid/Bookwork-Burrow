@@ -13,8 +13,13 @@
     <color name="pink">#FF8AB4</color>
     <color name="hot_pink">#FF69B4</color>
     <color name="gray">#B1CAD0</color>
+    <color name="light_gray">#E6EDEF</color>
     <color name="blue">#0000FF</color>
     <color name="light_blue">#E6EDEF</color>
     <color name="very_dark_blue">#003D60</color>
+    <color name="dark_gray">#69797D</color>
+
+    <color name="design_default_color_on_primary">#FF000000</color>
+
 
 </resources>

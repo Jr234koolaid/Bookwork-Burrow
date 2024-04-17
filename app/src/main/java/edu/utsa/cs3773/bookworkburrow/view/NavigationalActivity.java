@@ -7,11 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import edu.utsa.cs3773.bookworkburrow.R;
-import edu.utsa.cs3773.bookworkburrow.controller.NavigationalController;
 
 public class NavigationalActivity extends AppCompatActivity {
 
-    private enum NavigationState { NONE, HOME, SEARCH, CART, BOOKSHELF }
+    private enum NavigationState { NONE, HOME, SEARCH, CART, SETTINGS }
 
     private NavigationState     mNavigationState;
 
@@ -20,9 +19,12 @@ public class NavigationalActivity extends AppCompatActivity {
     private ImageButton         mHomeButton;
     private ImageButton         mSearchButton;
     private ImageButton         mCartButton;
-    private ImageButton         mBookshelfButton;
+    private ImageButton         mSettingsButton;
 
-    private NavigationalLayout  mNavigationalLayout;
+    private HomeLayout          mHomeLayout;
+    private SearchLayout        mSearchLayout;
+    private CartLayout          mCartLayout;
+    private SettingsLayout      mSettingsLayout;
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -34,104 +36,71 @@ public class NavigationalActivity extends AppCompatActivity {
 
         mScrollView = this.findViewById(R.id.navigational_scroll);
 
-        NavigationalController controller = new NavigationalController(this);
+        mHomeLayout = new HomeLayout(this, mScrollView);
+        mSearchLayout = new SearchLayout(this, mScrollView);
+        mCartLayout = new CartLayout(this, mScrollView);
+        mSettingsLayout = new SettingsLayout(this, mScrollView);
 
         mHomeButton = this.findViewById(R.id.navigational_button_home);
-        mHomeButton.setOnClickListener(controller);
+        mHomeButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.HOME));
 
         mSearchButton = this.findViewById(R.id.navigational_button_search);
-        mSearchButton.setOnClickListener(controller);
+        mSearchButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.SEARCH));
 
         mCartButton = this.findViewById(R.id.navigational_button_cart);
-        mCartButton.setOnClickListener(controller);
+        mCartButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.CART));
 
-        mBookshelfButton = this.findViewById(R.id.navigational_button_bookshelf);
-        mBookshelfButton.setOnClickListener(controller);
+        mSettingsButton = this.findViewById(R.id.navigational_button_settings);
+        mSettingsButton.setOnClickListener(view -> this.show(NavigationalActivity.NavigationState.SETTINGS));
 
-        ImageButton settingsButton = this.findViewById(R.id.navigational_button_settings);
-        settingsButton.setOnClickListener(controller);
-
-        // Select home as default
-        this.selectHomeLayout();
+        // show home as default
+        this.show(NavigationState.HOME);
     }
 
-    public void selectHomeLayout() {
+    private void show(NavigationState _state) {
 
-        if (mNavigationState == NavigationState.HOME) return;
+        if (mNavigationState == _state) return;
+
+        switch (_state) {
+
+            case HOME:
+                this.selectLayout(mHomeLayout, mHomeButton, R.drawable.home_selected);
+                break;
+
+            case SEARCH:
+                this.selectLayout(mSearchLayout, mSearchButton, R.drawable.search_selected);
+                break;
+
+            case CART:
+                this.selectLayout(mCartLayout, mCartButton, R.drawable.shopping_cart_selected);
+                break;
+
+            case SETTINGS:
+                this.selectLayout(mSettingsLayout, mSettingsButton, R.drawable.settings_selected);
+                break;
+        }
+
+        // Set navigation state
+        mNavigationState = _state;
+    }
+
+    private void selectLayout(NavigationalLayout _layout, ImageButton _button, int _resource) {
 
         // Unselect current layout
         this.unselectLayout();
 
         // Add layout
-        mNavigationalLayout = new HomeLayout(this, mScrollView);
-        mNavigationalLayout.onShow();
+        _layout.onShow();
 
-        // Set status image
-        mHomeButton.setImageResource(R.drawable.home_selected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.HOME;
-    }
-
-    public void selectSearchLayout() {
-
-        if (mNavigationState == NavigationState.SEARCH) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        //m_navigationLayout = new SearchLayout(this, m_scrollView);
-        //m_navigationLayout.show();
-
-        // Set status image
-        mSearchButton.setImageResource(R.drawable.search_selected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.SEARCH;
-    }
-
-    public void selectCartLayout() {
-
-        if (mNavigationState == NavigationState.CART) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        //mNavigationLayout = new CartLayout(this, mScrollView);
-        //mNavigationLayout.show();
-
-        // Set status image
-        mCartButton.setImageResource(R.drawable.shopping_cart_selected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.CART;
-    }
-
-    public void selectBookshelfLayout() {
-
-        if (mNavigationState == NavigationState.BOOKSHELF) return;
-
-        // Unselect current layout
-        this.unselectLayout();
-
-        // Add layout
-        //mNavigationLayout = new BookshelfLayout(this, mScrollView);
-        //mNavigationLayout.show();
-
-        // Set status image
-        mBookshelfButton.setImageResource(R.drawable.book_selected);
-
-        // Set navigation state
-        mNavigationState = NavigationState.BOOKSHELF;
+        // Set image resource
+        _button.setImageResource(_resource);
     }
 
     private void unselectLayout() {
 
         if (mNavigationState == NavigationState.NONE) return;
 
-        // Reset status image
+        // Reset image resource
         switch (mNavigationState) {
 
             case HOME:
@@ -146,12 +115,13 @@ public class NavigationalActivity extends AppCompatActivity {
                 mCartButton.setImageResource(R.drawable.shopping_cart);
                 break;
 
-            case BOOKSHELF:
-                mBookshelfButton.setImageResource(R.drawable.book);
+            case SETTINGS:
+                mSettingsButton.setImageResource(R.drawable.settings);
                 break;
         }
 
         // Remove layout
+        mScrollView.scrollTo(0, 0);
         mScrollView.removeAllViews();
     }
 
