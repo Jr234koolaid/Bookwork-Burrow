@@ -112,12 +112,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- TODO: REMOVE -->
-            <!--            <ImageButton-->
-            <!--                android:tag="Book"-->
-            <!--                android:layout_width="140dp"-->
-            <!--                android:layout_height="195dp"-->
-            <!--                android:background="@color/gray" />-->
+            <!-- Books will be programmatically added here -->
 
         </LinearLayout>
 
@@ -162,12 +157,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- TODO: REMOVE -->
-            <!--            <ImageButton-->
-            <!--                android:tag="Book"-->
-            <!--                android:layout_width="140dp"-->
-            <!--                android:layout_height="195dp"-->
-            <!--                android:background="@color/gray" />-->
+            <!-- Books will be programmatically added here -->
 
         </LinearLayout>
 
@@ -179,7 +169,7 @@
         android:id="@+id/home_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="left"
+        app:barrierDirection="start"
         app:constraint_referenced_ids="home_text_welcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
