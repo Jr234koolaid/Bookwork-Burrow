@@ -1,4 +1,4 @@
-package edu.utsa.cs3773.bookworkburrow;
+package edu.utsa.cs3773.bookworkburrow.view;
 
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
+import edu.utsa.cs3773.bookworkburrow.R;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
