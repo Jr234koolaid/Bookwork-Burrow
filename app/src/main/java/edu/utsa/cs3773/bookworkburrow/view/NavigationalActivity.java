@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
@@ -31,7 +32,8 @@ public class NavigationalActivity extends AppCompatActivity {
 
         super.onCreate(_savedInstanceState);
         this.setContentView(R.layout.activity_navigational);
-
+        Intent intent = new Intent(this,OrderHistory.class);
+        startActivity(intent);
         mNavigationState = NavigationState.NONE;
 
         mScrollView = this.findViewById(R.id.navigational_scroll);
