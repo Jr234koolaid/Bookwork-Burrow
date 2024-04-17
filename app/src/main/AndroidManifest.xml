@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
+            android:name=".view.BookshelfActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.ReadingActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.ChangePasswordActivity"
             android:exported="false" />
         <activity
