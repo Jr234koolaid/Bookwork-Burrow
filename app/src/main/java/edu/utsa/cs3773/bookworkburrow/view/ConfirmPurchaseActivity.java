@@ -40,36 +40,38 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_purchase);
 
-        account = FirebaseUserUtil.getCurrUser();
-        boolean loggedIn = FirebaseUserUtil.isLoggedIn();
-        Log.d("account id", account.getUID());
-        Log.d("Is logged in?", loggedIn + "!");
-        applyDiscount = findViewById(R.id.discount_apply_button);
-        backButton = findViewById(R.id.back_arrow);
-        booksContainer = findViewById(R.id.booksAddedContainer);
-        discountCode = findViewById(R.id.discount_code);
-        discountDisplay = findViewById(R.id.discount_text_display);
-        subtotal = findViewById(R.id.subtotal);
-        tax = findViewById(R.id.tax);
-        total = findViewById(R.id.total);
-        Button checkout = findViewById(R.id.checkout_button);
-        Button cancel = findViewById(R.id.cancel_button);
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            boolean loggedIn = FirebaseUserUtil.isLoggedIn();
+            Log.d("account id", account.getUID());
+            Log.d("Is logged in?", loggedIn + "!");
 
-        backButton.setOnClickListener(view ->returnToCart());
-        cancel.setOnClickListener(view -> returnToCart());
-        checkout.setOnClickListener(view -> handleCheckout());
-        applyDiscount.setOnClickListener(view -> handleDiscount());
+            applyDiscount = findViewById(R.id.discount_apply_button);
+            backButton = findViewById(R.id.back_arrow);
+            booksContainer = findViewById(R.id.booksAddedContainer);
+            discountCode = findViewById(R.id.discount_code);
+            discountDisplay = findViewById(R.id.discount_text_display);
+            subtotal = findViewById(R.id.subtotal);
+            tax = findViewById(R.id.tax);
+            total = findViewById(R.id.total);
+            Button checkout = findViewById(R.id.checkout_button);
+            Button cancel = findViewById(R.id.cancel_button);
 
+            backButton.setOnClickListener(view ->returnToCart());
+            cancel.setOnClickListener(view -> returnToCart());
+            checkout.setOnClickListener(view -> handleCheckout());
+            applyDiscount.setOnClickListener(view -> handleDiscount());
 
-        FirebaseBookUtils.getAllBookIDs().thenAccept(ArrayList ->{
-            for(String bookID: ArrayList){
-                FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
-                    account.getCart().addBook(Book);
-                    Log.d("Added book", Book.getTitle());
-                    addBookView(Book);
-                    setPrices();
-                });
-            }
+            FirebaseBookUtils.getAllBookIDs().thenAccept(ArrayList ->{
+                for(String bookID: ArrayList){
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
+                        account.getCart().addBook(Book);
+                        Log.d("Added book", Book.getTitle());
+                        addBookView(Book);
+                        setPrices();
+                    });
+                }
+            });
         });
 
     }

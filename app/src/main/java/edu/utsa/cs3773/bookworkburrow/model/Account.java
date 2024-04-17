@@ -27,6 +27,16 @@ public class Account {
         this.UID = UID;
     }
 
+    public Account(String UID, String firstName, String lastName, String email){
+        this.UID = UID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        booksOwned = new ArrayList<>();
+        orderHistory = new ArrayList<>();
+        cart = new Order();
+    }
+
     public String getUID() {return UID;}
 
     public String getEmail() {

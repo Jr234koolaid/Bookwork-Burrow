@@ -31,7 +31,11 @@ public class CartActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        account = FirebaseUserUtil.getCurrUser();
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            loadBookViews();
+            setSubtotal();
+        });
         bookContainer = findViewById(R.id.booksAddedContainer);
         subtotal = findViewById(R.id.subtotal);
         checkout = findViewById(R.id.checkout_button);
@@ -67,8 +71,7 @@ public class CartActivity extends AppCompatActivity
         account.getCart().addBook(book0);
         Log.d("Account info", account.toString());
 
-        loadBookViews();
-        setSubtotal();
+
 
 
     }

@@ -3,6 +3,7 @@ package edu.utsa.cs3773.bookworkburrow.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class HomeLayout extends NavigationalLayout {
 
+    Account account;
     public HomeLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_home);
     }
@@ -32,51 +34,55 @@ public class HomeLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        Account account = FirebaseUserUtil.getCurrUser();
+        FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
+            account = Account;
+            TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
+            welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
+            Log.d("Account name", account.getFirstName());
 
-        TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
-        welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
+            int readingGoal = account.getReadingGoal();
 
-        int readingGoal = account.getReadingGoal();
+            ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
+            bookProgress.setProgress((int)((0.0 / (float)readingGoal) * 100.0));
 
-        ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
-        bookProgress.setProgress((int)((0.0 / (float)readingGoal) * 100.0));
+            TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
+            progressText.setText(mContext.getString(R.string.home_text_progress_count, 0));
 
-        TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
-        progressText.setText(mContext.getString(R.string.home_text_progress_count, 0));
+            TextView goalText = mLayoutView.findViewById(R.id.home_text_goal);
+            goalText.setText(mContext.getString(R.string.home_text_progress_goal, readingGoal));
 
-        TextView goalText = mLayoutView.findViewById(R.id.home_text_goal);
-        goalText.setText(mContext.getString(R.string.home_text_progress_goal, readingGoal));
+            Button goalUpdateButton = mLayoutView.findViewById(R.id.home_button_update_goal);
+            goalUpdateButton.setOnClickListener(view -> this.updateGoal());
 
-        Button goalUpdateButton = mLayoutView.findViewById(R.id.home_button_update_goal);
-        goalUpdateButton.setOnClickListener(view -> this.updateGoal());
+            LinearLayout favoritesLayout = mLayoutView.findViewById(R.id.home_layout_favorites);
+            LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
 
-        LinearLayout favoritesLayout = mLayoutView.findViewById(R.id.home_layout_favorites);
-        LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
+            // Add favorites
+            ArrayList<String> favoritesIDList = account.getFavorites();
+            if ((favoritesIDList == null) || favoritesIDList.isEmpty()) {
+                this.showText(favoritesLayout, R.string.home_text_no_favorites);
 
-        // Add favorites
-        ArrayList<String> favoritesIDList = account.getFavorites();
-        if ((favoritesIDList == null) || favoritesIDList.isEmpty()) {
-            this.showText(favoritesLayout, R.string.home_text_no_favorites);
+            } else {
 
-        } else {
-
-            for (String bookID : favoritesIDList) {
-                FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(favoritesLayout, book));
+                for (String bookID : favoritesIDList) {
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(favoritesLayout, book));
+                }
             }
-        }
 
-        // Add books from bookshelf
-        ArrayList<String> ownedIDList = account.getBooksOwned();
-        if ((ownedIDList == null) || ownedIDList.isEmpty()) {
-            this.showText(bookshelfLayout, R.string.home_text_no_books);
+            // Add books from bookshelf
+            ArrayList<String> ownedIDList = account.getBooksOwned();
+            if ((ownedIDList == null) || ownedIDList.isEmpty()) {
+                this.showText(bookshelfLayout, R.string.home_text_no_books);
 
-        } else {
+            } else {
 
-            for (String bookID : ownedIDList) {
-                FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(bookshelfLayout, book));
+                for (String bookID : ownedIDList) {
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(bookshelfLayout, book));
+                }
             }
-        }
+        });
+
+
     }
 
     private void showBook(LinearLayout _layout, Book _book) {

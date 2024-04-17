@@ -6,11 +6,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
+
 import edu.utsa.cs3773.bookworkburrow.model.Account;
 
 public class FirebaseUserUtil {
@@ -27,14 +30,27 @@ public class FirebaseUserUtil {
         return user != null;
     }
 
-    public static Account getCurrUser(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public static CompletableFuture<Account> getCurrUser(){
+        CompletableFuture<Account> completableFuture = new CompletableFuture<>();
         if(user != null){
-            String id = user.getUid();
-            Account account = new Account(id);
-            return account;
+            db.collection("users").document(user.getUid()).get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot doc = task.getResult();
+                            Account account = new Account(user.getUid(), doc.getString("first-name"), doc.getString("last-name"), doc.getString("email"));
+                            Double goal = doc.getDouble("reading-goal");
+                            assert goal != null;
+                            account.setReadingGoal(goal.intValue());
+                            account.setOrderHistory((ArrayList<String>) doc.get("orders"));
+                            account.setFavorites((ArrayList<String>) doc.get("books-favorited"));
+                            account.setBooksOwned((ArrayList<String>) doc.get("books-owned"));
+                            completableFuture.complete(account);
+                        }
+                        else completableFuture.completeExceptionally(new Throwable(task.getException()));
+                    });
+            return completableFuture;
         }
-        return new Account("user not found");
+        return completableFuture;
     }
 
     /**
@@ -105,6 +121,7 @@ public class FirebaseUserUtil {
                             userMap.put("books-favorited", new ArrayList<>());
                             userMap.put("orders", new ArrayList<>());
                             userMap.put("reading-goal", 5);
+                            Account account = new Account(uid, firstname, lastname, email);
                             db.collection("users").document(user.getUid()).set(userMap);
                             completableFuture.complete(new Account(uid));
                         } else {
@@ -196,6 +213,23 @@ public class FirebaseUserUtil {
      */
     public static void logOut(){
         FirebaseAuth.getInstance().signOut();
+    }
+
+    /**
+     * Get user info
+     */
+    private static CompletableFuture<Account> getUserInfo(){
+        CompletableFuture<Account> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(user.getUid()).get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        Account account = new Account(user.getUid(), doc.getString("first-name"), doc.getString("last-name"), doc.getString("email"));
+                        completableFuture.complete(account);
+                    }
+                    else completableFuture.completeExceptionally(new Throwable(task.getException()));
+                });
+        return completableFuture;
     }
 
 
