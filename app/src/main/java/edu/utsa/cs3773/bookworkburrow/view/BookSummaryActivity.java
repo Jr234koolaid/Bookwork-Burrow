@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
@@ -21,6 +24,7 @@ public class BookSummaryActivity extends AppCompatActivity {
     private TextView backToSearch;
     private TextView author;
     private ScrollView descriptionContainer;
+    private ImageView bookCover;
 
 
     private Account account;
@@ -32,9 +36,10 @@ public class BookSummaryActivity extends AppCompatActivity {
 
         bookTitle = findViewById(R.id.BookTitle);
         addToCart = findViewById(R.id.addToCartButton);
-        backToSearch = findViewById(R.id.back_button);
-        descriptionContainer = findViewById(R.id.desc_container);
+        backToSearch = findViewById(R.id.backButton);
+        descriptionContainer = findViewById(R.id.descContainer);
         author = findViewById(R.id.authorName);
+        bookCover = findViewById(R.id.bookImage);
 
         String bookID = getIntent().getStringExtra("bookid");
         Log.d("BookID", bookID);
@@ -47,6 +52,7 @@ public class BookSummaryActivity extends AppCompatActivity {
                 setAuthor(Book.getAuthor());
                 setAddToCartView(false);
                 setDescriptionContainer(Book.getDescription());
+                setBookCover(book.getCoverURL().toString());
                 addToCart.setOnClickListener(view -> addToCart(book));
                 backToSearch.setOnClickListener(view -> returnToSearch());
             });
@@ -67,6 +73,12 @@ public class BookSummaryActivity extends AppCompatActivity {
 
     private void setAuthor(String authorName){
         author.setText(authorName);
+    }
+
+    private void setBookCover(String coverUrl){
+        Glide.with(this)
+                .load(coverUrl)
+                .into(bookCover);
     }
 
     private void returnToSearch(){
