@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <LinearLayout
+                android:id="@+id/ReadingGoalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:src="@tools:sample/avatars"
+                    app:srcCompat="@drawable/arrow" />
+
+                <TextView
+                    android:layout_width="177dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/commissioner_medium"
+                    android:gravity="center"
+                    android:text="Reading Goal"
+                    android:textSize="28sp" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/TotalBooksReadInput"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:background="#D7EAEE"
+                    android:fontFamily="@font/commissioner_bold"
+                    android:gravity="center"
+                    android:text="10"
+                    android:textColor="#003D60"
+                    android:textColorHint="#003D60"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/commissioner_medium"
+                        android:text="Books Read"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="25sp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/commissioner_regular"
+                        android:text="Total books read"
+                        android:textColor="#003D60"
+                        android:textColorHint="#003D60"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/TotalBooksToReadInput"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:background="#D7EAEE"
+                    android:editable="true"
+                    android:fontFamily="@font/commissioner_bold"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="#003D60"
+                    android:textColorHint="#003D60"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/commissioner_medium"
+                        android:text="Reading Goal"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="25sp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/commissioner_regular"
+                        android:text="Total books to read"
+                        android:textColor="#003D60"
+                        android:textColorHint="#003D60"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/UpdateButton"
+                    android:layout_width="290dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="55dp"
+                    android:background="@color/black"
+                    android:clickable="true"
+                    android:fontFamily="@font/commissioner_semi_bold"
+                    android:gravity="center"
+                    android:text="Update"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
