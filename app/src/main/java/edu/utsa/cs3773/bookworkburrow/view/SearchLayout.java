@@ -119,7 +119,9 @@ public class SearchLayout extends NavigationalLayout {
         if (_bookID == null) return;
 
         // TODO: Use intent to go to right book?
-        mContext.startActivity(new Intent(mContext, BookActivity.class));
+        Intent bookSumIntent = new Intent(mContext, BookSummaryActivity.class);
+        bookSumIntent.putExtra("bookid", _bookID);
+        mContext.startActivity(bookSumIntent);
     }
 
 } // class SearchLayout
