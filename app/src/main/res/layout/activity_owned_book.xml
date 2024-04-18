@@ -19,7 +19,7 @@
                 android:layout_height="20dp" />
 
             <LinearLayout
-                android:id="@+id/backToSearchButton"
+                android:id="@+id/BackToBooksButton"
                 android:layout_width="189dp"
                 android:layout_height="18dp"
                 android:clickable="true"
@@ -42,7 +42,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/inter_medium"
                     android:gravity="center|left"
-                    android:text="Back to search"
+                    android:text="Back to books"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -121,26 +121,34 @@
                 android:orientation="horizontal">
 
                 <Space
-                    android:layout_width="34dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0" />
 
                 <TextView
-                    android:id="@+id/addToCartButton"
-                    android:layout_width="343dp"
+                    android:id="@+id/ReadButton"
+                    android:layout_width="194dp"
                     android:layout_height="match_parent"
                     android:background="@color/black"
                     android:clickable="true"
                     android:fontFamily="@font/inter_bold"
                     android:gravity="center"
-                    android:text="Add to cart | $price"
+                    android:text="Read"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Space
-                    android:layout_width="34dp"
+                    android:layout_width="5dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:src="@tools:sample/avatars"
+                    app:srcCompat="@drawable/SaveBook" />
 
             </LinearLayout>
 
@@ -186,7 +194,7 @@
                     android:layout_width="31dp"
                     android:layout_height="31dp"
                     android:layout_weight="1"
-                    android:src="@drawable/star"/>
+                    android:src="@drawable/star" />
 
                 <TextView
                     android:id="@+id/AvrgReview"
@@ -238,11 +246,11 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
+                    app:srcCompat="@drawable/arrow"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:rotationY="182"
-                    android:src="@tools:sample/avatars"
-                    app:srcCompat="@drawable/arrow" />
+                    android:src="@tools:sample/avatars" />
 
                 <Space
                     android:layout_width="wrap_content"
