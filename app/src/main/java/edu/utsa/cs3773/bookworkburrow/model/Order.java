@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
+import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
 
 /**
  * object class representing and order in progress
@@ -37,6 +38,7 @@ public class Order {
     public void addBook(Book newBook){
         //TODO: update firestore
         cartList.add(newBook);
+        FirebaseOrderUtil.addBookToCart(newBook.getId());
     }
 
     /**
