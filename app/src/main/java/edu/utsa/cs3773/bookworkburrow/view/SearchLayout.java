@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 
@@ -19,6 +23,8 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 public class SearchLayout extends NavigationalLayout {
 
     private EditText            mSearchText;
+    private AppCompatSpinner    mSortSpinner;
+    private AppCompatSpinner    mGenreSpinner;
     private ConstraintLayout    mBookContainer;
 
     public SearchLayout(NavigationalActivity _context, ViewGroup _parent) {
@@ -29,19 +35,25 @@ public class SearchLayout extends NavigationalLayout {
     protected void onDisplay() {
 
         mSearchText = mLayoutView.findViewById(R.id.search_edit_search);
+        mSortSpinner = mLayoutView.findViewById(R.id.search_spinner_sort);
+        mGenreSpinner = mLayoutView.findViewById(R.id.search_spinner_genre);
         mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
+
+        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(mContext, R.array.sort_array, R.layout.layout_search_spinner_item);
+        sortAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
+
+        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.genre_array, R.layout.layout_search_spinner_item);
+        genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
+
+        mSortSpinner.setAdapter(sortAdapter);
+        mGenreSpinner.setAdapter(genreAdapter);
 
         FirebaseBookUtils.getAllBookIDs().thenAccept(bookList -> {
 
             for (int i = 0; i < bookList.size(); i++) {
 
                 String bookID = bookList.get(i);
-                if ((i % 2) == 0) {
-                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(book, true));
-
-                } else {
-                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(book, false));
-                }
+                FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(book));
             }
         });
     }
@@ -51,66 +63,61 @@ public class SearchLayout extends NavigationalLayout {
         // TODO: Something with search
     }
 
-    private void showBook(Book _book, boolean _start) {
+    private void showBook(Book _book) {
 
         // Book properties
         int width = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140.f, mMetrics));
-        int height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 195.f, mMetrics));
-
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(width, height);
+        int height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 210.f, mMetrics));
 
         ImageButton imageButton = new ImageButton(mContext);
         imageButton.setId(View.generateViewId());
         imageButton.setTag(_book.getId());
-        imageButton.setLayoutParams(layoutParams);
+        imageButton.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
+        imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+        imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Glide.with(mContext)
-                .load(_book.getCoverURL().toString())
-                .into(imageButton);
+        this.addToContainer(imageButton);
 
-        mBookContainer.addView(imageButton);
+        Glide.with(mContext).load(_book.getCoverURL().toString()).into(imageButton);
+    }
 
-        // Constraint layout properties
-        int marginStart = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32.f, mMetrics));
-        int marginEnd = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32.f, mMetrics));
+    private void addToContainer(ImageButton _imageButton) {
+
+        // Add image button to container
+        mBookContainer.addView(_imageButton);
+
+        // Place image button in correct spot
+        int ID = _imageButton.getId();
+
+        int childCount = mBookContainer.getChildCount();
+        int index = (childCount - 3);
+
+        // Set layout set
         int marginTop = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24.f, mMetrics));
 
         ConstraintSet layoutSet = new ConstraintSet();
         layoutSet.clone(mBookContainer);
 
-        int childCount = mBookContainer.getChildCount();
-        int index = (childCount - 3);
-
-        if (childCount % 2 == 1) {
-
-            layoutSet.connect(imageButton.getId(), ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, marginStart);
-
-            if (index < 0) {
-                layoutSet.connect(imageButton.getId(), ConstraintSet.TOP, mBookContainer.getId(), ConstraintSet.TOP);
-
-            } else {
-
-                View child = mBookContainer.getChildAt(index);
-
-                layoutSet.connect(imageButton.getId(), ConstraintSet.TOP, child.getId(), ConstraintSet.BOTTOM, marginTop);
-            }
+        if ((childCount % 2) == 1) {
+            layoutSet.connect(_imageButton.getId(), ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, 0);
 
         } else {
 
-            layoutSet.connect(imageButton.getId(), ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, marginEnd);
-
-            if (index < 0) {
-                layoutSet.connect(imageButton.getId(), ConstraintSet.TOP, mBookContainer.getId(), ConstraintSet.TOP);
-
-            } else {
-
-                View child = mBookContainer.getChildAt(index);
-
-                layoutSet.connect(imageButton.getId(), ConstraintSet.TOP, child.getId(), ConstraintSet.BOTTOM, marginTop);
-            }
+            layoutSet.connect(_imageButton.getId(), ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, 0);
         }
 
+        if (index < 0) {
+            layoutSet.connect(_imageButton.getId(), ConstraintSet.TOP, mBookContainer.getId(), ConstraintSet.TOP);
+
+        } else {
+
+            View child = mBookContainer.getChildAt(index);
+
+            layoutSet.connect(_imageButton.getId(), ConstraintSet.TOP, child.getId(), ConstraintSet.BOTTOM, marginTop);
+        }
+
+        // Apply layout set
         layoutSet.applyTo(mBookContainer);
     }
 
@@ -118,10 +125,10 @@ public class SearchLayout extends NavigationalLayout {
 
         if (_bookID == null) return;
 
-        // TODO: Use intent to go to right book?
-        Intent bookSumIntent = new Intent(mContext, BookSummaryActivity.class);
-        bookSumIntent.putExtra("bookid", _bookID);
-        mContext.startActivity(bookSumIntent);
+        Intent intent = new Intent(mContext, BookSummaryActivity.class);
+        intent.putExtra("bookid", _bookID);
+
+        mContext.startActivity(intent);
     }
 
 } // class SearchLayout
