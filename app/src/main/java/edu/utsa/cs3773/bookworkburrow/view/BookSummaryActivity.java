@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -21,12 +22,12 @@ public class BookSummaryActivity extends AppCompatActivity {
 
     private TextView bookTitle;
     private TextView addToCart;
-    private TextView backToSearch;
+    private LinearLayout backToSearch;
     private TextView author;
     private ScrollView descriptionContainer;
     private ImageView bookCover;
 
-
+    private boolean added;
     private Account account;
     private Book book;
     @Override
@@ -34,12 +35,13 @@ public class BookSummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_summary);
 
+        added = false;
         bookTitle = findViewById(R.id.BookTitle);
         addToCart = findViewById(R.id.addToCartButton);
-        backToSearch = findViewById(R.id.backButton);
+        backToSearch = findViewById(R.id.backToSearchButton);
         descriptionContainer = findViewById(R.id.descContainer);
         author = findViewById(R.id.authorName);
-        bookCover = findViewById(R.id.bookImage);
+        bookCover = findViewById(R.id.BookImage);
 
         String bookID = getIntent().getStringExtra("bookid");
         Log.d("BookID", bookID);
@@ -50,7 +52,7 @@ public class BookSummaryActivity extends AppCompatActivity {
                 book = Book;
                 setBookTitle(Book.getTitle());
                 setAuthor(Book.getAuthor());
-                setAddToCartView(false);
+                setAddToCartView();
                 setDescriptionContainer(Book.getDescription());
                 setBookCover(book.getCoverURL().toString());
                 addToCart.setOnClickListener(view -> addToCart(book));
@@ -85,14 +87,17 @@ public class BookSummaryActivity extends AppCompatActivity {
         this.startActivity(new Intent(this, NavigationalActivity.class));
     }
 
-    private void setAddToCartView(Boolean added){
+    private void setAddToCartView(){
         if(added) addToCart.setText("Added to Cart!");
         else addToCart.setText("Add to cart | " + book.getPrice());
     }
 
     private void addToCart(Book book){
-        account.getCart().addBook(book);
-        setAddToCartView(true);
+        if(!added) {
+            account.getCart().addBook(book);
+            added = true;
+        }
+        setAddToCartView();
 
     }
 }
