@@ -32,8 +32,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="match_parent"
-                    android:src="@tools:sample/avatars"
-                    app:srcCompat="@drawable/arrow" />
+                    android:src="@drawable/arrow" />
 
                 <TextView
                     android:layout_width="177dp"

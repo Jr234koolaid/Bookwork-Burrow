@@ -38,11 +38,12 @@
                     android:src="@drawable/arrow" />
 
                 <TextView
+                    android:id="@+id/back_button"
                     android:layout_width="138dp"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/inter_medium"
                     android:gravity="center|left"
-                    android:text="Back to search"
+                    android:text="Back to home"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -52,7 +53,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_height="293dp"
                 android:orientation="horizontal">
 
                 <Space
@@ -154,101 +155,127 @@
                 android:layout_weight="0"
                 android:background="?android:attr/listDivider" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:orientation="horizontal">
-
-                <Space
-                    android:layout_width="28dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="104dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="Reviews"
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="28dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="31dp"
-                    android:layout_height="31dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/star"/>
-
-                <TextView
-                    android:id="@+id/AvrgReview"
-                    android:layout_width="31dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/commissioner"
-                    android:gravity="center"
-                    android:text="4.7"
-                    android:textColor="@color/pink"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:orientation="vertical">
-
-                <ScrollView
-                    android:id="@+id/reviews"
+            <ScrollView
+                android:layout_width="356dp"
+                android:layout_height="332dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Space
-                    android:layout_width="259dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/writeReviewButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:fontFamily="@font/inter_medium"
-                    android:gravity="center|right"
-                    android:text="Write a review "
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/commissioner_medium"
+                        android:textSize="24sp"
+                        android:textColor="@color/black"
+                        android:text="Description" />
+                    <ScrollView
+                        android:id="@+id/descContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:rotationY="182"
-                    android:src="@tools:sample/avatars"
-                    app:srcCompat="@drawable/arrow" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="104dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Reviews"
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+                            <Space
+                                android:layout_width="28dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <ImageView
+                                android:layout_width="31dp"
+                                android:layout_height="31dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/star"/>
+
+                            <TextView
+                                android:id="@+id/AvrgReview"
+                                android:layout_width="31dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/commissioner"
+                                android:gravity="center"
+                                android:text="4.7"
+                                android:textColor="@color/pink"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:orientation="vertical">
+
+                            <ScrollView
+                                android:id="@+id/reviews"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Space
+                                android:layout_width="259dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0" />
+
+                            <TextView
+                                android:id="@+id/writeReviewButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:fontFamily="@font/inter_medium"
+                                android:gravity="center|right"
+                                android:text="Write a review "
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:rotationY="182"
+                                android:src="@drawable/arrow" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+
+
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

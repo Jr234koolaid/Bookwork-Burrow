@@ -118,10 +118,8 @@ public class HomeLayout extends NavigationalLayout {
 
         if (_bookID == null) return;
 
-        Intent intent = new Intent(mContext, BookSummaryActivity.class);
-        intent.putExtra("bookid", _bookID);
-
-        mContext.startActivity(intent);
+        // TODO: Use intent to go to right book?
+        mContext.startActivity(new Intent(mContext, ReadingActivity.class));
     }
 
 } // class HomeLayout
