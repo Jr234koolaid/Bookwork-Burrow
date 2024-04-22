@@ -147,8 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:src="@tools:sample/avatars"
-                    app:srcCompat="@drawable/SaveBook" />
+                    android:src="@drawable/save_book" />
 
             </LinearLayout>
 
@@ -246,11 +245,10 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    app:srcCompat="@drawable/arrow"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:rotationY="182"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/arrow" />
 
                 <Space
                     android:layout_width="wrap_content"
