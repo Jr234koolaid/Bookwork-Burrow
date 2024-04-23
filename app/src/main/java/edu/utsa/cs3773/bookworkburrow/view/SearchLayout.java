@@ -25,12 +25,13 @@ import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.SearchFilterController;
 import edu.utsa.cs3773.bookworkburrow.controller.SearchSortController;
+import edu.utsa.cs3773.bookworkburrow.controller.SearchTextController;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class SearchLayout extends NavigationalLayout {
 
     private enum SortItem   { NONE, ASCENDING, DESCENDING };
-    private enum FilterItem { NONE, HORROR };
+    private enum FilterItem { NONE, EDUCATION, FANTASY, FICTION, ROMANCE };
 
     private SortItem[]              mSortArray;
     private FilterItem[]            mFilterArray;
@@ -38,7 +39,8 @@ public class SearchLayout extends NavigationalLayout {
     private SortItem                mSortItem;
     private FilterItem              mFilterItem;
 
-    private EditText                mSearchText;
+    private String                  mKeyword;
+
     private AppCompatSpinner        mFilterSpinner;
     private ConstraintLayout        mBookContainer;
 
@@ -55,7 +57,8 @@ public class SearchLayout extends NavigationalLayout {
         mSortItem = SortItem.NONE;
         mFilterItem = FilterItem.NONE;
 
-        mSearchText = mLayoutView.findViewById(R.id.search_edit_search);
+        mKeyword = "";
+
         mFilterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
         mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
 
@@ -64,6 +67,9 @@ public class SearchLayout extends NavigationalLayout {
 
         mFilterSpinner.setAdapter(genreAdapter);
         mFilterSpinner.setOnItemSelectedListener(new SearchFilterController(this));
+
+        EditText searchText = mLayoutView.findViewById(R.id.search_edit_search);
+        searchText.addTextChangedListener(new SearchTextController(this));
 
         ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(mContext, R.array.sort_array, R.layout.layout_search_spinner_item);
         sortAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
@@ -74,6 +80,15 @@ public class SearchLayout extends NavigationalLayout {
 
         AppCompatImageButton clearButton = mLayoutView.findViewById(R.id.search_button_clear);
         clearButton.setOnClickListener(view -> this.clearFilter());
+
+        // Call update
+        this.onUpdate();
+    }
+
+    public void setSearchKeyword(String _keyword) {
+
+        // Set keyword
+        mKeyword = ((_keyword == null) || _keyword.isEmpty()) ? "" : _keyword.toLowerCase();
 
         // Call update
         this.onUpdate();
@@ -101,11 +116,6 @@ public class SearchLayout extends NavigationalLayout {
             // Call update
             this.onUpdate();
         }
-    }
-
-    private void search() {
-
-        // TODO: Something with search
     }
 
     private void onUpdate() {
@@ -138,14 +148,35 @@ public class SearchLayout extends NavigationalLayout {
 
     private void showBookList(ArrayList<Book> bookList) {
 
+        if (bookList.isEmpty()) return;
+
         // Clear container
         mBookContainer.removeAllViews();
 
-        // Filter book list
+        // Filter book list by keyword
+        if (!mKeyword.isEmpty()) {
+            bookList.removeIf(book -> (!book.getTitle().toLowerCase().contains(mKeyword)));
+        }
+
+        if (bookList.isEmpty()) return;
+
+        // Filter book list by genre
         switch (mFilterItem) {
 
-            case HORROR:
-                bookList.removeIf(book -> (!book.getGenre().equals("Horror")));
+            case EDUCATION:
+                bookList.removeIf(book -> (!book.getGenre().equalsIgnoreCase("education")));
+                break;
+
+            case FANTASY:
+                bookList.removeIf(book -> (!book.getGenre().equalsIgnoreCase("fantasy")));
+                break;
+
+            case FICTION:
+                bookList.removeIf(book -> (!book.getGenre().equalsIgnoreCase("fiction")));
+                break;
+
+            case ROMANCE:
+                bookList.removeIf(book -> (!book.getGenre().equalsIgnoreCase("romance")));
                 break;
 
             default: break;

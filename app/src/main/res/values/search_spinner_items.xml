@@ -13,7 +13,10 @@
 
         <item>Filter By:</item>
 
-        <item>Horror</item>
+        <item>Education</item>
+        <item>Fantasy</item>
+        <item>Fiction</item>
+        <item>Romance</item>
 
     </string-array>
 </resources>
