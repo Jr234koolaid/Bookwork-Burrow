@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -16,16 +17,30 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.CompletableFuture;
+
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.R;
+import edu.utsa.cs3773.bookworkburrow.controller.SearchFilterController;
+import edu.utsa.cs3773.bookworkburrow.controller.SearchSortController;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class SearchLayout extends NavigationalLayout {
 
-    private EditText            mSearchText;
-    private AppCompatSpinner    mSortSpinner;
-    private AppCompatSpinner    mGenreSpinner;
-    private ConstraintLayout    mBookContainer;
+    private enum SortItem   { NONE, ASCENDING, DESCENDING };
+    private enum FilterItem { NONE, HORROR };
+
+    private SortItem[]              mSortArray;
+    private FilterItem[]            mFilterArray;
+
+    private SortItem                mSortItem;
+    private FilterItem              mFilterItem;
+
+    private EditText                mSearchText;
+    private AppCompatSpinner        mFilterSpinner;
+    private ConstraintLayout        mBookContainer;
 
     public SearchLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_search);
@@ -34,28 +49,58 @@ public class SearchLayout extends NavigationalLayout {
     @Override
     protected void onDisplay() {
 
-        mSearchText = mLayoutView.findViewById(R.id.search_edit_search);
-        mSortSpinner = mLayoutView.findViewById(R.id.search_spinner_sort);
-        mGenreSpinner = mLayoutView.findViewById(R.id.search_spinner_genre);
-        mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
+        mSortArray = SortItem.values();
+        mFilterArray = FilterItem.values();
 
-        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(mContext, R.array.sort_array, R.layout.layout_search_spinner_item);
-        sortAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
+        mSortItem = SortItem.NONE;
+        mFilterItem = FilterItem.NONE;
+
+        mSearchText = mLayoutView.findViewById(R.id.search_edit_search);
+        mFilterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
+        mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
 
         ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.genre_array, R.layout.layout_search_spinner_item);
         genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
 
-        mSortSpinner.setAdapter(sortAdapter);
-        mGenreSpinner.setAdapter(genreAdapter);
+        mFilterSpinner.setAdapter(genreAdapter);
+        mFilterSpinner.setOnItemSelectedListener(new SearchFilterController(this));
 
-        FirebaseBookUtils.getAllBookIDs().thenAccept(bookList -> {
+        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(mContext, R.array.sort_array, R.layout.layout_search_spinner_item);
+        sortAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
 
-            for (int i = 0; i < bookList.size(); i++) {
+        AppCompatSpinner sortSpinner = mLayoutView.findViewById(R.id.search_spinner_sort);
+        sortSpinner.setAdapter(sortAdapter);
+        sortSpinner.setOnItemSelectedListener(new SearchSortController(this));
 
-                String bookID = bookList.get(i);
-                FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(book));
-            }
-        });
+        AppCompatImageButton clearButton = mLayoutView.findViewById(R.id.search_button_clear);
+        clearButton.setOnClickListener(view -> this.clearFilter());
+
+        // Call update
+        this.onUpdate();
+    }
+
+    public void setSortItem(int _position) {
+
+        // Set sorting item
+        mSortItem = mSortArray[_position];
+
+        if (_position != 0) {
+
+            // Call update
+            this.onUpdate();
+        }
+    }
+
+    public void setFilterItem(int _position) {
+
+        // Set filtering item
+        mFilterItem = mFilterArray[_position];
+
+        if (_position != 0) {
+
+            // Call update
+            this.onUpdate();
+        }
     }
 
     private void search() {
@@ -63,9 +108,74 @@ public class SearchLayout extends NavigationalLayout {
         // TODO: Something with search
     }
 
+    private void onUpdate() {
+
+        FirebaseBookUtils.getAllBookIDs().thenAccept(bookIDList -> {
+            this.generateBookList(bookIDList).thenAccept(bookList -> this.showBookList(bookList));
+        });
+    }
+
+    private CompletableFuture<ArrayList<Book>> generateBookList(ArrayList<String> bookIDList) {
+
+        CompletableFuture<ArrayList<Book>> completableFuture = new CompletableFuture<>();
+
+        ArrayList<Book> bookList = new ArrayList<>();
+        for (String bookID : bookIDList) {
+
+            FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> {
+
+                // Add book to list
+                bookList.add(book);
+
+                // Check for completion
+                if (bookList.size() == bookIDList.size()) {
+                    completableFuture.complete(bookList);
+                }
+            });
+
+        } return completableFuture;
+    }
+
+    private void showBookList(ArrayList<Book> bookList) {
+
+        // Clear container
+        mBookContainer.removeAllViews();
+
+        // Filter book list
+        switch (mFilterItem) {
+
+            case HORROR:
+                bookList.removeIf(book -> (!book.getGenre().equals("Horror")));
+                break;
+
+            default: break;
+        }
+
+        if (bookList.isEmpty()) return;
+
+        // Sort book list
+        switch (mSortItem) {
+
+            case ASCENDING:
+                bookList.sort(Comparator.naturalOrder());
+                break;
+
+            case DESCENDING:
+                bookList.sort(Comparator.reverseOrder());
+                break;
+
+            default: break;
+        }
+
+        // Show books
+        for (Book book : bookList) {
+            this.showBook(book);
+        }
+    }
+
     private void showBook(Book _book) {
 
-        // Book properties
+        // Image button properties
         int width = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140.f, mMetrics));
         int height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 210.f, mMetrics));
 
@@ -77,15 +187,16 @@ public class SearchLayout extends NavigationalLayout {
         imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
         imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        this.addToContainer(imageButton);
+        // Add image button to container
+        mBookContainer.addView(imageButton);
+
+        // Apply layout to image button
+        this.applyLayout(imageButton);
 
         Glide.with(mContext).load(_book.getCoverURL().toString()).into(imageButton);
     }
 
-    private void addToContainer(ImageButton _imageButton) {
-
-        // Add image button to container
-        mBookContainer.addView(_imageButton);
+    private void applyLayout(ImageButton _imageButton) {
 
         // Place image button in correct spot
         int ID = _imageButton.getId();
@@ -100,21 +211,21 @@ public class SearchLayout extends NavigationalLayout {
         layoutSet.clone(mBookContainer);
 
         if ((childCount % 2) == 1) {
-            layoutSet.connect(_imageButton.getId(), ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, 0);
+            layoutSet.connect(ID, ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, 0);
 
         } else {
 
-            layoutSet.connect(_imageButton.getId(), ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, 0);
+            layoutSet.connect(ID, ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, 0);
         }
 
         if (index < 0) {
-            layoutSet.connect(_imageButton.getId(), ConstraintSet.TOP, mBookContainer.getId(), ConstraintSet.TOP);
+            layoutSet.connect(ID, ConstraintSet.TOP, mBookContainer.getId(), ConstraintSet.TOP);
 
         } else {
 
             View child = mBookContainer.getChildAt(index);
 
-            layoutSet.connect(_imageButton.getId(), ConstraintSet.TOP, child.getId(), ConstraintSet.BOTTOM, marginTop);
+            layoutSet.connect(ID, ConstraintSet.TOP, child.getId(), ConstraintSet.BOTTOM, marginTop);
         }
 
         // Apply layout set
@@ -129,6 +240,15 @@ public class SearchLayout extends NavigationalLayout {
         intent.putExtra("bookid", _bookID);
 
         mContext.startActivity(intent);
+    }
+
+    private void clearFilter() {
+
+        // Reset item selection
+        mFilterSpinner.setSelection(0);
+
+        // Call update
+        this.onUpdate();
     }
 
 } // class SearchLayout

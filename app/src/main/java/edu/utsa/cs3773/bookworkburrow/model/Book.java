@@ -2,7 +2,7 @@ package edu.utsa.cs3773.bookworkburrow.model;
 
 import java.net.URL;
 
-public class Book {
+public class Book implements Comparable<Book> {
     private String title;
     private String genre;
     private String author;
@@ -44,4 +44,7 @@ public class Book {
     public void setId(String s){ id = s; }
     public void setTextUrl(URL url){ textURL = url; }
     public void setCoverUrl(URL url){ coverURL = url; }
+
+    @Override
+    public int compareTo(Book book) { return title.compareTo(book.getTitle()); }
 }
