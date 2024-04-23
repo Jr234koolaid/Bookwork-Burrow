@@ -38,7 +38,7 @@ public class HomeLayout extends NavigationalLayout {
             int booksRead = account.getBooksRead();
 
             ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
-            bookProgress.setProgress((int)(((float)booksRead / readingGoal) * 100.0));
+            bookProgress.setProgress((int)((booksRead * 100.0) / readingGoal));
 
             TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
             progressText.setText(mContext.getString(R.string.home_text_progress_count, booksRead));
