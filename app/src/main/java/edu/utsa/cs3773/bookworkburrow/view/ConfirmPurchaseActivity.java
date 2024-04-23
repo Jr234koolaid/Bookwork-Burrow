@@ -150,8 +150,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     }
 
     public void returnToCart(){
-        Intent cartView = new Intent(this, NavigationalActivity.class);
-        startActivity(cartView);
+        finish();
 
     }
 
