@@ -1,14 +1,13 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
@@ -32,7 +31,7 @@ public class UpdateReadingGoalActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.UpdateButton);
         backButton = findViewById(R.id.goal_back_button);
         backButton.setOnClickListener(view ->{
-            this.startActivity(new Intent(this, NavigationalActivity.class));
+            this.finish();
         });
         FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
             account = Account;
