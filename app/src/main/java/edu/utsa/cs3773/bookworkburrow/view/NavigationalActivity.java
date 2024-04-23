@@ -64,7 +64,7 @@ public class NavigationalActivity extends AppCompatActivity {
         switch (_state) {
 
             case HOME:
-                this.selectLayout(mHomeLayout, mHomeButton, R.drawable.home_selected);
+                this.selectLayout(mHomeLayout, mHomeButton, R.drawable.book_selected);
                 break;
 
             case SEARCH:
@@ -104,7 +104,7 @@ public class NavigationalActivity extends AppCompatActivity {
         switch (mNavigationState) {
 
             case HOME:
-                mHomeButton.setImageResource(R.drawable.home);
+                mHomeButton.setImageResource(R.drawable.book);
                 break;
 
             case SEARCH:

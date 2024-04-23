@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_array">
+
+        <item>Sort By:</item>
+
+        <item>Ascending</item>
+        <item>Descending</item>
+
+    </string-array>
+
+    <string-array name="genre_array">
+
+        <item>Filter By:</item>
+
+        <item>Education</item>
+        <item>Fantasy</item>
+        <item>Fiction</item>
+        <item>Romance</item>
+
+    </string-array>
+</resources>

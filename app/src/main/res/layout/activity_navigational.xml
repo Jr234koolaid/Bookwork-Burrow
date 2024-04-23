@@ -39,7 +39,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
         android:background="@color/transparent"
-        android:src="@drawable/home_selected"
+        android:src="@drawable/book_selected"
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

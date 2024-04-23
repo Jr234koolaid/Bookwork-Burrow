@@ -1,6 +1,5 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.widget.ImageView;
 import android.content.Intent;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -49,20 +48,25 @@ public class HomeLayout extends NavigationalLayout {
             goalUpdateButton.setOnClickListener(view -> updateGoal());
 
             LinearLayout favoritesLayout = mLayoutView.findViewById(R.id.home_layout_favorites);
+            LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
+
             ArrayList<String> favoritesIDList = account.getFavorites();
             if (favoritesIDList == null || favoritesIDList.isEmpty()) {
                 showText(favoritesLayout, R.string.home_text_no_favorites);
+
             } else {
+
                 for (String bookID : favoritesIDList) {
                     FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> showBook(favoritesLayout, book));
                 }
             }
 
-            LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
             ArrayList<String> ownedIDList = account.getBooksOwned();
             if (ownedIDList == null || ownedIDList.isEmpty()) {
                 showText(bookshelfLayout, R.string.home_text_no_books);
+
             } else {
+
                 for (String bookID : ownedIDList) {
                     FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> showBook(bookshelfLayout, book));
                 }
@@ -85,11 +89,9 @@ public class HomeLayout extends NavigationalLayout {
         imageButton.setLayoutParams(layoutParams);
         imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
 
-        Glide.with(mContext)
-                .load(_book.getCoverURL().toString())
-                .into(imageButton);
-
         _layout.addView(imageButton);
+
+        Glide.with(mContext).load(_book.getCoverURL().toString()).into(imageButton);
     }
 
     private void showText(LinearLayout _layout, int _stringResource) {
@@ -97,13 +99,8 @@ public class HomeLayout extends NavigationalLayout {
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
-        int marginStart = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16.f, mMetrics));
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-        layoutParams.setMarginStart(marginStart);
-
         TextView noBooksText = new TextView(mContext);
-        noBooksText.setLayoutParams(layoutParams);
+        noBooksText.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         noBooksText.setTypeface(ResourcesCompat.getFont(mContext, R.font.commissioner_medium));
         noBooksText.setText(mContext.getString(_stringResource));
         noBooksText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.f);
@@ -114,6 +111,7 @@ public class HomeLayout extends NavigationalLayout {
     private void updateGoal() {
 
         // TODO: Update goal
+        //mContext.startActivity(new Intent(mContext, UpdateGoalActivity.class));
     }
 
     private void openBook(String _bookID) {

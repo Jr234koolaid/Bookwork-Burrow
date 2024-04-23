@@ -1,14 +1,13 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
@@ -84,7 +83,7 @@ public class BookSummaryActivity extends AppCompatActivity {
     }
 
     private void returnToSearch(){
-        this.startActivity(new Intent(this, NavigationalActivity.class));
+        this.finish();
     }
 
     private void setAddToCartView(){

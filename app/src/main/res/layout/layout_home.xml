@@ -74,29 +74,28 @@
 
     <!-- Favorites -->
 
+    <ImageView
+        android:id="@+id/home_image_favorites"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:src="@drawable/favorite"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toTopOf="@id/home_text_favorites"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_favorites" />
+
     <TextView
         android:id="@+id/home_text_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="64dp"
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_favorites"
         android:textColor="@color/black"
         android:textSize="26sp"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintStart_toEndOf="@id/home_image_favorites"
         app:layout_constraintTop_toBottomOf="@id/home_button_update_goal" />
-
-
-    <ImageView
-        android:id="@+id/home_image_favorites"
-        android:layout_width="43dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/favorite"
-        app:layout_constraintBottom_toBottomOf="@id/home_text_favorites"
-        app:layout_constraintStart_toEndOf="@id/home_text_favorites"
-        app:layout_constraintTop_toTopOf="@id/home_text_favorites"
-        app:layout_constraintVertical_bias="1.0" />
 
     <HorizontalScrollView
         android:id="@+id/home_scroll_favorites"
@@ -104,7 +103,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="18dp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_text_favorites">
+        app:layout_constraintTop_toBottomOf="@id/home_image_favorites">
 
         <LinearLayout
             android:id="@+id/home_layout_favorites"
@@ -120,28 +119,28 @@
 
     <!-- Bookshelf -->
 
+    <ImageView
+        android:id="@+id/home_image_shelf"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:src="@drawable/shelf"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintTop_toTopOf="@id/home_text_bookshelf"
+        app:layout_constraintBottom_toBottomOf="@id/home_text_bookshelf" />
+
     <TextView
         android:id="@+id/home_text_bookshelf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="56dp"
         android:fontFamily="@font/commissioner_medium"
         android:text="@string/home_text_bookshelf"
         android:textColor="@color/black"
         android:textSize="26sp"
-        app:layout_constraintStart_toEndOf="@id/home_barrier"
+        app:layout_constraintStart_toEndOf="@id/home_image_shelf"
         app:layout_constraintTop_toBottomOf="@id/home_scroll_favorites" />
-
-    <ImageView
-        android:id="@+id/home_image_shelf"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/shelf"
-        app:layout_constraintBottom_toBottomOf="@id/home_text_bookshelf"
-        app:layout_constraintStart_toEndOf="@id/home_text_bookshelf"
-        app:layout_constraintTop_toTopOf="@id/home_text_bookshelf"
-        app:layout_constraintVertical_bias="1.0" />
 
     <HorizontalScrollView
         android:id="@+id/home_scroll_bookshelf"
@@ -149,7 +148,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="18dp"
         app:layout_constraintStart_toEndOf="@id/home_barrier"
-        app:layout_constraintTop_toBottomOf="@id/home_text_bookshelf">
+        app:layout_constraintTop_toBottomOf="@id/home_image_shelf">
 
         <LinearLayout
             android:id="@+id/home_layout_bookshelf"
