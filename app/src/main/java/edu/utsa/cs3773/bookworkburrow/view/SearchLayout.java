@@ -41,6 +41,7 @@ public class SearchLayout extends NavigationalLayout {
 
     private String                  mKeyword;
 
+    private AppCompatImageButton    mClearButton;
     private AppCompatSpinner        mFilterSpinner;
     private ConstraintLayout        mBookContainer;
 
@@ -59,8 +60,11 @@ public class SearchLayout extends NavigationalLayout {
 
         mKeyword = "";
 
+        mClearButton = mLayoutView.findViewById(R.id.search_button_clear);
         mFilterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
         mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
+
+        mClearButton.setOnClickListener(view -> this.clearFilter());
 
         ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.genre_array, R.layout.layout_search_spinner_item);
         genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
@@ -77,9 +81,6 @@ public class SearchLayout extends NavigationalLayout {
         AppCompatSpinner sortSpinner = mLayoutView.findViewById(R.id.search_spinner_sort);
         sortSpinner.setAdapter(sortAdapter);
         sortSpinner.setOnItemSelectedListener(new SearchSortController(this));
-
-        AppCompatImageButton clearButton = mLayoutView.findViewById(R.id.search_button_clear);
-        clearButton.setOnClickListener(view -> this.clearFilter());
 
         // Call update
         this.onUpdate();
@@ -111,11 +112,13 @@ public class SearchLayout extends NavigationalLayout {
         // Set filtering item
         mFilterItem = mFilterArray[_position];
 
-        if (_position != 0) {
+        if (_position == 0) return;
 
-            // Call update
-            this.onUpdate();
-        }
+        // Set button tint
+        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.black));
+
+        // Call update
+        this.onUpdate();
     }
 
     private void onUpdate() {
@@ -274,6 +277,9 @@ public class SearchLayout extends NavigationalLayout {
     }
 
     private void clearFilter() {
+
+        // Reset button tint
+        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.gray));
 
         // Reset item selection
         mFilterSpinner.setSelection(0);
