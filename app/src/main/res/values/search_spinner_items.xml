@@ -2,8 +2,6 @@
 <resources>
     <string-array name="sort_array">
 
-        <item>Sort By:</item>
-
         <item>Ascending</item>
         <item>Descending</item>
 

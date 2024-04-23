@@ -30,7 +30,7 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class SearchLayout extends NavigationalLayout {
 
-    private enum SortItem   { NONE, ASCENDING, DESCENDING };
+    private enum SortItem   { ASCENDING, DESCENDING };
     private enum FilterItem { NONE, EDUCATION, FANTASY, FICTION, ROMANCE };
 
     private SortItem[]              mSortArray;
@@ -55,7 +55,7 @@ public class SearchLayout extends NavigationalLayout {
         mSortArray = SortItem.values();
         mFilterArray = FilterItem.values();
 
-        mSortItem = SortItem.NONE;
+        mSortItem = SortItem.ASCENDING;
         mFilterItem = FilterItem.NONE;
 
         mKeyword = "";
@@ -100,11 +100,8 @@ public class SearchLayout extends NavigationalLayout {
         // Set sorting item
         mSortItem = mSortArray[_position];
 
-        if (_position != 0) {
-
-            // Call update
-            this.onUpdate();
-        }
+        // Call update
+        this.onUpdate();
     }
 
     public void setFilterItem(int _position) {
@@ -116,6 +113,18 @@ public class SearchLayout extends NavigationalLayout {
 
         // Set button tint
         mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.black));
+
+        // Call update
+        this.onUpdate();
+    }
+
+    private void clearFilter() {
+
+        // Reset button tint
+        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.gray));
+
+        // Reset item selection
+        mFilterSpinner.setSelection(0);
 
         // Call update
         this.onUpdate();
@@ -197,8 +206,6 @@ public class SearchLayout extends NavigationalLayout {
             case DESCENDING:
                 bookList.sort(Comparator.reverseOrder());
                 break;
-
-            default: break;
         }
 
         // Show books
@@ -224,13 +231,13 @@ public class SearchLayout extends NavigationalLayout {
         // Add image button to container
         mBookContainer.addView(imageButton);
 
-        // Apply layout to image button
-        this.applyLayout(imageButton);
+        // Apply image button to container
+        this.applyToContainer(imageButton);
 
         Glide.with(mContext).load(_book.getCoverURL().toString()).into(imageButton);
     }
 
-    private void applyLayout(ImageButton _imageButton) {
+    private void applyToContainer(ImageButton _imageButton) {
 
         // Place image button in correct spot
         int ID = _imageButton.getId();
@@ -240,16 +247,17 @@ public class SearchLayout extends NavigationalLayout {
 
         // Set layout set
         int marginTop = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24.f, mMetrics));
+        int marginStart = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6.f, mMetrics));
+        int marginEnd = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6.f, mMetrics));
 
         ConstraintSet layoutSet = new ConstraintSet();
         layoutSet.clone(mBookContainer);
 
         if ((childCount % 2) == 1) {
-            layoutSet.connect(ID, ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, 0);
+            layoutSet.connect(ID, ConstraintSet.START, mBookContainer.getId(), ConstraintSet.START, marginStart);
 
         } else {
-
-            layoutSet.connect(ID, ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, 0);
+            layoutSet.connect(ID, ConstraintSet.END, mBookContainer.getId(), ConstraintSet.END, marginEnd);
         }
 
         if (index < 0) {
@@ -274,18 +282,6 @@ public class SearchLayout extends NavigationalLayout {
         intent.putExtra("bookid", _bookID);
 
         mContext.startActivity(intent);
-    }
-
-    private void clearFilter() {
-
-        // Reset button tint
-        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.gray));
-
-        // Reset item selection
-        mFilterSpinner.setSelection(0);
-
-        // Call update
-        this.onUpdate();
     }
 
 } // class SearchLayout
