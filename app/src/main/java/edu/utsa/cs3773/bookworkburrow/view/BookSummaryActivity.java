@@ -88,7 +88,7 @@ public class BookSummaryActivity extends AppCompatActivity {
 
     private void setAddToCartView(){
         if(added) addToCart.setText("Added to Cart!");
-        else addToCart.setText("Add to cart | " + book.getPrice());
+        else addToCart.setText("Add to cart | $" + book.getPrice());
     }
 
     private void addToCart(Book book){
