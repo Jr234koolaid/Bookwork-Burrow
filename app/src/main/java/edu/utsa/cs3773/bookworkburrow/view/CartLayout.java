@@ -69,11 +69,10 @@ public class CartLayout extends NavigationalLayout {
             removeButton.setOnClickListener(view -> this.removeBook(book));
 
             ImageView bookImage = bookLayout.findViewById(R.id.cart_book_image);
-            Glide.with(mContext)
-                    .load(book.getCoverURL().toString())
-                    .into(bookImage);
 
             bookContainer.addView(bookLayout);
+
+            Glide.with(mContext).load(book.getCoverURL().toString()).into(bookImage);
         }
 
         mSubtotalCostText.setText(mContext.getString(R.string.cart_text_subtotal_cost, mCart.getSubtotal()));
