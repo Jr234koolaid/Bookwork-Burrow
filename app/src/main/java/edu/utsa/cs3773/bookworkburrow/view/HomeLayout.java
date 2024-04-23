@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.util.TypedValue;
@@ -31,16 +32,18 @@ public class HomeLayout extends NavigationalLayout {
     protected void onDisplay() {
       
         FirebaseUserUtil.getCurrUser().thenAccept(account ->{
-
+            Log.d("Books read in home", ""+account.getBooksRead());
+            Log.d("Goal in home", ""+account.getReadingGoal());
             TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
             welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
 
             ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
             int readingGoal = account.getReadingGoal();
-            bookProgress.setProgress((int) ((0.0 / readingGoal) * 100.0));
+            int booksRead = account.getBooksRead();
+            bookProgress.setProgress((int) ((booksRead / readingGoal) * 100.0));
 
             TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
-            progressText.setText(mContext.getString(R.string.home_text_progress_count, 0));
+            progressText.setText(mContext.getString(R.string.home_text_progress_count, booksRead));
 
             TextView goalText = mLayoutView.findViewById(R.id.home_text_goal);
             goalText.setText(mContext.getString(R.string.home_text_progress_goal, readingGoal));
@@ -112,8 +115,8 @@ public class HomeLayout extends NavigationalLayout {
     }
 
     private void updateGoal() {
-
-        // TODO: Update goal
+        Intent intent = new Intent(mContext, UpdateReadingGoalActivity.class);
+        mContext.startActivity(intent);
     }
 
     private void openBook(String _bookID) {

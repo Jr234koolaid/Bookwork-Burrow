@@ -20,6 +20,7 @@ public class Account {
     Order cart;
     String cartID;
     int readingGoal;
+    int booksRead;
 
     public Account(String UID) {
         booksOwned = new ArrayList<>();
@@ -86,9 +87,9 @@ public class Account {
 
     public void setReadingGoal(int readingGoal) {
         this.readingGoal = readingGoal;
-        FirebaseUserUtil.setUserReadingGoal(UID, readingGoal).thenAccept(Boolean ->{
-            if(!Boolean) Log.d("Update reading goal", "Failed");
-            else Log.d("Update reading goal", "Success");
+        FirebaseUserUtil.setUserIntField(UID, "reading-goal", readingGoal).thenAccept(Boolean ->{
+            if(!Boolean) Log.d("M - Update reading goal", "Failed");
+            else Log.d("M - Update reading goal", "Success, new reading goal: " + readingGoal);
         });
     }
 
@@ -122,6 +123,18 @@ public class Account {
 
     public void setCart(Order cart) {
         this.cart = cart;
+    }
+
+    public int getBooksRead() {
+        return booksRead;
+    }
+
+    public void setBooksRead(int booksRead) {
+        this.booksRead = booksRead;
+        FirebaseUserUtil.setUserIntField(UID, "books-read", booksRead).thenAccept(Boolean ->{
+            if(!Boolean) Log.d("Model - Update books read", "Failed");
+            else Log.d("Model - Update books read", "Success, new books read: " + booksRead);
+        });
     }
 
     /**

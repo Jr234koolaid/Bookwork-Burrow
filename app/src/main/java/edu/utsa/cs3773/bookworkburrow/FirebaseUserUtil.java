@@ -42,6 +42,8 @@ public class FirebaseUserUtil {
                         account.setOrderHistory((ArrayList<String>) doc.get("orders"));
                         Double goal = doc.getDouble("reading-goal");
                         account.setReadingGoal(goal.intValue());
+                        Double booksRead = doc.getDouble("books-read");
+                        account.setBooksRead(booksRead.intValue());
                         completableFuture.complete(account);
                     } else
                         completableFuture.completeExceptionally(new Throwable(task.getException()));
@@ -118,6 +120,7 @@ public class FirebaseUserUtil {
                             userMap.put("books-favorited", new ArrayList<>());
                             userMap.put("orders", new ArrayList<>());
                             userMap.put("reading-goal", 5);
+                            userMap.put("books-read", 0);
                             db.collection("users").document(user.getUid()).set(userMap);
                             completableFuture.complete(new Account(uid));
                         } else {
@@ -156,9 +159,9 @@ public class FirebaseUserUtil {
      * @param userID userID
      * @param value the updated value
      */
-    public static CompletableFuture<Boolean> setUserReadingGoal(String userID, int value){
+    public static CompletableFuture<Boolean> setUserIntField(String userID, String field, int value){
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        db.collection("users").document(userID).update("reading-goal", value)
+        db.collection("users").document(userID).update(field, value)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()) completableFuture.complete(true);
                     else completableFuture.completeExceptionally(new Throwable(task.getException()));
