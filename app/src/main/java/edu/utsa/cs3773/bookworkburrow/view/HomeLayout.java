@@ -1,7 +1,5 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
-import android.util.Log;
-import android.widget.ImageView;
 import android.content.Intent;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -32,13 +30,15 @@ public class HomeLayout extends NavigationalLayout {
     protected void onDisplay() {
       
         FirebaseUserUtil.getCurrUser().thenAccept(account ->{
+
             TextView welcomeText = mLayoutView.findViewById(R.id.home_text_welcome);
             welcomeText.setText(mContext.getString(R.string.home_text_header_welcome, account.getFirstName()));
 
-            ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
             int readingGoal = account.getReadingGoal();
             int booksRead = account.getBooksRead();
-            bookProgress.setProgress((int) ((booksRead / readingGoal) * 100.0));
+
+            ProgressBar bookProgress = mLayoutView.findViewById(R.id.home_bar_progress);
+            bookProgress.setProgress((int)(((float)booksRead / readingGoal) * 100.0));
 
             TextView progressText = mLayoutView.findViewById(R.id.home_text_progress_count);
             progressText.setText(mContext.getString(R.string.home_text_progress_count, booksRead));
@@ -111,9 +111,8 @@ public class HomeLayout extends NavigationalLayout {
     }
 
     private void updateGoal() {
-        Intent intent = new Intent(mContext, UpdateReadingGoalActivity.class);
-        mContext.startActivity(intent);
 
+        mContext.startActivity(new Intent(mContext, UpdateReadingGoalActivity.class));
     }
 
     private void openBook(String _bookID) {
