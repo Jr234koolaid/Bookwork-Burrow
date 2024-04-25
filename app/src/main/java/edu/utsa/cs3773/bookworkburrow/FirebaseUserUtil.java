@@ -197,6 +197,27 @@ public class FirebaseUserUtil {
     }
 
     /**
+     * Updates a list (books owned, favorites, orders) of user by removing the value
+     * @param list list name (books-owned, books-favorited, orders)
+     * @param valueID ID of book or order to add to collected
+     * @return boolean if successfully added
+     */
+    public static CompletableFuture<Boolean> removeFromUserList(String list, String valueID){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(user.getUid()).update(list, FieldValue.arrayRemove(valueID))
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        completableFuture.complete(true);
+                    }
+                    else{
+                        completableFuture.completeExceptionally(new Throwable("Could not retrieve books"));
+                    }
+                });
+
+        return completableFuture;
+    }
+
+    /**
      * Resets the user's password with a new string
      * @param newPassword new password to set
      * @return boolean whether it was successful or not

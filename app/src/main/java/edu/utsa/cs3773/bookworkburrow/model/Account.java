@@ -2,6 +2,8 @@ package edu.utsa.cs3773.bookworkburrow.model;
 
 import android.util.Log;
 
+import org.checkerframework.checker.guieffect.qual.UI;
+
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
@@ -104,6 +106,33 @@ public class Account {
 
     public ArrayList<String> getFavorites() {
         return favorites;
+    }
+
+    //todo: update DB with favorites
+    public CompletableFuture<Boolean> addToFavorites(String bookID){
+        cart.getBookIDs().add(bookID);
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        FirebaseUserUtil.addToUserList(UID,"books-favorited", bookID).thenAccept(Boolean ->{
+            if(Boolean) {
+                Log.d("Book added to favorites DB", "Success");
+                completableFuture.complete(true);
+            }
+            else Log.d("Book added to favorites DB", "Failed");
+        });
+        return completableFuture;
+    }
+
+    public CompletableFuture<Boolean> removeFromFavorites(String bookID){
+        cart.getBookIDs().add(bookID);
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        FirebaseUserUtil.removeFromUserList("books-favorited", bookID).thenAccept(Boolean ->{
+            if(Boolean) {
+                Log.d("Book removed from favorites DB", "Success");
+                completableFuture.complete(true);
+            }
+            else Log.d("Book removed favorites DB", "Failed");
+        });
+        return completableFuture;
     }
 
     public void setFavorites(ArrayList<String> favorites) {

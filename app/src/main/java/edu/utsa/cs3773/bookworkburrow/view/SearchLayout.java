@@ -260,7 +260,7 @@ public class SearchLayout extends NavigationalLayout {
             Intent intent;
             if(Account.getBooksOwned().contains(_bookID)) intent = new Intent(mContext, OwnedBookActivity.class);
             else intent = new Intent(mContext, BookSummaryActivity.class);
-            intent.putExtra("bookid", _bookID);
+            intent.putExtra("bookID", _bookID);
             mContext.startActivity(intent);
         });
 

@@ -121,7 +121,7 @@ public class HomeLayout extends NavigationalLayout {
 
         // TODO: Use intent to go to right book?
 
-        Intent readIntent = new Intent(mContext, ReadingActivity.class);
+        Intent readIntent = new Intent(mContext, OwnedBookActivity.class);
         readIntent.putExtra("bookID", _bookID);
         mContext.startActivity(readIntent);
 
