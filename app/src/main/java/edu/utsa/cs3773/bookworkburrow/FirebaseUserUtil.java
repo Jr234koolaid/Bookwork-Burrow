@@ -123,7 +123,7 @@ public class FirebaseUserUtil {
                             userMap.put("books-owned", new ArrayList<>());
                             userMap.put("books-favorited", new ArrayList<>());
                             userMap.put("orders", new ArrayList<>());
-                            userMap.put("reading-goal", 5);
+                            userMap.put("reading-goal", 0);
                             userMap.put("books-read", 0);
                             userMap.put("cart", new ArrayList<>());
                             db.collection("users").document(user.getUid()).set(userMap);
@@ -135,7 +135,7 @@ public class FirebaseUserUtil {
                     } else {
                         // If sign in fails, display a message and complete exceptionally
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(context, "Authentication failed.",
+                        Toast.makeText(context, "Password should be at least 6 characters or email in use",
                                 Toast.LENGTH_SHORT).show();
                         completableFuture.completeExceptionally(task.getException());
                     }
