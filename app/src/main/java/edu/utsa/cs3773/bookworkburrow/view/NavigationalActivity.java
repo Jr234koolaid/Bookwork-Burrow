@@ -32,8 +32,7 @@ public class NavigationalActivity extends AppCompatActivity {
 
         super.onCreate(_savedInstanceState);
         this.setContentView(R.layout.activity_navigational);
-        Intent intent = new Intent(this,OrderHistory.class);
-        startActivity(intent);
+
         mNavigationState = NavigationState.NONE;
 
         mScrollView = this.findViewById(R.id.navigational_scroll);

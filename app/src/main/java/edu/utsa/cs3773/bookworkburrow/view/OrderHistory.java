@@ -40,7 +40,7 @@ public class OrderHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        list = findViewById(R.id.list);
+        /*list = findViewById(R.id.list);
         FirebaseUserUtil.getCurrUser().thenAccept(Account ->{
             account = Account;
             FirebaseOrderUtil.getOrderHistory(account.getUID()).thenAccept(ArrayList ->{
@@ -50,11 +50,10 @@ public class OrderHistory extends AppCompatActivity {
                     text = "";
                     FirebaseOrderUtil.getOrderByID(temp.get(i)).thenAccept(Order -> {
                         currentOrder = Order;
-                        currentOrder.toString();
                     });
                 }
             });
-        });
+        });*/
 
     }
 }
