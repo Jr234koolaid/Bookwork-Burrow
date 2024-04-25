@@ -59,26 +59,15 @@
 
     <!-- Filter -->
 
+    <!-- android:layout_marginEnd="6dp" -->
+
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/search_spinner_filter"
         android:layout_width="150dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="6dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toStartOf="@id/search_button_clear"
-        app:layout_constraintTop_toBottomOf="@id/search_edit_search" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/search_button_clear"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:background="@color/transparent"
-        android:tint="@color/gray"
-        android:src="@drawable/x"
-        android:scaleType="centerInside"
         app:layout_constraintEnd_toStartOf="@id/search_barrier_end"
-        app:layout_constraintTop_toTopOf="@id/search_spinner_filter"
-        app:layout_constraintBottom_toBottomOf="@id/search_spinner_filter"/>
+        app:layout_constraintTop_toBottomOf="@id/search_edit_search" />
 
     <!-- Books -->
 

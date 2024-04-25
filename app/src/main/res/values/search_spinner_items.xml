@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sort_array">
 
-        <item>Sort By:</item>
+    <string-array name="sort_array">
 
         <item>Ascending</item>
         <item>Descending</item>
 
     </string-array>
 
-    <string-array name="genre_array">
+    <string-array name="filter_array">
 
-        <item>Filter By:</item>
+        <item>No filter</item>
 
         <item>Education</item>
         <item>Fantasy</item>
@@ -19,4 +18,5 @@
         <item>Romance</item>
 
     </string-array>
+
 </resources>
