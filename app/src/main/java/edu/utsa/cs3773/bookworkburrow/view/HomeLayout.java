@@ -89,7 +89,7 @@ public class HomeLayout extends NavigationalLayout {
         ImageButton imageButton = new ImageButton(mContext);
         imageButton.setTag(_book.getId());
         imageButton.setLayoutParams(layoutParams);
-        imageButton.setOnClickListener(view -> this.openBook((view.getTag() == null) ? null : view.getTag().toString()));
+        imageButton.setOnClickListener(view -> this.openBook(_book.getId()));
 
         _layout.addView(imageButton);
 
@@ -120,7 +120,12 @@ public class HomeLayout extends NavigationalLayout {
         if (_bookID == null) return;
 
         // TODO: Use intent to go to right book?
-        mContext.startActivity(new Intent(mContext, ReadingActivity.class));
+
+        Intent readIntent = new Intent(mContext, ReadingActivity.class);
+        readIntent.putExtra("bookID", _bookID);
+        mContext.startActivity(readIntent);
+
+
     }
 
 } // class HomeLayout
