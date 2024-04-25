@@ -115,5 +115,6 @@
     <string name="toggle_theme_description">Toggle theme color</string>
     <string name="error_loading_book"></string>
     <string name="book_not_found"></string>
+    <string name="back"><![CDATA[<- Back]]></string>
 
 </resources>
