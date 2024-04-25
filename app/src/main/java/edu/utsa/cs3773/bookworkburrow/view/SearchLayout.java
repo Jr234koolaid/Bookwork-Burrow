@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
+import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.SearchFilterController;
 import edu.utsa.cs3773.bookworkburrow.controller.SearchSortController;
@@ -269,11 +270,14 @@ public class SearchLayout extends NavigationalLayout {
     private void openBook(String _bookID) {
 
         if (_bookID == null) return;
+        FirebaseUserUtil.getCurrUser().thenAccept(Account->{
+            Intent intent;
+            if(Account.getBooksOwned().contains(_bookID)) intent = new Intent(mContext, OwnedBookActivity.class);
+            else intent = new Intent(mContext, BookSummaryActivity.class);
+            intent.putExtra("bookid", _bookID);
+            mContext.startActivity(intent);
+        });
 
-        Intent intent = new Intent(mContext, BookSummaryActivity.class);
-        intent.putExtra("bookid", _bookID);
-
-        mContext.startActivity(intent);
     }
 
     private void clearFilter() {
