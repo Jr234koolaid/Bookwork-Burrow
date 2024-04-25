@@ -42,7 +42,7 @@ public class BookSummaryActivity extends AppCompatActivity {
         author = findViewById(R.id.authorName);
         bookCover = findViewById(R.id.BookImage);
 
-        String bookID = getIntent().getStringExtra("bookid");
+        String bookID = getIntent().getStringExtra("bookID");
         Log.d("BookID", bookID);
         //todo if owned -> read book
         //todo if already added to cart -> added to cart
