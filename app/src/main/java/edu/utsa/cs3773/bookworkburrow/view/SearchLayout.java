@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -41,7 +40,6 @@ public class SearchLayout extends NavigationalLayout {
 
     private String                  mKeyword;
 
-    private AppCompatImageButton    mClearButton;
     private AppCompatSpinner        mFilterSpinner;
     private ConstraintLayout        mBookContainer;
 
@@ -60,13 +58,10 @@ public class SearchLayout extends NavigationalLayout {
 
         mKeyword = "";
 
-        mClearButton = mLayoutView.findViewById(R.id.search_button_clear);
         mFilterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
         mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
 
-        mClearButton.setOnClickListener(view -> this.clearFilter());
-
-        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.genre_array, R.layout.layout_search_spinner_item);
+        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.filter_array, R.layout.layout_search_spinner_item);
         genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
 
         mFilterSpinner.setAdapter(genreAdapter);
@@ -108,23 +103,6 @@ public class SearchLayout extends NavigationalLayout {
 
         // Set filtering item
         mFilterItem = mFilterArray[_position];
-
-        if (_position == 0) return;
-
-        // Set button tint
-        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.black));
-
-        // Call update
-        this.onUpdate();
-    }
-
-    private void clearFilter() {
-
-        // Reset button tint
-        mClearButton.setColorFilter(ContextCompat.getColor(mContext, R.color.gray));
-
-        // Reset item selection
-        mFilterSpinner.setSelection(0);
 
         // Call update
         this.onUpdate();
