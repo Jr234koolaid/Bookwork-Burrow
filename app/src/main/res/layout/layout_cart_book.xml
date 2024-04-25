@@ -36,7 +36,7 @@
         android:text="@string/cart_book_text_author"
         android:textSize="12sp"
         android:textColor="@color/black"
-        android:fontFamily="@font/commissioner_medium"
+        android:fontFamily="@font/commissioner"
         app:layout_constraintStart_toEndOf="@id/cart_book_barrier_start"
         app:layout_constraintTop_toBottomOf="@id/cart_book_text_title" />
 
@@ -44,6 +44,7 @@
         android:id="@+id/cart_book_text_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:text="@string/cart_book_text_price"
         android:textSize="32sp"
         android:textColor="@color/very_dark_blue"
@@ -53,27 +54,27 @@
 
     <!-- Remove -->
 
-    <Button
+    <!-- Divider -->
+
+    <TextView
         android:id="@+id/cart_book_button_remove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:background="@color/transparent"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/commissioner_extra_bold"
         android:text="@string/cart_book_button_remove"
-        android:textSize="12sp"
-        android:textColor="@android:color/darker_gray"
-        android:fontFamily="@font/commissioner_medium"
-        app:layout_constraintEnd_toStartOf="@id/cart_book_barrier_end"
-        app:layout_constraintBottom_toTopOf="@id/cart_book_divider" />
-
-    <!-- Divider -->
+        android:textColor="@color/pink"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/cart_book_divider"
+        app:layout_constraintEnd_toStartOf="@id/cart_book_barrier_end" />
 
     <View
         android:id="@+id/cart_book_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cart_book_barrier_end"
         app:layout_constraintTop_toBottomOf="@id/cart_book_image" />

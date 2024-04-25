@@ -37,7 +37,7 @@
 
     <!-- Cart strings -->
     <string name="cart_button_checkout">Checkout</string>
-    <string name="cart_book_button_remove">Remove</string>
+    <string name="cart_book_button_remove"><u>Remove</u></string>
 
     <string name="cart_text_subtotal">Subtotal</string>
     <string name="cart_text_subtotal_cost">$%1$.2f</string>

@@ -44,11 +44,14 @@ public class BookSummaryActivity extends AppCompatActivity {
 
         String bookID = getIntent().getStringExtra("bookid");
         Log.d("BookID", bookID);
+        //todo if owned -> read book
+        //todo if already added to cart -> added to cart
 
         FirebaseUserUtil.getCurrUser().thenAccept(Account->{
             account = Account;
             FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
                 book = Book;
+                if(account.getCart().getBookIDs().contains(book.getId())) added = true;
                 setBookTitle(Book.getTitle());
                 setAuthor(Book.getAuthor());
                 setAddToCartView();

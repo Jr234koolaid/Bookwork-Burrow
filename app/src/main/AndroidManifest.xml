@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookworkBurrow">
         <activity
+            android:name=".view.OwnedBookActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.UpdateReadingGoalActivity"
             android:exported="false" />
         <activity

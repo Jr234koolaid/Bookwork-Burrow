@@ -38,13 +38,17 @@ public class FirebaseUserUtil {
                         DocumentSnapshot doc = task.getResult();
                         Account account = new Account(user.getUid(), doc.getString("first-name"), doc.getString("last-name"), doc.getString("email"));
                         account.setFavorites((ArrayList<String>) doc.get("books-favorited"));
-//                        account.setBooksOwned((ArrayList<String>) doc.get("books-owned"));
+                        account.setBooksOwned((ArrayList<String>) doc.get("books-owned"));
                         account.setOrderHistory((ArrayList<String>) doc.get("orders"));
                         Double goal = doc.getDouble("reading-goal");
                         account.setReadingGoal(goal.intValue());
                         Double booksRead = doc.getDouble("books-read");
                         account.setBooksRead(booksRead.intValue());
-                        completableFuture.complete(account);
+                        //todo add cart from db
+                        account.getCart().setBookIDs((ArrayList<String>)doc.get("cart")).thenAccept(Boolean ->{
+                            completableFuture.complete(account);
+                        });
+
                     } else
                         completableFuture.completeExceptionally(new Throwable(task.getException()));
 
@@ -121,6 +125,7 @@ public class FirebaseUserUtil {
                             userMap.put("orders", new ArrayList<>());
                             userMap.put("reading-goal", 5);
                             userMap.put("books-read", 0);
+                            userMap.put("cart", new ArrayList<>());
                             db.collection("users").document(user.getUid()).set(userMap);
                             completableFuture.complete(new Account(uid));
                         } else {
