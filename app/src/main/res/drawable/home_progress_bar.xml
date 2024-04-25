@@ -14,7 +14,7 @@
                 android:thickness="24dp"
                 android:useLevel="true">
 
-                <solid android:color="@color/hot_pink" />
+                <solid android:color="@color/pink" />
             </shape>
         </rotate>
     </item>
