@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.bookworkburrow.view;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,9 +13,11 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 
+import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 import edu.utsa.cs3773.bookworkburrow.R;
 import edu.utsa.cs3773.bookworkburrow.controller.CartController;
+import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Book;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
 
@@ -33,8 +36,8 @@ public class CartLayout extends NavigationalLayout {
         mSubtotalCostText = mLayoutView.findViewById(R.id.cart_text_subtotal_cost);
 
         FirebaseUserUtil.getCurrUser().thenAccept(account ->{
-
             mCart = account.getCart();
+            Log.d("Cart books", mCart.getCartList().toString());
 
             CartController cartController = new CartController(mContext);
 
@@ -47,9 +50,7 @@ public class CartLayout extends NavigationalLayout {
 
     private void updateCart() {
 
-        NestedScrollView bookScroll = mLayoutView.findViewById(R.id.cart_scroll_book_container);
-
-        LinearLayout bookContainer = bookScroll.findViewById(R.id.cart_layout_book_container);
+        LinearLayout bookContainer = mLayoutView.findViewById(R.id.cart_layout_book_container);
         bookContainer.removeAllViews();
 
         for (Book book : mCart.getCartList()) {
@@ -65,7 +66,7 @@ public class CartLayout extends NavigationalLayout {
             TextView bookPriceText = bookLayout.findViewById(R.id.cart_book_text_price);
             bookPriceText.setText(mContext.getString(R.string.cart_book_text_price, book.getPrice()));
 
-            Button removeButton = bookLayout.findViewById(R.id.cart_book_button_remove);
+            TextView removeButton = bookLayout.findViewById(R.id.cart_book_button_remove);
             removeButton.setOnClickListener(view -> this.removeBook(book));
 
             ImageView bookImage = bookLayout.findViewById(R.id.cart_book_image);

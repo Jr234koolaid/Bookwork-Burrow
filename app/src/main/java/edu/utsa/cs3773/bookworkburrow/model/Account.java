@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
+import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
 import edu.utsa.cs3773.bookworkburrow.FirebaseUserUtil;
 
@@ -186,4 +187,13 @@ public class Account {
                 });
     }
 
+    public void addBookByIDToCart(String bookID){
+        FirebaseUserUtil.addToUserList(UID, "cart", bookID)
+                .thenAccept(Boolean ->{
+                    if(Boolean) Log.d("Added bookID to cart in DB", bookID + " added to cart");
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(Book ->{
+                        cart.addBook(Book);
+                    });
+                });
+    }
 }

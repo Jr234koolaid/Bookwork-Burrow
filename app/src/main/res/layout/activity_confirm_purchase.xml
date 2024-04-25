@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/commissioner_medium"
         android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
         android:textSize="35sp"
         android:textColor="@color/black"
         android:text="Confirm Purchase" />
@@ -112,31 +113,38 @@
         android:textStyle="bold" />
 
 
-    <Button
+    <TextView
         android:id="@+id/checkout_button"
         android:layout_width="352dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:paddingVertical="5dp"
+        android:background="@drawable/edittext_background"
         android:backgroundTint="@color/pink"
         android:fontFamily="@font/commissioner_medium"
         android:paddingStart="90dp"
         android:paddingEnd="90dp"
         android:text="Checkout"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <Button
+    <TextView
         android:id="@+id/cancel_button"
         android:layout_width="352dp"
-        android:layout_height="52dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
+        android:paddingVertical="5dp"
+        android:background="@drawable/edittext_background"
         android:backgroundTint="@color/gray"
         android:fontFamily="@font/commissioner_medium"
         android:paddingStart="90dp"
         android:paddingEnd="90dp"
         android:text="Cancel"
         android:textColor="@color/white"
+        android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold" />
 </LinearLayout>

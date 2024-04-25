@@ -4,9 +4,13 @@ import android.util.Log;
 
 import com.google.firebase.Timestamp;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.FirebaseBookUtils;
 import edu.utsa.cs3773.bookworkburrow.FirebaseOrderUtil;
@@ -36,9 +40,11 @@ public class Order {
      * @param newBook, book to be added to cart (Book)
      */
     public void addBook(Book newBook){
-        //TODO: update firestore
         cartList.add(newBook);
-        FirebaseOrderUtil.addBookToCart(newBook.getId());
+        FirebaseOrderUtil.addBookToCart(newBook.getId()).thenAccept(Boolean ->{
+            if(Boolean) Log.d("addBook function", "Success");
+            else Log.d("addBook function", "Failure");
+        });
     }
 
     /**
@@ -48,6 +54,10 @@ public class Order {
     public void removeBook(Book book){
         //TODO: update firestore
         cartList.remove(book);
+        FirebaseOrderUtil.removeBookFromCart(book.getId()).thenAccept(Boolean ->{
+            if(Boolean) Log.d("removeBook function", "Success");
+            else Log.d("removeBook function", "Failure");
+        });
     }
 
     /**
@@ -135,11 +145,44 @@ public class Order {
         return bookIDs;
     }
 
-    public void setBookIDs(ArrayList<String> bookIDs) {
+    /**
+     * Adds all books to cart list
+     * @param bookIDs array list of bookID strings
+     */
+    public CompletableFuture<Boolean> setBookIDs(ArrayList<String> bookIDs) {
+        // This will store all the futures from the asynchronous operations
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+        // Assign the new bookIDs to the instance variable
         this.bookIDs = bookIDs;
-        for(String ID : bookIDs) FirebaseBookUtils.getBookByID(ID).thenAccept(Book ->{
-            cartList.add(Book);
-            Log.d("Order Book", Book.getTitle());
-        });
+
+        // Loop through each book ID and initiate an asynchronous fetch operation
+        for (String ID : bookIDs) {
+            CompletableFuture<Void> future = FirebaseBookUtils.getBookByID(ID).thenAccept(book -> {
+                cartList.add(book);
+                Log.d("Book added to order", book.getTitle());
+            });
+            futures.add(future);
+        }
+
+        // Create a CompletableFuture that will complete when all fetched futures are complete
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(v -> {
+                    // Once all futures complete, we return true
+                    return true;
+                });
     }
+
+    /**
+     * Removes all books from cart object and DB
+     */
+    public CompletableFuture<Boolean> clear() {
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        FirebaseOrderUtil.clearCart().thenAccept(Boolean ->{
+            if(Boolean) Log.d("Clear cart", "Success");
+            else Log.d("Clear cart", "failure");
+        });
+        return completableFuture;
+    }
+
 }

@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.bookworkburrow;
 
 import android.util.Log;
+import android.util.StateSet;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,6 +41,7 @@ public class FirebaseOrderUtil {
             bookIDs.add(book.getId());
         }
         orderMap.put("books", bookIDs);
+        orderMap.put("price", order.getTotalWithTax());
 
         db.collection("orders").add(orderMap)
                 .addOnCompleteListener(task -> {
@@ -117,23 +119,63 @@ public class FirebaseOrderUtil {
 
     /**
      * Adds a book ID to a user's cart array in Firestore.
-     * @param userId The ID of the user.
      * @param bookId The book ID to add to the user's cart array.
      */
-    public static void addBookToCart(String bookId) {
+    public static CompletableFuture<Boolean> addBookToCart(String bookId) {
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         db.collection("users").document(userId)
                 .update("cart", FieldValue.arrayUnion(bookId))
                 .addOnSuccessListener(aVoid -> {
                     Log.d("UpdateSuccess", "Book added to user's cart array");
+                    completableFuture.complete(true);
                 })
                 .addOnFailureListener(e -> {
                     db.collection("users").document(userId)
                             .set(Collections.singletonMap("cart", Collections.singletonList(bookId)), SetOptions.merge())
                             .addOnSuccessListener(aVoid ->
                                     Log.d("SetSuccess", "Cart field created and book added"))
-                            .addOnFailureListener(eSet ->
-                                    Log.w("SetFailure", "Error creating cart field and adding book", eSet));
+                            .addOnFailureListener(eSet ->{
+                                        Log.w("SetFailure", "Error creating cart field and adding book", eSet);
+                                        completableFuture.complete(false);
+                                    });
                 });
+        return completableFuture;
     }
+
+    /**
+     * Removes a book ID from a user's cart array in Firestore.
+     * @param bookId The book ID to remove from the user's cart array.
+     */
+    public static CompletableFuture<Boolean> removeBookFromCart(String bookId) {
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(userId)
+                .update("cart", FieldValue.arrayRemove(bookId))
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("UpdateSuccess", "Book removed from user's cart array");
+                    completableFuture.complete(true);
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("UpdateFailure", "Error removing book from cart", e);
+                    completableFuture.complete(false);
+                });
+        return completableFuture;
+    }
+
+    public static CompletableFuture<Boolean> clearCart(){
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        db.collection("users").document(userId)
+                .update("cart", new ArrayList<>())
+                .addOnSuccessListener(task ->{
+                    Log.d("UpdateSuccess", "cart cleared");
+                    completableFuture.complete(true);
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("UpdateFailure", "cart not cleared", e);
+                    completableFuture.complete(false);
+                });
+        return completableFuture;
+
+    }
+
 
 }
