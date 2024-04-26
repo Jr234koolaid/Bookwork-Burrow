@@ -5,10 +5,14 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
@@ -22,8 +26,12 @@ import edu.utsa.cs3773.bookworkburrow.model.Book;
 
 public class HomeLayout extends NavigationalLayout {
 
+    private final ActivityResultLauncher<Intent> mResultLauncher;
+
     public HomeLayout(NavigationalActivity _context, ViewGroup _parent) {
         super(_context, _parent, R.layout.layout_home);
+
+        mResultLauncher = mContext.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> this.onDisplay());
     }
 
     @Override
@@ -50,27 +58,30 @@ public class HomeLayout extends NavigationalLayout {
             goalUpdateButton.setOnClickListener(view -> updateGoal());
 
             LinearLayout favoritesLayout = mLayoutView.findViewById(R.id.home_layout_favorites);
+            favoritesLayout.removeAllViews();
+
             LinearLayout bookshelfLayout = mLayoutView.findViewById(R.id.home_layout_bookshelf);
+            bookshelfLayout.removeAllViews();
 
             ArrayList<String> favoritesIDList = account.getFavorites();
             if (favoritesIDList == null || favoritesIDList.isEmpty()) {
-                showText(favoritesLayout, R.string.home_text_no_favorites);
+                this.showText(favoritesLayout, R.string.home_text_no_favorites);
 
             } else {
 
                 for (String bookID : favoritesIDList) {
-                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> showBook(favoritesLayout, book));
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(favoritesLayout, book));
                 }
             }
 
             ArrayList<String> ownedIDList = account.getBooksOwned();
             if (ownedIDList == null || ownedIDList.isEmpty()) {
-                showText(bookshelfLayout, R.string.home_text_no_books);
+                this.showText(bookshelfLayout, R.string.home_text_no_books);
 
             } else {
 
                 for (String bookID : ownedIDList) {
-                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> showBook(bookshelfLayout, book));
+                    FirebaseBookUtils.getBookByID(bookID).thenAccept(book -> this.showBook(bookshelfLayout, book));
                 }
             }
         });
@@ -79,7 +90,7 @@ public class HomeLayout extends NavigationalLayout {
     private void showBook(LinearLayout _layout, Book _book) {
 
         int width = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140.f, mMetrics));
-        int height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 195.f, mMetrics));
+        int height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 210.f, mMetrics));
 
         int marginEnd = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36.f, mMetrics));
 
@@ -90,6 +101,8 @@ public class HomeLayout extends NavigationalLayout {
         imageButton.setTag(_book.getId());
         imageButton.setLayoutParams(layoutParams);
         imageButton.setOnClickListener(view -> this.openBook(_book.getId()));
+        imageButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+        imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
 
         _layout.addView(imageButton);
 
@@ -111,21 +124,17 @@ public class HomeLayout extends NavigationalLayout {
     }
 
     private void updateGoal() {
-
-        mContext.startActivity(new Intent(mContext, UpdateReadingGoalActivity.class));
+        mResultLauncher.launch(new Intent(mContext, UpdateReadingGoalActivity.class));
     }
 
     private void openBook(String _bookID) {
 
         if (_bookID == null) return;
 
-        // TODO: Use intent to go to right book?
+        Intent intent = new Intent(mContext, OwnedBookActivity.class);
+        intent.putExtra("bookID", _bookID);
 
-        Intent readIntent = new Intent(mContext, OwnedBookActivity.class);
-        readIntent.putExtra("bookID", _bookID);
-        mContext.startActivity(readIntent);
-
-
+        mResultLauncher.launch(intent);
     }
 
 } // class HomeLayout

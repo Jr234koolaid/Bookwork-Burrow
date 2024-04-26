@@ -41,7 +41,6 @@ public class SearchLayout extends NavigationalLayout {
 
     private String                  mKeyword;
 
-    private AppCompatSpinner        mFilterSpinner;
     private ConstraintLayout        mBookContainer;
 
     public SearchLayout(NavigationalActivity _context, ViewGroup _parent) {
@@ -59,14 +58,7 @@ public class SearchLayout extends NavigationalLayout {
 
         mKeyword = "";
 
-        mFilterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
         mBookContainer = mLayoutView.findViewById(R.id.search_layout_book_container);
-
-        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.filter_array, R.layout.layout_search_spinner_item);
-        genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
-
-        mFilterSpinner.setAdapter(genreAdapter);
-        mFilterSpinner.setOnItemSelectedListener(new SearchFilterController(this));
 
         EditText searchText = mLayoutView.findViewById(R.id.search_edit_search);
         searchText.addTextChangedListener(new SearchTextController(this));
@@ -77,6 +69,13 @@ public class SearchLayout extends NavigationalLayout {
         AppCompatSpinner sortSpinner = mLayoutView.findViewById(R.id.search_spinner_sort);
         sortSpinner.setAdapter(sortAdapter);
         sortSpinner.setOnItemSelectedListener(new SearchSortController(this));
+
+        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(mContext, R.array.filter_array, R.layout.layout_search_spinner_item);
+        genreAdapter.setDropDownViewResource(R.layout.layout_search_spinner_dropdown);
+
+        AppCompatSpinner filterSpinner = mLayoutView.findViewById(R.id.search_spinner_filter);
+        filterSpinner.setAdapter(genreAdapter);
+        filterSpinner.setOnItemSelectedListener(new SearchFilterController(this));
 
         // Call update
         this.onUpdate();
@@ -256,14 +255,16 @@ public class SearchLayout extends NavigationalLayout {
     private void openBook(String _bookID) {
 
         if (_bookID == null) return;
-        FirebaseUserUtil.getCurrUser().thenAccept(Account->{
-            Intent intent;
-            if(Account.getBooksOwned().contains(_bookID)) intent = new Intent(mContext, OwnedBookActivity.class);
-            else intent = new Intent(mContext, BookSummaryActivity.class);
+
+        FirebaseUserUtil.getCurrUser().thenAccept(account->{
+
+            boolean bookOwned = account.getBooksOwned().contains(_bookID);
+
+            Intent intent = new Intent(mContext, (bookOwned) ? OwnedBookActivity.class : BookSummaryActivity.class);
             intent.putExtra("bookID", _bookID);
+
             mContext.startActivity(intent);
         });
-
     }
 
 } // class SearchLayout
