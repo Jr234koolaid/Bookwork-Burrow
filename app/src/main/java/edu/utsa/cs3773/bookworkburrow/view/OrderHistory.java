@@ -49,8 +49,8 @@ public class OrderHistory extends AppCompatActivity {
                     order1.setText(text);
                 });
             });
-
         });
+        
     }
     public void setOrder(String Id,int num)
     {
