@@ -40,6 +40,7 @@ public class FirebaseOrderUtil {
         for(Book book : order.getCartList()){
             bookIDs.add(book.getId());
         }
+        Log.d("Time stamp",FieldValue.serverTimestamp().toString());
         orderMap.put("books", bookIDs);
         orderMap.put("price", order.getTotalWithTax());
 
@@ -107,10 +108,11 @@ public class FirebaseOrderUtil {
                         DocumentSnapshot doc = task.getResult();
                         Order order = new Order();
                         ArrayList<String> bookIDs = (ArrayList<String>) doc.get("books");
-                        order.setBookIDs(bookIDs);
-                        order.setOrderID(orderID);
-                        order.setDate((Timestamp) doc.get("date"));
-                        completableFuture.complete(order);
+                        order.setBookIDs(bookIDs).thenAccept(Boolean ->{
+                            order.setOrderID(orderID);
+                            order.setDate((Timestamp) doc.get("date"));
+                            completableFuture.complete(order);
+                        });
                     }
                     else completableFuture.completeExceptionally(new Throwable(task.getException()));
                 });

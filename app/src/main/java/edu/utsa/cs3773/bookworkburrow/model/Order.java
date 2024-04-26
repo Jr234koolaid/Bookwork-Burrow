@@ -92,7 +92,7 @@ public class Order {
     public String getStringDate(){
 //        String[] dayPart = date.getTime().toString().split(" ");
 //        return(dayPart[1]+", "+dayPart[2]+", "+dayPart[5]);
-        return date.toString();
+        return date.toDate().toString();
     }
 
     /**
