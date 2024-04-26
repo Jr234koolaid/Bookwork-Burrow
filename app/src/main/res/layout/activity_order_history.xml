@@ -1,183 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- activity_order_history.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.OrderHistory">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/firstOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179" />
-
-    <Button
-        android:id="@+id/Date"
-        android:layout_width="80dp"
-        android:layout_height="41dp"
-        android:text="Date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.685"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027" />
-
-    <Button
-        android:id="@+id/Price"
-        android:layout_width="81dp"
-        android:layout_height="39dp"
-        android:text="Price"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
-
-    <TextView
-        android:id="@+id/thirdText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.564" />
-
-    <TextView
-        android:id="@+id/secondText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347" />
-
-    <TextView
-        android:id="@+id/OrderHistory"
+        android:id="@+id/orderHistoryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Order History"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp" />
 
-    <TextView
-        android:id="@+id/secondOrder"
+    <Button
+        android:id="@+id/priceFilterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.411" />
+        android:text="Price"
+        android:layout_below="@id/orderHistoryTitle"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/thirdOrder"
+    <Button
+        android:id="@+id/dateFilterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.639" />
+        android:text="Date"
+        android:layout_below="@id/orderHistoryTitle"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:id="@+id/firstText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
-    <View
-        android:id="@+id/navigational_divider"
-        android:layout_width="350dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/navigational_button_home" />
-
-    <ImageButton
-        android:id="@+id/navigational_button_home"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/book"
-        android:scaleType="centerInside"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageButton
-        android:id="@+id/navigational_button_search"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/search"
-        android:scaleType="centerInside"
-        app:layout_constraintStart_toEndOf="@id/navigational_button_home"
-        app:layout_constraintEnd_toStartOf="@id/navigational_button_cart"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageButton
-        android:id="@+id/navigational_button_cart"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/shopping_cart"
-        android:scaleType="centerInside"
-        app:layout_constraintStart_toEndOf="@id/navigational_button_search"
-        app:layout_constraintEnd_toStartOf="@id/navigational_button_settings"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageButton
-        android:id="@+id/navigational_button_settings"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/settings_selected"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/ordersLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+    </LinearLayout>
+</RelativeLayout>

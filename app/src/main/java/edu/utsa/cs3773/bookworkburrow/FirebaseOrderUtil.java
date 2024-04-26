@@ -8,12 +8,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import edu.utsa.cs3773.bookworkburrow.model.Book;
@@ -118,6 +121,44 @@ public class FirebaseOrderUtil {
                 });
         return completableFuture;
     }
+
+    public static CompletableFuture<List<Order>> getOrdersByUserId(String userId, String sortBy) {
+        CompletableFuture<List<Order>> completableFuture = new CompletableFuture<>();
+        Query query = db.collection("orders").whereEqualTo("user-id", userId);
+
+        query.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Order> orders = new ArrayList<>();
+                        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+                        for (DocumentSnapshot document : task.getResult()) {
+                            CompletableFuture<Void> future = new CompletableFuture<>();
+                            futures.add(future);
+
+                            Order order = new Order();
+                            order.setOrderID(document.getId());
+                            order.setDate((Timestamp) document.get("date"));
+                            order.setBookIDs((ArrayList<String>) document.get("books"))
+                                    .thenAccept(aVoid -> future.complete(null)); // Assuming setBookIDs returns a CompletableFuture<Void>
+
+                            orders.add(order);
+                        }
+                        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenRun(() -> {
+                            if (sortBy != null && sortBy.toLowerCase().equals("price")) {
+                                orders.sort(Comparator.comparingDouble(Order::getTotalWithTax));
+                            } else {
+                                orders.sort(Comparator.comparing(Order::getDate));
+                            }
+                            completableFuture.complete(orders);
+                        });
+                    } else {
+                        completableFuture.completeExceptionally(new Throwable(task.getException()));
+                    }
+                });
+        return completableFuture;
+    }
+
 
     /**
      * Adds a book ID to a user's cart array in Firestore.

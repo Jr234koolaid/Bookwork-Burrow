@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -24,81 +27,50 @@ import edu.utsa.cs3773.bookworkburrow.model.Account;
 import edu.utsa.cs3773.bookworkburrow.model.Order;
 
 public class OrderHistory extends AppCompatActivity implements View.OnClickListener {
-    //Account account;
-    ArrayList<String> Orders;
-    TextView order1;
-    TextView order2;
-    TextView order3;
-
-    TextView o1;
-    TextView o2;
-    TextView o3;
-    String text;
-    ArrayList<String> list;
     String Filter;
+    private LinearLayout ordersLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-        order1 = (TextView) findViewById(R.id.firstOrder);
-        order2 = (TextView) findViewById(R.id.secondOrder);
-        order3 = (TextView) findViewById(R.id.thirdOrder);
-        o1 = (TextView) findViewById(R.id.firstText);
-        o2 = (TextView) findViewById(R.id.secondText);
-        o3 = (TextView) findViewById(R.id.thirdText);
         Filter = getIntent().getStringExtra("Filter");
-        setupImageButton(R.id.navigational_button_home);
-        setupImageButton(R.id.navigational_button_search);
-        setupImageButton(R.id.navigational_button_cart);
-        setupButton(R.id.Date);
-        setupButton(R.id.Price);
-        if (Filter == null) {
-            Filter = "";
-        }
-        if (Filter.equals("Date") || Filter.equals("")) {
-            FirebaseUserUtil.getCurrUser().thenAccept(account -> {
-                list = account.getOrderHistory();
-                for (String id : list) {
-                    FirebaseOrderUtil.getOrderByID(id).thenAccept(order -> {
-                        text = "Books:\n      ";
-                        for (String bookName : order.getBookIDs()) {
-                            text += bookName + ", ";
-                        }
-                        text = text.substring(0, text.length() - 2);
-                        text += "\nDate:\n     " + order.getStringDate();
-                        text += "\nPrice:\n     " + order.getTotalWithTax();
-                        if (list.indexOf(id) == 0) {
-                            order1.setText(text);
-                            o1.setText("Order 1");
-                        }
-                        if (list.indexOf(id) == 1) {
-                            order2.setText(text);
-                            o2.setText("Order 2");
-                        }
-                        if (list.indexOf(id) == 2) {
-                            order3.setText(text);
-                            o3.setText("Order 3");
-                        }
-
-                    });
+//        setupImageButton(R.id.navigational_button_home);
+//        setupImageButton(R.id.navigational_button_search);
+//        setupImageButton(R.id.navigational_button_cart);
+        ordersLayout = findViewById(R.id.ordersLinearLayout);
+        setupButton(R.id.dateFilterButton);
+        setupButton(R.id.priceFilterButton);
+        FirebaseUserUtil.getCurrUser().thenAccept(account -> {
+            FirebaseOrderUtil.getOrdersByUserId(account.getUID(), Filter == null ? "" : Filter).thenAccept(list -> {
+                for(Order o : list){
+                    addOrderView(o);
                 }
             });
-        } else if (Filter.equals("Price")) {
-            ArrayList<Order> temp = new ArrayList<>();
-            FirebaseUserUtil.getCurrUser().thenAccept(account -> {
-                List<String> list = account.getOrderHistory();
-                List<CompletableFuture<Void>> futures = new ArrayList<>();
-                for (String id : list) {
-                    CompletableFuture<Void> future = FirebaseOrderUtil.getOrderByID(id).thenAccept(order -> {
-                        temp.add(order);
-                    });
-                    futures.add(future);
-                }
-                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-            });
+        });
+    }
+    private void addOrderView(Order order) {
+        LinearLayout orderView = new LinearLayout(this);
+        orderView.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(10, 10, 10, 10);
+        orderView.setLayoutParams(layoutParams);
 
-        }
+        TextView dateTextView = new TextView(this);
+        dateTextView.setText("Date: " + order.getDate().toString());
+        TextView priceTextView = new TextView(this);
+        priceTextView.setText(String.format(Locale.getDefault(), "Price: $%.2f", order.getSubtotal()));
+
+        TextView booksTextView = new TextView(this);
+        booksTextView.setText("Books: " + TextUtils.join(", ", order.getBookIDs()));
+
+        orderView.addView(dateTextView);
+        orderView.addView(priceTextView);
+        orderView.addView(booksTextView);
+
+        ordersLayout.addView(orderView);
     }
     public void onClick(View v)
     {
@@ -113,13 +85,13 @@ public class OrderHistory extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this, CartActivity.class);
             startActivity(intent);
         }
-        if(v.getId() == R.id.Price)
+        if(v.getId() == R.id.priceFilterButton)
         {
             intent = new Intent(this, OrderHistory.class);
             intent.putExtra("Filter","Price");
             startActivity(intent);
         }
-        if(v.getId() == R.id.Date)
+        if(v.getId() == R.id.dateFilterButton)
         {
             intent = new Intent(this, OrderHistory.class);
             intent.putExtra("Filter","Date");
