@@ -60,7 +60,6 @@ public class OrderHistory extends AppCompatActivity implements View.OnClickListe
         TextView booksTextView = orderLayout.findViewById(R.id.orderBookList);
         booksTextView.setText("Books: " + TextUtils.join(", ", order.getBookIDs()));
 
-
         ordersLayout.addView(orderLayout);
     }
     public void onClick(View v)
