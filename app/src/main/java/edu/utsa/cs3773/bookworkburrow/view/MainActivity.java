@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(_savedInstanceState);
         this.setContentView(R.layout.activity_main);
+        //FirebaseUserUtil.logOut();
+        Intent intent = new Intent(this, OrderHistory.class);
+        startActivity(intent);
         if (FirebaseUserUtil.isLoggedIn()) {
 //            //tests for firebase utils
 //            Account account = FirebaseUtil.getCurrUser();
