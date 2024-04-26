@@ -17,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(_savedInstanceState);
         this.setContentView(R.layout.activity_login);
-
         AppCompatButton loginButton = this.findViewById(R.id.login_button_login);
         loginButton.setOnClickListener(view -> this.login());
 
