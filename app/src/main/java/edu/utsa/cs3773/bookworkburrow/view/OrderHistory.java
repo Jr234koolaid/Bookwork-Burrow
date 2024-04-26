@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,9 +36,6 @@ public class OrderHistory extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
         Filter = getIntent().getStringExtra("Filter");
-//        setupImageButton(R.id.navigational_button_home);
-//        setupImageButton(R.id.navigational_button_search);
-//        setupImageButton(R.id.navigational_button_cart);
         ordersLayout = findViewById(R.id.ordersLinearLayout);
         setupButton(R.id.dateFilterButton);
         setupButton(R.id.priceFilterButton);
@@ -50,27 +48,20 @@ public class OrderHistory extends AppCompatActivity implements View.OnClickListe
         });
     }
     private void addOrderView(Order order) {
-        LinearLayout orderView = new LinearLayout(this);
-        orderView.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(10, 10, 10, 10);
-        orderView.setLayoutParams(layoutParams);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View orderLayout = inflater.inflate(R.layout.order_desc, ordersLayout, false);
 
-        TextView dateTextView = new TextView(this);
-        dateTextView.setText("Date: " + order.getDate().toString());
-        TextView priceTextView = new TextView(this);
+        TextView dateTextView = orderLayout.findViewById(R.id.orderDate);
+        dateTextView.setText(""+order.getDate().toDate());
+
+        TextView priceTextView = orderLayout.findViewById(R.id.orderPrice);
         priceTextView.setText(String.format(Locale.getDefault(), "Price: $%.2f", order.getSubtotal()));
 
-        TextView booksTextView = new TextView(this);
+        TextView booksTextView = orderLayout.findViewById(R.id.orderBookList);
         booksTextView.setText("Books: " + TextUtils.join(", ", order.getBookIDs()));
 
-        orderView.addView(dateTextView);
-        orderView.addView(priceTextView);
-        orderView.addView(booksTextView);
 
-        ordersLayout.addView(orderView);
+        ordersLayout.addView(orderLayout);
     }
     public void onClick(View v)
     {
